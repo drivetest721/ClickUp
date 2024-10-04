@@ -261,6 +261,13 @@ class CClickUpDB:
 
         # Sort tasks by 'TaskStartDate' ascending, then by 'TaskScore' ascending within the same date
         df = df.sort_values(by=['TaskStartDate', 'TaskScore'])
+        
+        # Drop columns except the specified list
+        columns_to_keep = ['ListName', 'TaskID', 'TaskSubject', 'TaskStartDate', 'TaskDueDate', 
+                        'EstimatedTime', 'TaskPriority', 'TaskAssigneesList', 
+                        'TaskIsMilestone', 'TaskIntensity', 'TaskScore']
+        df = df[columns_to_keep]
+        
         # Creating employee-wise DataFrames
         employee_tasks = {}
         for _, row in df.iterrows():
