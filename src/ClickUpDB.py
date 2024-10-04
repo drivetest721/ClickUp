@@ -298,6 +298,11 @@ class CClickUpDB:
 
         print("Employee-wise task details have been saved to the 'Data/' directory.")
     
+    @staticmethod
+    def processCleanDF(df):
+        print("Input DF", df)
+        
+        
 # Example usage
 if __name__ == "__main__":
     # CDBHelper.MSCreateDatabaseAndTables()
@@ -417,14 +422,14 @@ if __name__ == "__main__":
     # print(CClickUpDB.MSConvertMilliSecondsToHrs(312900000))
     
     # Define your query parameters
-    # list_id = "901600183071"  # Replace with your actual ListID
-    # start_date = "01-08-2024"  # Replace with your desired start date
-    # end_date = "01-09-2024"    # Replace with your desired end date
+    list_id = "901600183071"  # Replace with your actual ListID
+    start_date = "01-08-2024"  # Replace with your desired start date
+    end_date = "01-09-2024"    # Replace with your desired end date
 
-    # # Fetch tasks based on the criteria
-    # tasks = CClickUpDB.MSGetTasksByListID(list_id, start_date, end_date)
-    # print(tasks)
-    # print(len(tasks))
+    # Fetch tasks based on the criteria
+    tasks = CClickUpDB.MSGetTasksByListID(list_id, start_date, end_date)
+    print(tasks)
+    print(len(tasks))
     
-    print(CClickUpDB.isEstimatedTimeProvided({'ListName': 'ERPNext', 'ListID': '901600183071', 'FolderName': 'REAL Office', 'SpaceID': '90020386592', 'TaskID': '86cw73j5j', 'TaskSubject': 'Mitul - ERPNext Install & Setup V15', 'TaskStartDate': '13-08-2024', 'TaskDueDate': '21-08-2024', 'ParentTaskID': '86cw76fxd', 'EstimatedTime': '{"hrs": 0, "mins": 0, "time_estimate": 214324234}', 'TaskPriority': {'id': '1', 'color': '#f50000', 'priority': 'urgent', 'orderindex': '1'}, 'TaskStatus': '{"id": "subcat901600183071_subcat901600182452_subcat900202016677_subcat900202016557_subcat900202016465_subcat900201647299_subcat900201617233_subcat900201614169_subcat900201614016_subcat900201613908_subcat900201524923_subcat900900756278_subcat900900756275_subcat900900756272_subcat900600588774_sc900600504232_NTf0x6rB", "type": "closed", "color": "#008844", "status": "delievered", "orderindex": 4}', 'AssignByPersonDetails': '{"id": 67390920, "color": "", "email": "mitul@riveredgeanalytics.com", "username": "Mitul Solanki", "profilePicture": "https://attachments.clickup.com/profilePictures/67390920_BGd.jpg"}', 'TaskAssigneesList': '[{"id": 67390920, "color": "", "email": "mitul@riveredgeanalytics.com", "initials": "MS", "username": "Mitul Solanki", "profilePicture": "https://attachments.clickup.com/profilePictures/67390920_BGd.jpg"}]', 'WatchersList': '[{"id": 67390920, "color": "", "email": "mitul@riveredgeanalytics.com", "initials": "MS", "username": "Mitul Solanki", "profilePicture": "https://attachments.clickup.com/profilePictures/67390920_BGd.jpg"}]', 'TaskCreatedDate': '12-08-2024', 'TaskUpdateDate': '02-09-2024', 'TaskDateClosed': '15-08-2024', 'TaskDateDone': '15-08-2024', 'TaskTags': '[]', 'TaskDependencies': '[{"type": 1, "userid": "67390920", "task_id": "86cw75tb6", "chain_id": null, "depends_on": "86cw73j5j", "date_created": "1723621006884", "workspace_id": "9002161791"}]', 'TaskIsMilestone': 0, 'TaskIntensity': 1, 'TaskCheckLists': '[]'}))
+    # print(CClickUpDB.isEstimatedTimeProvided({'ListName': 'ERPNext', 'ListID': '901600183071', 'FolderName': 'REAL Office', 'SpaceID': '90020386592', 'TaskID': '86cw73j5j', 'TaskSubject': 'Mitul - ERPNext Install & Setup V15', 'TaskStartDate': '13-08-2024', 'TaskDueDate': '21-08-2024', 'ParentTaskID': '86cw76fxd', 'EstimatedTime': '{"hrs": 0, "mins": 0, "time_estimate": 214324234}', 'TaskPriority': {'id': '1', 'color': '#f50000', 'priority': 'urgent', 'orderindex': '1'}, 'TaskStatus': '{"id": "subcat901600183071_subcat901600182452_subcat900202016677_subcat900202016557_subcat900202016465_subcat900201647299_subcat900201617233_subcat900201614169_subcat900201614016_subcat900201613908_subcat900201524923_subcat900900756278_subcat900900756275_subcat900900756272_subcat900600588774_sc900600504232_NTf0x6rB", "type": "closed", "color": "#008844", "status": "delievered", "orderindex": 4}', 'AssignByPersonDetails': '{"id": 67390920, "color": "", "email": "mitul@riveredgeanalytics.com", "username": "Mitul Solanki", "profilePicture": "https://attachments.clickup.com/profilePictures/67390920_BGd.jpg"}', 'TaskAssigneesList': '[{"id": 67390920, "color": "", "email": "mitul@riveredgeanalytics.com", "initials": "MS", "username": "Mitul Solanki", "profilePicture": "https://attachments.clickup.com/profilePictures/67390920_BGd.jpg"}]', 'WatchersList': '[{"id": 67390920, "color": "", "email": "mitul@riveredgeanalytics.com", "initials": "MS", "username": "Mitul Solanki", "profilePicture": "https://attachments.clickup.com/profilePictures/67390920_BGd.jpg"}]', 'TaskCreatedDate': '12-08-2024', 'TaskUpdateDate': '02-09-2024', 'TaskDateClosed': '15-08-2024', 'TaskDateDone': '15-08-2024', 'TaskTags': '[]', 'TaskDependencies': '[{"type": 1, "userid": "67390920", "task_id": "86cw75tb6", "chain_id": null, "depends_on": "86cw73j5j", "date_created": "1723621006884", "workspace_id": "9002161791"}]', 'TaskIsMilestone': 0, 'TaskIntensity': 1, 'TaskCheckLists': '[]'}))
     

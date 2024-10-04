@@ -1,0 +1,925 @@
+{
+    "mansi solanki": [
+        {
+            "ListName": "ERPNext",
+            "TaskID": "86cw75tb6",
+            "TaskSubject": "Mohit - Job Openings Form",
+            "TaskStartDate": "20-08-2024",
+            "TaskDueDate": "22-08-2024",
+            "TaskStatus": "delievered",
+            "EstimatedTime": {
+                "hrs": 5,
+                "mins": 0,
+                "time_estimate": 18000000
+            },
+            "TaskPriority": "urgent",
+            "TaskAssigneesList": [
+                {
+                    "id": 88895068,
+                    "color": "#622aea",
+                    "email": "mansi@riveredgeanalytics.com",
+                    "initials": "MS",
+                    "username": "mansi solanki",
+                    "profilePicture": "https://attachments.clickup.com/profilePictures/88895068_IUP.jpg"
+                }
+            ],
+            "TaskIsMilestone": 0,
+            "TaskIntensity": 1,
+            "TaskScore": 3,
+            "EstimatedTaskMin": 300,
+            "AssignTo": "mansi solanki"
+        },
+        {
+            "ListName": "ERPNext",
+            "TaskID": "86cw75tdf",
+            "TaskSubject": "Mansi - Leave Request Form",
+            "TaskStartDate": "21-08-2024",
+            "TaskDueDate": "30-08-2024",
+            "TaskStatus": "delievered",
+            "EstimatedTime": {
+                "hrs": 16,
+                "mins": 0,
+                "time_estimate": 57600000
+            },
+            "TaskPriority": "urgent",
+            "TaskAssigneesList": [
+                {
+                    "id": 88895068,
+                    "color": "#622aea",
+                    "email": "mansi@riveredgeanalytics.com",
+                    "initials": "MS",
+                    "username": "mansi solanki",
+                    "profilePicture": "https://attachments.clickup.com/profilePictures/88895068_IUP.jpg"
+                }
+            ],
+            "TaskIsMilestone": 0,
+            "TaskIntensity": 1,
+            "TaskScore": 3,
+            "EstimatedTaskMin": 960,
+            "AssignTo": "mansi solanki"
+        },
+        {
+            "ListName": "ERPNext",
+            "TaskID": "86cw7x7xw",
+            "TaskSubject": "Mansi - Import Projects List",
+            "TaskStartDate": "16-08-2024",
+            "TaskDueDate": "16-08-2024",
+            "TaskStatus": "delievered",
+            "EstimatedTime": {
+                "hrs": 1,
+                "mins": 0,
+                "time_estimate": 3600000
+            },
+            "TaskPriority": "urgent",
+            "TaskAssigneesList": [
+                {
+                    "id": 88895068,
+                    "color": "#622aea",
+                    "email": "mansi@riveredgeanalytics.com",
+                    "initials": "MS",
+                    "username": "mansi solanki",
+                    "profilePicture": "https://attachments.clickup.com/profilePictures/88895068_IUP.jpg"
+                }
+            ],
+            "TaskIsMilestone": 0,
+            "TaskIntensity": 1,
+            "TaskScore": 3,
+            "EstimatedTaskMin": 60,
+            "AssignTo": "mansi solanki"
+        },
+        {
+            "ListName": "ERPNext",
+            "TaskID": "86cw7x84y",
+            "TaskSubject": "Vishal - Import Timesheets",
+            "TaskStartDate": "16-08-2024",
+            "TaskDueDate": "16-08-2024",
+            "TaskStatus": "delievered",
+            "EstimatedTime": {
+                "hrs": 3,
+                "mins": 0,
+                "time_estimate": 10800000
+            },
+            "TaskPriority": "urgent",
+            "TaskAssigneesList": [
+                {
+                    "id": 88895068,
+                    "color": "#622aea",
+                    "email": "mansi@riveredgeanalytics.com",
+                    "initials": "MS",
+                    "username": "mansi solanki",
+                    "profilePicture": "https://attachments.clickup.com/profilePictures/88895068_IUP.jpg"
+                }
+            ],
+            "TaskIsMilestone": 0,
+            "TaskIntensity": 1,
+            "TaskScore": 3,
+            "EstimatedTaskMin": 180,
+            "AssignTo": "mansi solanki"
+        },
+        {
+            "ListName": "ERPNext",
+            "TaskID": "86cw7x8f4",
+            "TaskSubject": "Customize Inbuilt Form",
+            "TaskStartDate": "15-08-2024",
+            "TaskDueDate": "15-08-2024",
+            "TaskStatus": "delievered",
+            "EstimatedTime": {
+                "hrs": 8,
+                "mins": 0,
+                "time_estimate": 28800000
+            },
+            "TaskPriority": "urgent",
+            "TaskAssigneesList": [
+                {
+                    "id": 88895068,
+                    "color": "#622aea",
+                    "email": "mansi@riveredgeanalytics.com",
+                    "initials": "MS",
+                    "username": "mansi solanki",
+                    "profilePicture": "https://attachments.clickup.com/profilePictures/88895068_IUP.jpg"
+                }
+            ],
+            "TaskIsMilestone": 0,
+            "TaskIntensity": 1,
+            "TaskScore": 3,
+            "EstimatedTaskMin": 480,
+            "AssignTo": "mansi solanki"
+        },
+        {
+            "ListName": "ERPNext",
+            "TaskID": "86cw7x9jk",
+            "TaskSubject": "Test V15 Implementation",
+            "TaskStartDate": "16-08-2024",
+            "TaskDueDate": "16-08-2024",
+            "TaskStatus": "delievered",
+            "EstimatedTime": {
+                "hrs": 4,
+                "mins": 0,
+                "time_estimate": 14400000
+            },
+            "TaskPriority": "urgent",
+            "TaskAssigneesList": [
+                {
+                    "id": 96776599,
+                    "color": "",
+                    "email": "mohit.intern@riveredgeanalytics.com",
+                    "initials": "MP",
+                    "username": "Mohit parmar",
+                    "profilePicture": None
+                },
+                {
+                    "id": 88895068,
+                    "color": "#622aea",
+                    "email": "mansi@riveredgeanalytics.com",
+                    "initials": "MS",
+                    "username": "mansi solanki",
+                    "profilePicture": "https://attachments.clickup.com/profilePictures/88895068_IUP.jpg"
+                }
+            ],
+            "TaskIsMilestone": 0,
+            "TaskIntensity": 1,
+            "TaskScore": 3,
+            "EstimatedTaskMin": 240,
+            "AssignTo": "Mohit parmar"
+        },
+        {
+            "ListName": "ERPNext",
+            "TaskID": "86cw7xy24",
+            "TaskSubject": "Mansi - Enable Client & Pyhton Scripts",
+            "TaskStartDate": "16-08-2024",
+            "TaskDueDate": "16-08-2024",
+            "TaskStatus": "delievered",
+            "EstimatedTime": {
+                "hrs": 3,
+                "mins": 0,
+                "time_estimate": 10800000
+            },
+            "TaskPriority": "urgent",
+            "TaskAssigneesList": [
+                {
+                    "id": 88895068,
+                    "color": "#622aea",
+                    "email": "mansi@riveredgeanalytics.com",
+                    "initials": "MS",
+                    "username": "mansi solanki",
+                    "profilePicture": "https://attachments.clickup.com/profilePictures/88895068_IUP.jpg"
+                }
+            ],
+            "TaskIsMilestone": 0,
+            "TaskIntensity": 1,
+            "TaskScore": 3,
+            "EstimatedTaskMin": 180,
+            "AssignTo": "mansi solanki"
+        },
+        {
+            "ListName": "ERPNext",
+            "TaskID": "86cw7y1dr",
+            "TaskSubject": "Test Individual Any 3-4 User Accounts",
+            "TaskStartDate": "16-08-2024",
+            "TaskDueDate": "16-08-2024",
+            "TaskStatus": "delievered",
+            "EstimatedTime": {
+                "hrs": 3,
+                "mins": 0,
+                "time_estimate": 10800000
+            },
+            "TaskPriority": "urgent",
+            "TaskAssigneesList": [
+                {
+                    "id": 88895068,
+                    "color": "#622aea",
+                    "email": "mansi@riveredgeanalytics.com",
+                    "initials": "MS",
+                    "username": "mansi solanki",
+                    "profilePicture": "https://attachments.clickup.com/profilePictures/88895068_IUP.jpg"
+                }
+            ],
+            "TaskIsMilestone": 0,
+            "TaskIntensity": 1,
+            "TaskScore": 3,
+            "EstimatedTaskMin": 180,
+            "AssignTo": "mansi solanki"
+        },
+        {
+            "ListName": "ERPNext",
+            "TaskID": "86cwa53ct",
+            "TaskSubject": "Mansi - Job Opening Form Suggestions",
+            "TaskStartDate": "29-08-2024",
+            "TaskDueDate": "29-08-2024",
+            "TaskStatus": "delievered",
+            "EstimatedTime": {
+                "hrs": 4,
+                "mins": 0,
+                "time_estimate": 14400000
+            },
+            "TaskPriority": "normal",
+            "TaskAssigneesList": [
+                {
+                    "id": 88895068,
+                    "color": "#622aea",
+                    "email": "mansi@riveredgeanalytics.com",
+                    "initials": "MS",
+                    "username": "mansi solanki",
+                    "profilePicture": "https://attachments.clickup.com/profilePictures/88895068_IUP.jpg"
+                }
+            ],
+            "TaskIsMilestone": 0,
+            "TaskIntensity": 1,
+            "TaskScore": 1,
+            "EstimatedTaskMin": 240,
+            "AssignTo": "mansi solanki"
+        },
+        {
+            "ListName": "ERPNext",
+            "TaskID": "86cwbxkvd",
+            "TaskSubject": "Mansi - Create New Member Accounts",
+            "TaskStartDate": "29-08-2024",
+            "TaskDueDate": "30-08-2024",
+            "TaskStatus": "delievered",
+            "EstimatedTime": {
+                "hrs": 0,
+                "mins": 20,
+                "time_estimate": 1200000
+            },
+            "TaskPriority": "normal",
+            "TaskAssigneesList": [
+                {
+                    "id": 88895068,
+                    "color": "#622aea",
+                    "email": "mansi@riveredgeanalytics.com",
+                    "initials": "MS",
+                    "username": "mansi solanki",
+                    "profilePicture": "https://attachments.clickup.com/profilePictures/88895068_IUP.jpg"
+                }
+            ],
+            "TaskIsMilestone": 0,
+            "TaskIntensity": 1,
+            "TaskScore": 1,
+            "EstimatedTaskMin": 20,
+            "AssignTo": "mansi solanki"
+        }
+    ],
+    "Mitul Solanki": [
+        {
+            "ListName": "ERPNext",
+            "TaskID": "86cw76fjj",
+            "TaskSubject": "Mitul - Compare Odoo vs Zoho vs ERPNext Solution",
+            "TaskStartDate": "14-08-2024",
+            "TaskDueDate": "21-08-2024",
+            "TaskStatus": "delievered",
+            "EstimatedTime": {
+                "hrs": 0,
+                "mins": 30,
+                "time_estimate": 1800000
+            },
+            "TaskPriority": "urgent",
+            "TaskAssigneesList": [
+                {
+                    "id": 67390920,
+                    "color": "",
+                    "email": "mitul@riveredgeanalytics.com",
+                    "initials": "MS",
+                    "username": "Mitul Solanki",
+                    "profilePicture": "https://attachments.clickup.com/profilePictures/67390920_BGd.jpg"
+                }
+            ],
+            "TaskIsMilestone": 0,
+            "TaskIntensity": 1,
+            "TaskScore": 3,
+            "EstimatedTaskMin": 30,
+            "AssignTo": "Mitul Solanki"
+        },
+        {
+            "ListName": "ERPNext",
+            "TaskID": "86cw7wkbw",
+            "TaskSubject": "Restore V14 Data in V15",
+            "TaskStartDate": "14-08-2024",
+            "TaskDueDate": "16-08-2024",
+            "TaskStatus": "delievered",
+            "EstimatedTime": {
+                "hrs": 24,
+                "mins": 0,
+                "time_estimate": 86400000
+            },
+            "TaskPriority": "urgent",
+            "TaskAssigneesList": [
+                {
+                    "id": 67390920,
+                    "color": "",
+                    "email": "mitul@riveredgeanalytics.com",
+                    "initials": "MS",
+                    "username": "Mitul Solanki",
+                    "profilePicture": "https://attachments.clickup.com/profilePictures/67390920_BGd.jpg"
+                }
+            ],
+            "TaskIsMilestone": 0,
+            "TaskIntensity": 1,
+            "TaskScore": 3,
+            "EstimatedTaskMin": 1440,
+            "AssignTo": "Mitul Solanki"
+        },
+        {
+            "ListName": "ERPNext",
+            "TaskID": "86cw7wzx2",
+            "TaskSubject": "Mitul - Review & Test",
+            "TaskStartDate": "21-08-2024",
+            "TaskDueDate": "21-08-2024",
+            "TaskStatus": "delievered",
+            "EstimatedTime": {
+                "hrs": 0,
+                "mins": 30,
+                "time_estimate": 1800000
+            },
+            "TaskPriority": "urgent",
+            "TaskAssigneesList": [
+                {
+                    "id": 67390920,
+                    "color": "",
+                    "email": "mitul@riveredgeanalytics.com",
+                    "initials": "MS",
+                    "username": "Mitul Solanki",
+                    "profilePicture": "https://attachments.clickup.com/profilePictures/67390920_BGd.jpg"
+                }
+            ],
+            "TaskIsMilestone": 0,
+            "TaskIntensity": 1,
+            "TaskScore": 3,
+            "EstimatedTaskMin": 30,
+            "AssignTo": "Mitul Solanki"
+        },
+        {
+            "ListName": "ERPNext",
+            "TaskID": "86cw7wzy0",
+            "TaskSubject": "Mitul - show demo to AKS",
+            "TaskStartDate": "22-08-2024",
+            "TaskDueDate": "22-08-2024",
+            "TaskStatus": "delievered",
+            "EstimatedTime": {
+                "hrs": 0,
+                "mins": 30,
+                "time_estimate": 1800000
+            },
+            "TaskPriority": "urgent",
+            "TaskAssigneesList": [
+                {
+                    "id": 67390920,
+                    "color": "",
+                    "email": "mitul@riveredgeanalytics.com",
+                    "initials": "MS",
+                    "username": "Mitul Solanki",
+                    "profilePicture": "https://attachments.clickup.com/profilePictures/67390920_BGd.jpg"
+                }
+            ],
+            "TaskIsMilestone": 0,
+            "TaskIntensity": 1,
+            "TaskScore": 3,
+            "EstimatedTaskMin": 30,
+            "AssignTo": "Mitul Solanki"
+        },
+        {
+            "ListName": "ERPNext",
+            "TaskID": "86cw7x1eg",
+            "TaskSubject": "Mitul - show demo to AKS",
+            "TaskStartDate": "30-08-2024",
+            "TaskDueDate": "30-08-2024",
+            "TaskStatus": "delievered",
+            "EstimatedTime": {
+                "hrs": 0,
+                "mins": 30,
+                "time_estimate": 1800000
+            },
+            "TaskPriority": "urgent",
+            "TaskAssigneesList": [
+                {
+                    "id": 67390920,
+                    "color": "",
+                    "email": "mitul@riveredgeanalytics.com",
+                    "initials": "MS",
+                    "username": "Mitul Solanki",
+                    "profilePicture": "https://attachments.clickup.com/profilePictures/67390920_BGd.jpg"
+                }
+            ],
+            "TaskIsMilestone": 0,
+            "TaskIntensity": 1,
+            "TaskScore": 3,
+            "EstimatedTaskMin": 30,
+            "AssignTo": "Mitul Solanki"
+        },
+        {
+            "ListName": "ERPNext",
+            "TaskID": "86cw7x1eh",
+            "TaskSubject": "Mitul - Review & Test",
+            "TaskStartDate": "29-08-2024",
+            "TaskDueDate": "30-08-2024",
+            "TaskStatus": "delievered",
+            "EstimatedTime": {
+                "hrs": 3,
+                "mins": 0,
+                "time_estimate": 10800000
+            },
+            "TaskPriority": "urgent",
+            "TaskAssigneesList": [
+                {
+                    "id": 67390920,
+                    "color": "",
+                    "email": "mitul@riveredgeanalytics.com",
+                    "initials": "MS",
+                    "username": "Mitul Solanki",
+                    "profilePicture": "https://attachments.clickup.com/profilePictures/67390920_BGd.jpg"
+                }
+            ],
+            "TaskIsMilestone": 0,
+            "TaskIntensity": 1,
+            "TaskScore": 3,
+            "EstimatedTaskMin": 180,
+            "AssignTo": "Mitul Solanki"
+        },
+        {
+            "ListName": "ERPNext",
+            "TaskID": "86cw7x7zr",
+            "TaskSubject": "Mitul - Import Customer List & Customize Form",
+            "TaskStartDate": "16-08-2024",
+            "TaskDueDate": "16-08-2024",
+            "TaskStatus": "delievered",
+            "EstimatedTime": {
+                "hrs": 0,
+                "mins": 30,
+                "time_estimate": 1800000
+            },
+            "TaskPriority": "urgent",
+            "TaskAssigneesList": [
+                {
+                    "id": 67390920,
+                    "color": "",
+                    "email": "mitul@riveredgeanalytics.com",
+                    "initials": "MS",
+                    "username": "Mitul Solanki",
+                    "profilePicture": "https://attachments.clickup.com/profilePictures/67390920_BGd.jpg"
+                }
+            ],
+            "TaskIsMilestone": 0,
+            "TaskIntensity": 1,
+            "TaskScore": 3,
+            "EstimatedTaskMin": 30,
+            "AssignTo": "Mitul Solanki"
+        },
+        {
+            "ListName": "ERPNext",
+            "TaskID": "86cw7x8v2",
+            "TaskSubject": "Mitul - Department & Module Access",
+            "TaskStartDate": "15-08-2024",
+            "TaskDueDate": "15-08-2024",
+            "TaskStatus": "delievered",
+            "EstimatedTime": {
+                "hrs": 1,
+                "mins": 0,
+                "time_estimate": 3600000
+            },
+            "TaskPriority": "urgent",
+            "TaskAssigneesList": [
+                {
+                    "id": 67390920,
+                    "color": "",
+                    "email": "mitul@riveredgeanalytics.com",
+                    "initials": "MS",
+                    "username": "Mitul Solanki",
+                    "profilePicture": "https://attachments.clickup.com/profilePictures/67390920_BGd.jpg"
+                }
+            ],
+            "TaskIsMilestone": 0,
+            "TaskIntensity": 1,
+            "TaskScore": 3,
+            "EstimatedTaskMin": 60,
+            "AssignTo": "Mitul Solanki"
+        },
+        {
+            "ListName": "ERPNext",
+            "TaskID": "86cw7x8vu",
+            "TaskSubject": "Mitul - Role & Permissions Setup",
+            "TaskStartDate": "15-08-2024",
+            "TaskDueDate": "15-08-2024",
+            "TaskStatus": "delievered",
+            "EstimatedTime": {
+                "hrs": 1,
+                "mins": 0,
+                "time_estimate": 3600000
+            },
+            "TaskPriority": "urgent",
+            "TaskAssigneesList": [
+                {
+                    "id": 67390920,
+                    "color": "",
+                    "email": "mitul@riveredgeanalytics.com",
+                    "initials": "MS",
+                    "username": "Mitul Solanki",
+                    "profilePicture": "https://attachments.clickup.com/profilePictures/67390920_BGd.jpg"
+                }
+            ],
+            "TaskIsMilestone": 0,
+            "TaskIntensity": 1,
+            "TaskScore": 3,
+            "EstimatedTaskMin": 60,
+            "AssignTo": "Mitul Solanki"
+        },
+        {
+            "ListName": "ERPNext",
+            "TaskID": "86cw7xty4",
+            "TaskSubject": "Meet with AKS",
+            "TaskStartDate": "16-08-2024",
+            "TaskDueDate": "16-08-2024",
+            "TaskStatus": "delievered",
+            "EstimatedTime": {
+                "hrs": 0,
+                "mins": 30,
+                "time_estimate": 1800000
+            },
+            "TaskPriority": "urgent",
+            "TaskAssigneesList": [
+                {
+                    "id": 67390920,
+                    "color": "",
+                    "email": "mitul@riveredgeanalytics.com",
+                    "initials": "MS",
+                    "username": "Mitul Solanki",
+                    "profilePicture": "https://attachments.clickup.com/profilePictures/67390920_BGd.jpg"
+                }
+            ],
+            "TaskIsMilestone": 0,
+            "TaskIntensity": 1,
+            "TaskScore": 3,
+            "EstimatedTaskMin": 30,
+            "AssignTo": "Mitul Solanki"
+        },
+        {
+            "ListName": "ERPNext",
+            "TaskID": "86cw7y1kr",
+            "TaskSubject": "Enable Streamlit Dashboard",
+            "TaskStartDate": "16-08-2024",
+            "TaskDueDate": "16-08-2024",
+            "TaskStatus": "delievered",
+            "EstimatedTime": {
+                "hrs": 2,
+                "mins": 0,
+                "time_estimate": 7200000
+            },
+            "TaskPriority": "urgent",
+            "TaskAssigneesList": [
+                {
+                    "id": 67390920,
+                    "color": "",
+                    "email": "mitul@riveredgeanalytics.com",
+                    "initials": "MS",
+                    "username": "Mitul Solanki",
+                    "profilePicture": "https://attachments.clickup.com/profilePictures/67390920_BGd.jpg"
+                }
+            ],
+            "TaskIsMilestone": 0,
+            "TaskIntensity": 1,
+            "TaskScore": 3,
+            "EstimatedTaskMin": 120,
+            "AssignTo": "Mitul Solanki"
+        },
+        {
+            "ListName": "ERPNext",
+            "TaskID": "86cw8arj7",
+            "TaskSubject": "Mitul - Purchase Business Paid Plan Clickup",
+            "TaskStartDate": "16-08-2024",
+            "TaskDueDate": "16-08-2024",
+            "TaskStatus": "delievered",
+            "EstimatedTime": {
+                "hrs": 0,
+                "mins": 15,
+                "time_estimate": 900000
+            },
+            "TaskPriority": "urgent",
+            "TaskAssigneesList": [
+                {
+                    "id": 67390920,
+                    "color": "",
+                    "email": "mitul@riveredgeanalytics.com",
+                    "initials": "MS",
+                    "username": "Mitul Solanki",
+                    "profilePicture": "https://attachments.clickup.com/profilePictures/67390920_BGd.jpg"
+                }
+            ],
+            "TaskIsMilestone": 0,
+            "TaskIntensity": 1,
+            "TaskScore": 3,
+            "EstimatedTaskMin": 15,
+            "AssignTo": "Mitul Solanki"
+        },
+        {
+            "ListName": "ERPNext",
+            "TaskID": "86cw8atcj",
+            "TaskSubject": "Stand Up Meet Task Explanation",
+            "TaskStartDate": "23-08-2024",
+            "TaskDueDate": "26-08-2024",
+            "TaskStatus": "delievered",
+            "EstimatedTime": {
+                "hrs": 1,
+                "mins": 0,
+                "time_estimate": 3600000
+            },
+            "TaskPriority": "urgent",
+            "TaskAssigneesList": [
+                {
+                    "id": 67390920,
+                    "color": "",
+                    "email": "mitul@riveredgeanalytics.com",
+                    "initials": "MS",
+                    "username": "Mitul Solanki",
+                    "profilePicture": "https://attachments.clickup.com/profilePictures/67390920_BGd.jpg"
+                }
+            ],
+            "TaskIsMilestone": 0,
+            "TaskIntensity": 1,
+            "TaskScore": 3,
+            "EstimatedTaskMin": 60,
+            "AssignTo": "Mitul Solanki"
+        },
+        {
+            "ListName": "ERPNext",
+            "TaskID": "86cw8atje",
+            "TaskSubject": "Stand Up Meet Task Explanation",
+            "TaskStartDate": "16-08-2024",
+            "TaskDueDate": "16-08-2024",
+            "TaskStatus": "delievered",
+            "EstimatedTime": {
+                "hrs": 1,
+                "mins": 0,
+                "time_estimate": 3600000
+            },
+            "TaskPriority": "urgent",
+            "TaskAssigneesList": [
+                {
+                    "id": 67390920,
+                    "color": "",
+                    "email": "mitul@riveredgeanalytics.com",
+                    "initials": "MS",
+                    "username": "Mitul Solanki",
+                    "profilePicture": "https://attachments.clickup.com/profilePictures/67390920_BGd.jpg"
+                }
+            ],
+            "TaskIsMilestone": 0,
+            "TaskIntensity": 1,
+            "TaskScore": 3,
+            "EstimatedTaskMin": 60,
+            "AssignTo": "Mitul Solanki"
+        }
+    ],
+    "Mohit parmar": [
+        {
+            "ListName": "ERPNext",
+            "TaskID": "86cw7x82b",
+            "TaskSubject": "Mohit  - Import Users List",
+            "TaskStartDate": "16-08-2024",
+            "TaskDueDate": "16-08-2024",
+            "TaskStatus": "delievered",
+            "EstimatedTime": {
+                "hrs": 1,
+                "mins": 0,
+                "time_estimate": 3600000
+            },
+            "TaskPriority": "urgent",
+            "TaskAssigneesList": [
+                {
+                    "id": 96776599,
+                    "color": "",
+                    "email": "mohit.intern@riveredgeanalytics.com",
+                    "initials": "MP",
+                    "username": "Mohit parmar",
+                    "profilePicture": None
+                }
+            ],
+            "TaskIsMilestone": 0,
+            "TaskIntensity": 1,
+            "TaskScore": 3,
+            "EstimatedTaskMin": 60,
+            "AssignTo": "Mohit parmar"
+        },
+        {
+            "ListName": "ERPNext",
+            "TaskID": "86cw7x83y",
+            "TaskSubject": "Mohit - Import Employee List",
+            "TaskStartDate": "16-08-2024",
+            "TaskDueDate": "16-08-2024",
+            "TaskStatus": "delievered",
+            "EstimatedTime": {
+                "hrs": 2,
+                "mins": 0,
+                "time_estimate": 7200000
+            },
+            "TaskPriority": "urgent",
+            "TaskAssigneesList": [
+                {
+                    "id": 96776599,
+                    "color": "",
+                    "email": "mohit.intern@riveredgeanalytics.com",
+                    "initials": "MP",
+                    "username": "Mohit parmar",
+                    "profilePicture": None
+                }
+            ],
+            "TaskIsMilestone": 0,
+            "TaskIntensity": 1,
+            "TaskScore": 3,
+            "EstimatedTaskMin": 120,
+            "AssignTo": "Mohit parmar"
+        },
+        {
+            "ListName": "ERPNext",
+            "TaskID": "86cw7x8r0",
+            "TaskSubject": "Mohit - Employee Form",
+            "TaskStartDate": "15-08-2024",
+            "TaskDueDate": "15-08-2024",
+            "TaskStatus": "delievered",
+            "EstimatedTime": {
+                "hrs": 4,
+                "mins": 0,
+                "time_estimate": 14400000
+            },
+            "TaskPriority": "urgent",
+            "TaskAssigneesList": [
+                {
+                    "id": 96776599,
+                    "color": "",
+                    "email": "mohit.intern@riveredgeanalytics.com",
+                    "initials": "MP",
+                    "username": "Mohit parmar",
+                    "profilePicture": None
+                }
+            ],
+            "TaskIsMilestone": 0,
+            "TaskIntensity": 1,
+            "TaskScore": 3,
+            "EstimatedTaskMin": 240,
+            "AssignTo": "Mohit parmar"
+        },
+        {
+            "ListName": "ERPNext",
+            "TaskID": "86cw7x9jk",
+            "TaskSubject": "Test V15 Implementation",
+            "TaskStartDate": "16-08-2024",
+            "TaskDueDate": "16-08-2024",
+            "TaskStatus": "delievered",
+            "EstimatedTime": {
+                "hrs": 4,
+                "mins": 0,
+                "time_estimate": 14400000
+            },
+            "TaskPriority": "urgent",
+            "TaskAssigneesList": [
+                {
+                    "id": 96776599,
+                    "color": "",
+                    "email": "mohit.intern@riveredgeanalytics.com",
+                    "initials": "MP",
+                    "username": "Mohit parmar",
+                    "profilePicture": None
+                },
+                {
+                    "id": 88895068,
+                    "color": "#622aea",
+                    "email": "mansi@riveredgeanalytics.com",
+                    "initials": "MS",
+                    "username": "mansi solanki",
+                    "profilePicture": "https://attachments.clickup.com/profilePictures/88895068_IUP.jpg"
+                }
+            ],
+            "TaskIsMilestone": 0,
+            "TaskIntensity": 1,
+            "TaskScore": 3,
+            "EstimatedTaskMin": 240,
+            "AssignTo": "Mohit parmar"
+        },
+        {
+            "ListName": "ERPNext",
+            "TaskID": "86cw7y1rf",
+            "TaskSubject": "Test Real ERPNext Dashboard",
+            "TaskStartDate": "16-08-2024",
+            "TaskDueDate": "16-08-2024",
+            "TaskStatus": "delievered",
+            "EstimatedTime": {
+                "hrs": 1,
+                "mins": 0,
+                "time_estimate": 3600000
+            },
+            "TaskPriority": "urgent",
+            "TaskAssigneesList": [
+                {
+                    "id": 96776599,
+                    "color": "",
+                    "email": "mohit.intern@riveredgeanalytics.com",
+                    "initials": "MP",
+                    "username": "Mohit parmar",
+                    "profilePicture": None
+                }
+            ],
+            "TaskIsMilestone": 0,
+            "TaskIntensity": 1,
+            "TaskScore": 3,
+            "EstimatedTaskMin": 60,
+            "AssignTo": "Mohit parmar"
+        }
+    ],
+    "Nidhi": [
+        {
+            "ListName": "ERPNext",
+            "TaskID": "86cw8ap06",
+            "TaskSubject": "Nidhi - provide sample demo filled form",
+            "TaskStartDate": "21-08-2024",
+            "TaskDueDate": "22-08-2024",
+            "TaskStatus": "delievered",
+            "EstimatedTime": {
+                "hrs": 0,
+                "mins": 30,
+                "time_estimate": 1800000
+            },
+            "TaskPriority": "normal",
+            "TaskAssigneesList": [
+                {
+                    "id": 73264089,
+                    "color": "#c51162",
+                    "email": "hr@riveredgeanalytics.com",
+                    "initials": "N",
+                    "username": "Nidhi",
+                    "profilePicture": None
+                }
+            ],
+            "TaskIsMilestone": 0,
+            "TaskIntensity": 1,
+            "TaskScore": 1,
+            "EstimatedTaskMin": 30,
+            "AssignTo": "Nidhi"
+        },
+        {
+            "ListName": "ERPNext",
+            "TaskID": "86cw8ap1y",
+            "TaskSubject": "Nidhi - provide sample demo filled form",
+            "TaskStartDate": "26-08-2024",
+            "TaskDueDate": "29-08-2024",
+            "TaskStatus": "delievered",
+            "EstimatedTime": {
+                "hrs": 0,
+                "mins": 30,
+                "time_estimate": 1800000
+            },
+            "TaskPriority": "normal",
+            "TaskAssigneesList": [
+                {
+                    "id": 73264089,
+                    "color": "#c51162",
+                    "email": "hr@riveredgeanalytics.com",
+                    "initials": "N",
+                    "username": "Nidhi",
+                    "profilePicture": None
+                }
+            ],
+            "TaskIsMilestone": 0,
+            "TaskIntensity": 1,
+            "TaskScore": 1,
+            "EstimatedTaskMin": 30,
+            "AssignTo": "Nidhi"
+        }
+    ]
+}
