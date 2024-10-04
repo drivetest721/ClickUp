@@ -15,7 +15,7 @@ class ClickUpHelper:
     AUTH_HEADER = {"Authorization": "pk_67390920_KWG9KAUXYQBLX2I4XL7EBXMHNA247V86"}
 
     @staticmethod
-    def MSFetchTaskOnListID(list_id):
+    def MSFetchTaskOnListID(list_id, start_date = None, end_date =  None):
         current_page = 0
         tasks_inserted = 0
         date_limit = int(datetime(2024, 9, 1).timestamp() * 1000)  # Timestamp for September 30, 2024
@@ -27,9 +27,17 @@ class ClickUpHelper:
                 "include_markdown_description": "false",
                 "page": str(current_page),
                 "subtasks": "true",
+                "include_closed":"true"
                 # "due_date_gt": date_limit  # Fetch tasks created before the end of September
             }
-            
+            if start_date is not None:
+                # Convert dates to Unix timestamps in milliseconds
+                due_date_gt = int(start_date.timestamp() * 1000)
+                query["due_date_gt"] = due_date_gt
+            if end_date is not None:
+                # Convert dates to Unix timestamps in milliseconds
+                due_date_lt = int(end_date.timestamp() * 1000)
+                query["due_date_lt"] = due_date_lt
             # API call to fetch tasks
             response = requests.get(ClickUpHelper.API_URL + list_id + "/task", headers=ClickUpHelper.AUTH_HEADER, params=query)
             data = response.json()
@@ -80,6 +88,15 @@ if __name__ == "__main__":
     # # Example usage
     # list_id = "901601699012"
     # ClickUpHelper.MSFetchTaskOnListID(list_id)
-    ClickUpHelper.MSFetchTaskOnListsOfIDs()
+    # Parse the date strings into datetime objects
+    start_date_str = None
+    end_date_str = None
+    listId = "901600183071"
+    
+    # Define the date format based on your input strings
+    date_format = "%d-%m-%Y"
+    start_date = datetime.strptime(start_date_str, date_format) if start_date_str else None
+    end_date = datetime.strptime(end_date_str, date_format) if end_date_str else None
+    ClickUpHelper.MSFetchTaskOnListID(listId,start_date,end_date)
     
     

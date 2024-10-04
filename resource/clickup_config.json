@@ -13,7 +13,7 @@
     },
     {
         "ListID": "901600183071",
-        "sync": false,
+        "sync": true,
         "Project": "ERPNext",
         "Customer": "REAL"
     },
@@ -37,13 +37,13 @@
     },
     {
         "ListID": "901603806927",
-        "sync": true,
+        "sync": false,
         "Project": "ClickUp",
         "Customer": "REAL"
     },
     {
         "ListID": "901603898346",
-        "sync": true,
+        "sync": false,
         "Project": "Drake",
         "Customer": "AP Office"
     }
