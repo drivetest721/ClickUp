@@ -147,11 +147,11 @@ class CClickUpDB:
 
     @staticmethod
     def MSConvertTimeStampToDate(timestamp):
-        if timestamp is not None and timestamp!="None":
+        if timestamp is not None and timestamp != "None":
             # Convert timestamp (in milliseconds) to a datetime object
             date_obj = datetime.fromtimestamp(int(timestamp) / 1000)
-            # Format datetime object to 'DD-MM-YYYY' format
-            formatted_date = date_obj.strftime('%d-%m-%Y')
+            # Format datetime object to 'DD-MM-YYYY HH:MM:SS' format
+            formatted_date = date_obj.strftime('%d-%m-%Y %H:%M:%S')
             return formatted_date
         else:
             return timestamp
@@ -216,7 +216,7 @@ class CClickUpDB:
     
     # Adding the 'TaskScore' column
     @staticmethod
-    def calculate_task_score(row, include_toughness=False):
+    def MSCalculateTaskScore(row, include_toughness=False):
         # Priority scoring
         priority_score = 1  # Default score
         if row['TaskPriority'] and row['TaskPriority'] !='null':
@@ -235,7 +235,7 @@ class CClickUpDB:
         return priority_score + toughness_score
 
     @staticmethod
-    def isEstimatedTimeProvided(estimated_time):
+    def MSIsEstimatedTimeProvided(estimated_time):
       
         # Ensure estimated_time is a dictionary; parse if it's a JSON string
         if isinstance(estimated_time, str):
@@ -252,9 +252,9 @@ class CClickUpDB:
         # Parsing JSON strings in 'TaskPriority' and 'TaskAssigneesList'
         df['TaskPriority'] = df['TaskPriority'].apply(lambda x: json.loads(x) if x != 'null' else None)
         df['TaskAssigneesList'] = df['TaskAssigneesList'].apply(json.loads)
-        df['TaskScore'] = df.apply(CClickUpDB.calculate_task_score, include_toughness=False, axis=1)
+        df['TaskScore'] = df.apply(CClickUpDB.MSCalculateTaskScore, include_toughness=False, axis=1)
         
-        df = df[df['EstimatedTime'].apply(CClickUpDB.isEstimatedTimeProvided)]
+        df = df[df['EstimatedTime'].apply(CClickUpDB.MSIsEstimatedTimeProvided)]
 
         # Convert 'TaskStartDate' to datetime for sorting
         df['TaskStartDate'] = pd.to_datetime(df['TaskStartDate'], format='%d-%m-%Y')
@@ -431,5 +431,5 @@ if __name__ == "__main__":
     print(tasks)
     print(len(tasks))
     
-    # print(CClickUpDB.isEstimatedTimeProvided({'ListName': 'ERPNext', 'ListID': '901600183071', 'FolderName': 'REAL Office', 'SpaceID': '90020386592', 'TaskID': '86cw73j5j', 'TaskSubject': 'Mitul - ERPNext Install & Setup V15', 'TaskStartDate': '13-08-2024', 'TaskDueDate': '21-08-2024', 'ParentTaskID': '86cw76fxd', 'EstimatedTime': '{"hrs": 0, "mins": 0, "time_estimate": 214324234}', 'TaskPriority': {'id': '1', 'color': '#f50000', 'priority': 'urgent', 'orderindex': '1'}, 'TaskStatus': '{"id": "subcat901600183071_subcat901600182452_subcat900202016677_subcat900202016557_subcat900202016465_subcat900201647299_subcat900201617233_subcat900201614169_subcat900201614016_subcat900201613908_subcat900201524923_subcat900900756278_subcat900900756275_subcat900900756272_subcat900600588774_sc900600504232_NTf0x6rB", "type": "closed", "color": "#008844", "status": "delievered", "orderindex": 4}', 'AssignByPersonDetails': '{"id": 67390920, "color": "", "email": "mitul@riveredgeanalytics.com", "username": "Mitul Solanki", "profilePicture": "https://attachments.clickup.com/profilePictures/67390920_BGd.jpg"}', 'TaskAssigneesList': '[{"id": 67390920, "color": "", "email": "mitul@riveredgeanalytics.com", "initials": "MS", "username": "Mitul Solanki", "profilePicture": "https://attachments.clickup.com/profilePictures/67390920_BGd.jpg"}]', 'WatchersList': '[{"id": 67390920, "color": "", "email": "mitul@riveredgeanalytics.com", "initials": "MS", "username": "Mitul Solanki", "profilePicture": "https://attachments.clickup.com/profilePictures/67390920_BGd.jpg"}]', 'TaskCreatedDate': '12-08-2024', 'TaskUpdateDate': '02-09-2024', 'TaskDateClosed': '15-08-2024', 'TaskDateDone': '15-08-2024', 'TaskTags': '[]', 'TaskDependencies': '[{"type": 1, "userid": "67390920", "task_id": "86cw75tb6", "chain_id": null, "depends_on": "86cw73j5j", "date_created": "1723621006884", "workspace_id": "9002161791"}]', 'TaskIsMilestone': 0, 'TaskIntensity': 1, 'TaskCheckLists': '[]'}))
+    # print(CClickUpDB.MSIsEstimatedTimeProvided({'ListName': 'ERPNext', 'ListID': '901600183071', 'FolderName': 'REAL Office', 'SpaceID': '90020386592', 'TaskID': '86cw73j5j', 'TaskSubject': 'Mitul - ERPNext Install & Setup V15', 'TaskStartDate': '13-08-2024', 'TaskDueDate': '21-08-2024', 'ParentTaskID': '86cw76fxd', 'EstimatedTime': '{"hrs": 0, "mins": 0, "time_estimate": 214324234}', 'TaskPriority': {'id': '1', 'color': '#f50000', 'priority': 'urgent', 'orderindex': '1'}, 'TaskStatus': '{"id": "subcat901600183071_subcat901600182452_subcat900202016677_subcat900202016557_subcat900202016465_subcat900201647299_subcat900201617233_subcat900201614169_subcat900201614016_subcat900201613908_subcat900201524923_subcat900900756278_subcat900900756275_subcat900900756272_subcat900600588774_sc900600504232_NTf0x6rB", "type": "closed", "color": "#008844", "status": "delievered", "orderindex": 4}', 'AssignByPersonDetails': '{"id": 67390920, "color": "", "email": "mitul@riveredgeanalytics.com", "username": "Mitul Solanki", "profilePicture": "https://attachments.clickup.com/profilePictures/67390920_BGd.jpg"}', 'TaskAssigneesList': '[{"id": 67390920, "color": "", "email": "mitul@riveredgeanalytics.com", "initials": "MS", "username": "Mitul Solanki", "profilePicture": "https://attachments.clickup.com/profilePictures/67390920_BGd.jpg"}]', 'WatchersList': '[{"id": 67390920, "color": "", "email": "mitul@riveredgeanalytics.com", "initials": "MS", "username": "Mitul Solanki", "profilePicture": "https://attachments.clickup.com/profilePictures/67390920_BGd.jpg"}]', 'TaskCreatedDate': '12-08-2024', 'TaskUpdateDate': '02-09-2024', 'TaskDateClosed': '15-08-2024', 'TaskDateDone': '15-08-2024', 'TaskTags': '[]', 'TaskDependencies': '[{"type": 1, "userid": "67390920", "task_id": "86cw75tb6", "chain_id": null, "depends_on": "86cw73j5j", "date_created": "1723621006884", "workspace_id": "9002161791"}]', 'TaskIsMilestone': 0, 'TaskIntensity': 1, 'TaskCheckLists': '[]'}))
     
