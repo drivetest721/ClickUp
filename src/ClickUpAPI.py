@@ -87,19 +87,20 @@ class ClickUpHelper:
                 ClickUpHelper.MSFetchTaskOnListID(listID)
 
 if __name__ == "__main__":
-    pass
+    ClickUpHelper.MSFetchTaskOnListsOfIDs()
+    # pass
     # # Example usage
     # list_id = "901601699012"
     # ClickUpHelper.MSFetchTaskOnListID(list_id)
     # Parse the date strings into datetime objects
-    start_date_str = None
-    end_date_str = None
-    listId = "901600183071"
+    # start_date_str = None
+    # end_date_str = None
+    # listId = "901600183071"
     
-    # Define the date format based on your input strings
-    date_format = "%d-%m-%Y"
-    start_date = datetime.strptime(start_date_str, date_format) if start_date_str else None
-    end_date = datetime.strptime(end_date_str, date_format) if end_date_str else None
-    ClickUpHelper.MSFetchTaskOnListID(listId,start_date,end_date)
+    # # Define the date format based on your input strings
+    # date_format = "%d-%m-%Y"
+    # start_date = datetime.strptime(start_date_str, date_format) if start_date_str else None
+    # end_date = datetime.strptime(end_date_str, date_format) if end_date_str else None
+    # ClickUpHelper.MSFetchTaskOnListID(listId,start_date,end_date)
     
     

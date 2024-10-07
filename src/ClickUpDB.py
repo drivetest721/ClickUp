@@ -59,10 +59,10 @@ class CClickUpDB:
             creator_name = json.dumps(data['creator'])
             task_assignees_list = json.dumps(data.get('assignees', []))  # Convert list to JSON string
             watchers_list = json.dumps(data.get('watchers', []))  # Convert list to JSON string
-            task_created_date = CClickUpDB.MSConvertTimeStampToDate(data.get('date_created', None))
-            task_update_date = CClickUpDB.MSConvertTimeStampToDate(data.get('date_updated', None))
-            task_date_closed = CClickUpDB.MSConvertTimeStampToDate(data.get('date_closed', None))
-            task_date_done = CClickUpDB.MSConvertTimeStampToDate(data.get('date_done', None))
+            task_created_date = CClickUpDB.MSConvertTimeStampToDate(data.get('date_created', None), format='%d-%m-%Y %H:%M:%S')
+            task_update_date = CClickUpDB.MSConvertTimeStampToDate(data.get('date_updated', None),format='%d-%m-%Y %H:%M:%S')
+            task_date_closed = CClickUpDB.MSConvertTimeStampToDate(data.get('date_closed', None),format='%d-%m-%Y %H:%M:%S')
+            task_date_done = CClickUpDB.MSConvertTimeStampToDate(data.get('date_done', None),format='%d-%m-%Y %H:%M:%S')
             task_tags = json.dumps(data.get('tags', []))  # Convert list to JSON string
             task_dependencies = json.dumps(data.get('dependencies', []))  # Convert list to JSON string
             task_is_milestone = CClickUpDB.MSIsTaskMileStone(task_subject)
@@ -146,12 +146,12 @@ class CClickUpDB:
         return bool(match)
 
     @staticmethod
-    def MSConvertTimeStampToDate(timestamp):
+    def MSConvertTimeStampToDate(timestamp, format='%d-%m-%Y'):
         if timestamp is not None and timestamp != "None":
             # Convert timestamp (in milliseconds) to a datetime object
             date_obj = datetime.fromtimestamp(int(timestamp) / 1000)
             # Format datetime object to 'DD-MM-YYYY HH:MM:SS %H:%M:%S' format
-            formatted_date = date_obj.strftime('%d-%m-%Y')
+            formatted_date = date_obj.strftime(format)
             return formatted_date
         else:
             return timestamp
@@ -187,18 +187,19 @@ class CClickUpDB:
 
             # Use the specified database
             cursor.execute(f"USE {CDBHelper.DATABASE_NAME}")
-
+            placeholders = ', '.join(['%s'] * len(list_id))  # Create a placeholder for each ListID
             # Define the query with parameter placeholders
-            query = """
+            query = f"""
                 SELECT *
                 FROM ClickUpList
-                WHERE ListID = %s
-                   AND STR_TO_DATE(TaskStartDate, '%d-%m-%Y') >= STR_TO_DATE(%s, '%d-%m-%Y')
-                    AND STR_TO_DATE(TaskDueDate, '%d-%m-%Y') <= STR_TO_DATE(%s, '%d-%m-%Y')
+                WHERE ListID IN ({placeholders})
+                AND STR_TO_DATE(TaskStartDate, '%d-%m-%Y') >= STR_TO_DATE(%s, '%d-%m-%Y')
+                AND STR_TO_DATE(TaskDueDate, '%d-%m-%Y') <= STR_TO_DATE(%s, '%d-%m-%Y')
             """
+            params = list_id + [start_date, end_date]  # Combine list of ListIDs with other parameters
 
-            # Execute the query with provided parameters
-            cursor.execute(query, (list_id, start_date, end_date))
+            # Execute the query using a database cursor
+            cursor.execute(query, params)
 
             # Fetch all matching records
             tasks = cursor.fetchall()
@@ -216,10 +217,10 @@ class CClickUpDB:
     
     # Adding the 'TaskScore' column
     @staticmethod
-    def MSCalculateTaskScore(row, include_toughness=False):
+    def MSCalculateTaskScore(row, include_toughness=False, bIncludeAssignBy=False):
         # Priority scoring
         priority_score = 1  # Default score
-        if row['TaskPriority'] and row['TaskPriority'] !='null':
+        if row['TaskPriority'] and row['TaskPriority'] != 'null':
             priority = row['TaskPriority'].get('priority', 'normal')
             if priority == 'urgent':
                 priority_score = 3
@@ -231,8 +232,32 @@ class CClickUpDB:
         # Toughness scoring
         toughness_score = row['TaskIntensity'] if include_toughness else 0
 
+        # AssignByDetails and WatchersList scoring
+        assign_by_score = 0  # Default to 0 if not including assign-by score
+        if bIncludeAssignBy:
+            email_list = []
+
+            # Extract email from AssignByDetails
+            assign_by_details = row.get("AssignByPersonDetails", {})
+            assign_by_email = assign_by_details.get("email", "")
+            if assign_by_email:
+                email_list.append(assign_by_email)
+
+            # Extract emails from WatchersList
+            watchers_list = row.get("WatchersList", [])
+            for watcher in watchers_list:
+                watcher_email = watcher.get("email", "")
+                if watcher_email:
+                    email_list.append(watcher_email)
+
+            # Check for specific email categories
+            if any(email in email_list for email in ["anirudh@riveredgeanalytics.com", "smeeta@riveredgeanalytics.com"]):
+                assign_by_score += 2
+            elif any(email in email_list for email in ["nikhil@riveredgeanalytics.com", "harshil@riveredgeanalytics.com", "hr@riveredgeanalytics.com"]):
+                assign_by_score += 1
+
         # Total score
-        return priority_score + toughness_score
+        return priority_score + toughness_score + assign_by_score
 
     @staticmethod
     def MSIsEstimatedTimeProvided(estimated_time):
@@ -297,10 +322,6 @@ class CClickUpDB:
             df.to_excel(file_path, index=False)
 
         print("Employee-wise task details have been saved to the 'Data/' directory.")
-    
-    @staticmethod
-    def processCleanDF(df):
-        print("Input DF", df)
         
         
 # Example usage
@@ -422,14 +443,12 @@ if __name__ == "__main__":
     # print(CClickUpDB.MSConvertMilliSecondsToHrs(312900000))
     
     # Define your query parameters
-    list_id = "901600183071"  # Replace with your actual ListID
-    start_date = "01-08-2024"  # Replace with your desired start date
-    end_date = "01-09-2024"    # Replace with your desired end date
+    list_id = ["901600183071"]  # Replace with your actual ListID
+    start_date = "01-06-2024"  # Replace with your desired start date
+    end_date = "01-10-2024"    # Replace with your desired end date
 
     # Fetch tasks based on the criteria
     tasks = CClickUpDB.MSGetTasksByListID(list_id, start_date, end_date)
     print(tasks)
     print(len(tasks))
-    
-    # print(CClickUpDB.MSIsEstimatedTimeProvided({'ListName': 'ERPNext', 'ListID': '901600183071', 'FolderName': 'REAL Office', 'SpaceID': '90020386592', 'TaskID': '86cw73j5j', 'TaskSubject': 'Mitul - ERPNext Install & Setup V15', 'TaskStartDate': '13-08-2024', 'TaskDueDate': '21-08-2024', 'ParentTaskID': '86cw76fxd', 'EstimatedTime': '{"hrs": 0, "mins": 0, "time_estimate": 214324234}', 'TaskPriority': {'id': '1', 'color': '#f50000', 'priority': 'urgent', 'orderindex': '1'}, 'TaskStatus': '{"id": "subcat901600183071_subcat901600182452_subcat900202016677_subcat900202016557_subcat900202016465_subcat900201647299_subcat900201617233_subcat900201614169_subcat900201614016_subcat900201613908_subcat900201524923_subcat900900756278_subcat900900756275_subcat900900756272_subcat900600588774_sc900600504232_NTf0x6rB", "type": "closed", "color": "#008844", "status": "delievered", "orderindex": 4}', 'AssignByPersonDetails': '{"id": 67390920, "color": "", "email": "mitul@riveredgeanalytics.com", "username": "Mitul Solanki", "profilePicture": "https://attachments.clickup.com/profilePictures/67390920_BGd.jpg"}', 'TaskAssigneesList': '[{"id": 67390920, "color": "", "email": "mitul@riveredgeanalytics.com", "initials": "MS", "username": "Mitul Solanki", "profilePicture": "https://attachments.clickup.com/profilePictures/67390920_BGd.jpg"}]', 'WatchersList': '[{"id": 67390920, "color": "", "email": "mitul@riveredgeanalytics.com", "initials": "MS", "username": "Mitul Solanki", "profilePicture": "https://attachments.clickup.com/profilePictures/67390920_BGd.jpg"}]', 'TaskCreatedDate': '12-08-2024', 'TaskUpdateDate': '02-09-2024', 'TaskDateClosed': '15-08-2024', 'TaskDateDone': '15-08-2024', 'TaskTags': '[]', 'TaskDependencies': '[{"type": 1, "userid": "67390920", "task_id": "86cw75tb6", "chain_id": null, "depends_on": "86cw73j5j", "date_created": "1723621006884", "workspace_id": "9002161791"}]', 'TaskIsMilestone': 0, 'TaskIntensity': 1, 'TaskCheckLists': '[]'}))
     

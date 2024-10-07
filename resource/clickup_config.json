@@ -1,13 +1,13 @@
 [
     {
         "ListID": "901601699012",
-        "sync": false,
+        "sync": true,
         "Project": "AccuVelocity",
         "Customer": "REAL"
     },
     {
         "ListID": "901604046396",
-        "sync": false,
+        "sync": true,
         "Project": "Airen group - Registry Automation",
         "Customer": "Airen"
     },
@@ -19,31 +19,31 @@
     },
     {
         "ListID": "901604035672",
-        "sync": false,
+        "sync": true,
         "Project": "IKIO - COGSAnalyzer",
         "Customer": "IKIO"
     },
     {
         "ListID": "901604046411",
-        "sync": false,
+        "sync": true,
         "Project": "Airen group - Customer List",
         "Customer": "Airen"
     },
     {
         "ListID": "901604272654",
-        "sync": false,
+        "sync": true,
         "Project": "Parag Traders - AccuVelocity",
         "Customer": "Parag Traders"
     },
     {
         "ListID": "901603806927",
-        "sync": false,
+        "sync": true,
         "Project": "ClickUp",
         "Customer": "REAL"
     },
     {
         "ListID": "901603898346",
-        "sync": false,
+        "sync": true,
         "Project": "Drake",
         "Customer": "AP Office"
     }

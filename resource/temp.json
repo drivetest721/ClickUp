@@ -1,925 +1,1560 @@
-{
-    "mansi solanki": [
-        {
-            "ListName": "ERPNext",
-            "TaskID": "86cw75tb6",
-            "TaskSubject": "Mohit - Job Openings Form",
-            "TaskStartDate": "20-08-2024",
-            "TaskDueDate": "22-08-2024",
-            "TaskStatus": "delievered",
-            "EstimatedTime": {
-                "hrs": 5,
-                "mins": 0,
-                "time_estimate": 18000000
-            },
-            "TaskPriority": "urgent",
-            "TaskAssigneesList": [
-                {
-                    "id": 88895068,
-                    "color": "#622aea",
-                    "email": "mansi@riveredgeanalytics.com",
-                    "initials": "MS",
-                    "username": "mansi solanki",
-                    "profilePicture": "https://attachments.clickup.com/profilePictures/88895068_IUP.jpg"
-                }
-            ],
-            "TaskIsMilestone": 0,
-            "TaskIntensity": 1,
-            "TaskScore": 3,
-            "EstimatedTaskMin": 300,
-            "AssignTo": "mansi solanki"
+[
+    {
+        "ListName": "Drake",
+        "TaskID": "86cw9fuyy",
+        "TaskSubject": "Devanshi_BBCReport Prepartion",
+        "TaskStartDate": "13-09-2024",
+        "TaskDueDate": "13-09-2024",
+        "TaskStatus": "Open",
+        "EstimatedTime": {
+            "hrs": 3,
+            "mins": 0,
+            "time_estimate": 10800000
         },
-        {
-            "ListName": "ERPNext",
-            "TaskID": "86cw75tdf",
-            "TaskSubject": "Mansi - Leave Request Form",
-            "TaskStartDate": "21-08-2024",
-            "TaskDueDate": "30-08-2024",
-            "TaskStatus": "delievered",
-            "EstimatedTime": {
-                "hrs": 16,
-                "mins": 0,
-                "time_estimate": 57600000
-            },
-            "TaskPriority": "urgent",
-            "TaskAssigneesList": [
-                {
-                    "id": 88895068,
-                    "color": "#622aea",
-                    "email": "mansi@riveredgeanalytics.com",
-                    "initials": "MS",
-                    "username": "mansi solanki",
-                    "profilePicture": "https://attachments.clickup.com/profilePictures/88895068_IUP.jpg"
-                }
-            ],
-            "TaskIsMilestone": 0,
-            "TaskIntensity": 1,
-            "TaskScore": 3,
-            "EstimatedTaskMin": 960,
-            "AssignTo": "mansi solanki"
+        "TaskPriority": None,
+        "TaskAssigneesList": [
+            {
+                "id": 67391042,
+                "color": "#cddc39",
+                "email": "devanshi@riveredgeanalytics.com",
+                "initials": "D",
+                "username": "Devanshi",
+                "profilePicture": "https://attachments.clickup.com/profilePictures/67391042_5Q4.jpg"
+            }
+        ],
+        "TaskIsMilestone": 0,
+        "TaskIntensity": 1,
+        "TaskScore": 1,
+        "TaskCreatedDate": "20-08-2024",
+        "TotalTskEstInMins": 180,
+        "TaskExecutionDate": "13-09-2024",
+        "AssignTo": "Devanshi"
+    },
+    {
+        "ListName": "Drake",
+        "TaskID": "86cw9fv4g",
+        "TaskSubject": "Devanshi_BBC Report Review and Submittion",
+        "TaskStartDate": "13-09-2024",
+        "TaskDueDate": "13-09-2024",
+        "TaskStatus": "Open",
+        "EstimatedTime": {
+            "hrs": 1,
+            "mins": 0,
+            "time_estimate": 3600000
         },
-        {
-            "ListName": "ERPNext",
-            "TaskID": "86cw7x7xw",
-            "TaskSubject": "Mansi - Import Projects List",
-            "TaskStartDate": "16-08-2024",
-            "TaskDueDate": "16-08-2024",
-            "TaskStatus": "delievered",
-            "EstimatedTime": {
-                "hrs": 1,
-                "mins": 0,
-                "time_estimate": 3600000
-            },
-            "TaskPriority": "urgent",
-            "TaskAssigneesList": [
-                {
-                    "id": 88895068,
-                    "color": "#622aea",
-                    "email": "mansi@riveredgeanalytics.com",
-                    "initials": "MS",
-                    "username": "mansi solanki",
-                    "profilePicture": "https://attachments.clickup.com/profilePictures/88895068_IUP.jpg"
-                }
-            ],
-            "TaskIsMilestone": 0,
-            "TaskIntensity": 1,
-            "TaskScore": 3,
-            "EstimatedTaskMin": 60,
-            "AssignTo": "mansi solanki"
+        "TaskPriority": None,
+        "TaskAssigneesList": [
+            {
+                "id": 67391042,
+                "color": "#cddc39",
+                "email": "devanshi@riveredgeanalytics.com",
+                "initials": "D",
+                "username": "Devanshi",
+                "profilePicture": "https://attachments.clickup.com/profilePictures/67391042_5Q4.jpg"
+            }
+        ],
+        "TaskIsMilestone": 0,
+        "TaskIntensity": 1,
+        "TaskScore": 1,
+        "TaskCreatedDate": "20-08-2024",
+        "TotalTskEstInMins": 60,
+        "TaskExecutionDate": "13-09-2024",
+        "AssignTo": "Devanshi"
+    },
+    {
+        "ListName": "Drake",
+        "TaskID": "86cwawmpr",
+        "TaskSubject": "Devanshi_Ramp Detailed analysis",
+        "TaskStartDate": "04-09-2024",
+        "TaskDueDate": "04-09-2024",
+        "TaskStatus": "in progress",
+        "EstimatedTime": {
+            "hrs": 4,
+            "mins": 0,
+            "time_estimate": 14400000
         },
-        {
-            "ListName": "ERPNext",
-            "TaskID": "86cw7x84y",
-            "TaskSubject": "Vishal - Import Timesheets",
-            "TaskStartDate": "16-08-2024",
-            "TaskDueDate": "16-08-2024",
-            "TaskStatus": "delievered",
-            "EstimatedTime": {
-                "hrs": 3,
-                "mins": 0,
-                "time_estimate": 10800000
-            },
-            "TaskPriority": "urgent",
-            "TaskAssigneesList": [
-                {
-                    "id": 88895068,
-                    "color": "#622aea",
-                    "email": "mansi@riveredgeanalytics.com",
-                    "initials": "MS",
-                    "username": "mansi solanki",
-                    "profilePicture": "https://attachments.clickup.com/profilePictures/88895068_IUP.jpg"
-                }
-            ],
-            "TaskIsMilestone": 0,
-            "TaskIntensity": 1,
-            "TaskScore": 3,
-            "EstimatedTaskMin": 180,
-            "AssignTo": "mansi solanki"
+        "TaskPriority": None,
+        "TaskAssigneesList": [
+            {
+                "id": 67391042,
+                "color": "#cddc39",
+                "email": "devanshi@riveredgeanalytics.com",
+                "initials": "D",
+                "username": "Devanshi",
+                "profilePicture": "https://attachments.clickup.com/profilePictures/67391042_5Q4.jpg"
+            }
+        ],
+        "TaskIsMilestone": 0,
+        "TaskIntensity": 1,
+        "TaskScore": 1,
+        "TaskCreatedDate": "26-08-2024",
+        "TotalTskEstInMins": 240,
+        "TaskExecutionDate": "04-09-2024",
+        "AssignTo": "Devanshi"
+    },
+    {
+        "ListName": "Drake",
+        "TaskID": "86cwbn4qx",
+        "TaskSubject": "T3 Devanshi_Liquidity report send to lenders and investors",
+        "TaskStartDate": "04-09-2024",
+        "TaskDueDate": "04-09-2024",
+        "TaskStatus": "Open",
+        "EstimatedTime": {
+            "hrs": 0,
+            "mins": 45,
+            "time_estimate": 2700000
         },
-        {
-            "ListName": "ERPNext",
-            "TaskID": "86cw7x8f4",
-            "TaskSubject": "Customize Inbuilt Form",
-            "TaskStartDate": "15-08-2024",
-            "TaskDueDate": "15-08-2024",
-            "TaskStatus": "delievered",
-            "EstimatedTime": {
-                "hrs": 8,
-                "mins": 0,
-                "time_estimate": 28800000
-            },
-            "TaskPriority": "urgent",
-            "TaskAssigneesList": [
-                {
-                    "id": 88895068,
-                    "color": "#622aea",
-                    "email": "mansi@riveredgeanalytics.com",
-                    "initials": "MS",
-                    "username": "mansi solanki",
-                    "profilePicture": "https://attachments.clickup.com/profilePictures/88895068_IUP.jpg"
-                }
-            ],
-            "TaskIsMilestone": 0,
-            "TaskIntensity": 1,
-            "TaskScore": 3,
-            "EstimatedTaskMin": 480,
-            "AssignTo": "mansi solanki"
+        "TaskPriority": "urgent",
+        "TaskAssigneesList": [
+            {
+                "id": 67391042,
+                "color": "#cddc39",
+                "email": "devanshi@riveredgeanalytics.com",
+                "initials": "D",
+                "username": "Devanshi",
+                "profilePicture": "https://attachments.clickup.com/profilePictures/67391042_5Q4.jpg"
+            }
+        ],
+        "TaskIsMilestone": 0,
+        "TaskIntensity": 3,
+        "TaskScore": 3,
+        "TaskCreatedDate": "28-08-2024",
+        "TotalTskEstInMins": 45,
+        "TaskExecutionDate": "04-09-2024",
+        "AssignTo": "Devanshi"
+    },
+    {
+        "ListName": "Drake",
+        "TaskID": "86cwdhx23",
+        "TaskSubject": "Devanshi_Upload monthly Byline bank statements on Ramp",
+        "TaskStartDate": "01-09-2024",
+        "TaskDueDate": "01-09-2024",
+        "TaskStatus": "delievered",
+        "EstimatedTime": {
+            "hrs": 0,
+            "mins": 20,
+            "time_estimate": 1200000
         },
-        {
-            "ListName": "ERPNext",
-            "TaskID": "86cw7x9jk",
-            "TaskSubject": "Test V15 Implementation",
-            "TaskStartDate": "16-08-2024",
-            "TaskDueDate": "16-08-2024",
-            "TaskStatus": "delievered",
-            "EstimatedTime": {
-                "hrs": 4,
-                "mins": 0,
-                "time_estimate": 14400000
-            },
-            "TaskPriority": "urgent",
-            "TaskAssigneesList": [
-                {
-                    "id": 96776599,
-                    "color": "",
-                    "email": "mohit.intern@riveredgeanalytics.com",
-                    "initials": "MP",
-                    "username": "Mohit parmar",
-                    "profilePicture": None
-                },
-                {
-                    "id": 88895068,
-                    "color": "#622aea",
-                    "email": "mansi@riveredgeanalytics.com",
-                    "initials": "MS",
-                    "username": "mansi solanki",
-                    "profilePicture": "https://attachments.clickup.com/profilePictures/88895068_IUP.jpg"
-                }
-            ],
-            "TaskIsMilestone": 0,
-            "TaskIntensity": 1,
-            "TaskScore": 3,
-            "EstimatedTaskMin": 240,
-            "AssignTo": "Mohit parmar"
+        "TaskPriority": "urgent",
+        "TaskAssigneesList": [
+            {
+                "id": 67391042,
+                "color": "#cddc39",
+                "email": "devanshi@riveredgeanalytics.com",
+                "initials": "D",
+                "username": "Devanshi",
+                "profilePicture": "https://attachments.clickup.com/profilePictures/67391042_5Q4.jpg"
+            }
+        ],
+        "TaskIsMilestone": 0,
+        "TaskIntensity": 1,
+        "TaskScore": 3,
+        "TaskCreatedDate": "04-09-2024",
+        "TotalTskEstInMins": 20,
+        "TaskExecutionDate": "01-09-2024",
+        "AssignTo": "Devanshi"
+    },
+    {
+        "ListName": "Drake",
+        "TaskID": "86cwdj362",
+        "TaskSubject": "T2 Devanshi_Call Users to Add there Exps",
+        "TaskStartDate": "04-09-2024",
+        "TaskDueDate": "04-09-2024",
+        "TaskStatus": "Open",
+        "EstimatedTime": {
+            "hrs": 1,
+            "mins": 0,
+            "time_estimate": 3600000
         },
-        {
-            "ListName": "ERPNext",
-            "TaskID": "86cw7xy24",
-            "TaskSubject": "Mansi - Enable Client & Pyhton Scripts",
-            "TaskStartDate": "16-08-2024",
-            "TaskDueDate": "16-08-2024",
-            "TaskStatus": "delievered",
-            "EstimatedTime": {
-                "hrs": 3,
-                "mins": 0,
-                "time_estimate": 10800000
-            },
-            "TaskPriority": "urgent",
-            "TaskAssigneesList": [
-                {
-                    "id": 88895068,
-                    "color": "#622aea",
-                    "email": "mansi@riveredgeanalytics.com",
-                    "initials": "MS",
-                    "username": "mansi solanki",
-                    "profilePicture": "https://attachments.clickup.com/profilePictures/88895068_IUP.jpg"
-                }
-            ],
-            "TaskIsMilestone": 0,
-            "TaskIntensity": 1,
-            "TaskScore": 3,
-            "EstimatedTaskMin": 180,
-            "AssignTo": "mansi solanki"
+        "TaskPriority": "high",
+        "TaskAssigneesList": [
+            {
+                "id": 67391042,
+                "color": "#cddc39",
+                "email": "devanshi@riveredgeanalytics.com",
+                "initials": "D",
+                "username": "Devanshi",
+                "profilePicture": "https://attachments.clickup.com/profilePictures/67391042_5Q4.jpg"
+            }
+        ],
+        "TaskIsMilestone": 0,
+        "TaskIntensity": 2,
+        "TaskScore": 2,
+        "TaskCreatedDate": "04-09-2024",
+        "TotalTskEstInMins": 60,
+        "TaskExecutionDate": "04-09-2024",
+        "AssignTo": "Devanshi"
+    },
+    {
+        "ListName": "Drake",
+        "TaskID": "86cwdj3fa",
+        "TaskSubject": "T3 Devanshi_Prepare JE for Ramp Location All Location",
+        "TaskStartDate": "04-09-2024",
+        "TaskDueDate": "04-09-2024",
+        "TaskStatus": "Open",
+        "EstimatedTime": {
+            "hrs": 4,
+            "mins": 0,
+            "time_estimate": 14400000
         },
-        {
-            "ListName": "ERPNext",
-            "TaskID": "86cw7y1dr",
-            "TaskSubject": "Test Individual Any 3-4 User Accounts",
-            "TaskStartDate": "16-08-2024",
-            "TaskDueDate": "16-08-2024",
-            "TaskStatus": "delievered",
-            "EstimatedTime": {
-                "hrs": 3,
-                "mins": 0,
-                "time_estimate": 10800000
-            },
-            "TaskPriority": "urgent",
-            "TaskAssigneesList": [
-                {
-                    "id": 88895068,
-                    "color": "#622aea",
-                    "email": "mansi@riveredgeanalytics.com",
-                    "initials": "MS",
-                    "username": "mansi solanki",
-                    "profilePicture": "https://attachments.clickup.com/profilePictures/88895068_IUP.jpg"
-                }
-            ],
-            "TaskIsMilestone": 0,
-            "TaskIntensity": 1,
-            "TaskScore": 3,
-            "EstimatedTaskMin": 180,
-            "AssignTo": "mansi solanki"
+        "TaskPriority": "high",
+        "TaskAssigneesList": [
+            {
+                "id": 67391042,
+                "color": "#cddc39",
+                "email": "devanshi@riveredgeanalytics.com",
+                "initials": "D",
+                "username": "Devanshi",
+                "profilePicture": "https://attachments.clickup.com/profilePictures/67391042_5Q4.jpg"
+            }
+        ],
+        "TaskIsMilestone": 0,
+        "TaskIntensity": 3,
+        "TaskScore": 2,
+        "TaskCreatedDate": "04-09-2024",
+        "TotalTskEstInMins": 240,
+        "TaskExecutionDate": "04-09-2024",
+        "AssignTo": "Devanshi"
+    },
+    {
+        "ListName": "Drake",
+        "TaskID": "86cwdj3zw",
+        "TaskSubject": "T2 Devanshi_Move Ramp Lib to DAZ",
+        "TaskStartDate": "04-09-2024",
+        "TaskDueDate": "04-09-2024",
+        "TaskStatus": "Open",
+        "EstimatedTime": {
+            "hrs": 2,
+            "mins": 0,
+            "time_estimate": 7200000
         },
-        {
-            "ListName": "ERPNext",
-            "TaskID": "86cwa53ct",
-            "TaskSubject": "Mansi - Job Opening Form Suggestions",
-            "TaskStartDate": "29-08-2024",
-            "TaskDueDate": "29-08-2024",
-            "TaskStatus": "delievered",
-            "EstimatedTime": {
-                "hrs": 4,
-                "mins": 0,
-                "time_estimate": 14400000
-            },
-            "TaskPriority": "normal",
-            "TaskAssigneesList": [
-                {
-                    "id": 88895068,
-                    "color": "#622aea",
-                    "email": "mansi@riveredgeanalytics.com",
-                    "initials": "MS",
-                    "username": "mansi solanki",
-                    "profilePicture": "https://attachments.clickup.com/profilePictures/88895068_IUP.jpg"
-                }
-            ],
-            "TaskIsMilestone": 0,
-            "TaskIntensity": 1,
-            "TaskScore": 1,
-            "EstimatedTaskMin": 240,
-            "AssignTo": "mansi solanki"
+        "TaskPriority": "normal",
+        "TaskAssigneesList": [
+            {
+                "id": 67391042,
+                "color": "#cddc39",
+                "email": "devanshi@riveredgeanalytics.com",
+                "initials": "D",
+                "username": "Devanshi",
+                "profilePicture": "https://attachments.clickup.com/profilePictures/67391042_5Q4.jpg"
+            }
+        ],
+        "TaskIsMilestone": 0,
+        "TaskIntensity": 2,
+        "TaskScore": 1,
+        "TaskCreatedDate": "04-09-2024",
+        "TotalTskEstInMins": 120,
+        "TaskExecutionDate": "04-09-2024",
+        "AssignTo": "Devanshi"
+    },
+    {
+        "ListName": "Drake",
+        "TaskID": "86cwdj4h3",
+        "TaskSubject": "Devanshi_Payroll for Each Check date",
+        "TaskStartDate": "05-09-2024",
+        "TaskDueDate": "06-09-2024",
+        "TaskStatus": "Open",
+        "EstimatedTime": {
+            "hrs": 6,
+            "mins": 0,
+            "time_estimate": 21600000
         },
-        {
-            "ListName": "ERPNext",
-            "TaskID": "86cwbxkvd",
-            "TaskSubject": "Mansi - Create New Member Accounts",
-            "TaskStartDate": "29-08-2024",
-            "TaskDueDate": "30-08-2024",
-            "TaskStatus": "delievered",
-            "EstimatedTime": {
-                "hrs": 0,
-                "mins": 20,
-                "time_estimate": 1200000
-            },
-            "TaskPriority": "normal",
-            "TaskAssigneesList": [
-                {
-                    "id": 88895068,
-                    "color": "#622aea",
-                    "email": "mansi@riveredgeanalytics.com",
-                    "initials": "MS",
-                    "username": "mansi solanki",
-                    "profilePicture": "https://attachments.clickup.com/profilePictures/88895068_IUP.jpg"
-                }
-            ],
-            "TaskIsMilestone": 0,
-            "TaskIntensity": 1,
-            "TaskScore": 1,
-            "EstimatedTaskMin": 20,
-            "AssignTo": "mansi solanki"
-        }
-    ],
-    "Mitul Solanki": [
-        {
-            "ListName": "ERPNext",
-            "TaskID": "86cw76fjj",
-            "TaskSubject": "Mitul - Compare Odoo vs Zoho vs ERPNext Solution",
-            "TaskStartDate": "14-08-2024",
-            "TaskDueDate": "21-08-2024",
-            "TaskStatus": "delievered",
-            "EstimatedTime": {
-                "hrs": 0,
-                "mins": 30,
-                "time_estimate": 1800000
-            },
-            "TaskPriority": "urgent",
-            "TaskAssigneesList": [
-                {
-                    "id": 67390920,
-                    "color": "",
-                    "email": "mitul@riveredgeanalytics.com",
-                    "initials": "MS",
-                    "username": "Mitul Solanki",
-                    "profilePicture": "https://attachments.clickup.com/profilePictures/67390920_BGd.jpg"
-                }
-            ],
-            "TaskIsMilestone": 0,
-            "TaskIntensity": 1,
-            "TaskScore": 3,
-            "EstimatedTaskMin": 30,
-            "AssignTo": "Mitul Solanki"
+        "TaskPriority": "high",
+        "TaskAssigneesList": [
+            {
+                "id": 67391042,
+                "color": "#cddc39",
+                "email": "devanshi@riveredgeanalytics.com",
+                "initials": "D",
+                "username": "Devanshi",
+                "profilePicture": "https://attachments.clickup.com/profilePictures/67391042_5Q4.jpg"
+            }
+        ],
+        "TaskIsMilestone": 0,
+        "TaskIntensity": 1,
+        "TaskScore": 2,
+        "TaskCreatedDate": "04-09-2024",
+        "TotalTskEstInMins": 360,
+        "TaskExecutionDate": "05-09-2024",
+        "AssignTo": "Devanshi"
+    },
+    {
+        "ListName": "Drake",
+        "TaskID": "86cwdj534",
+        "TaskSubject": "T2 Devanshi_Payroll Allocation Each Location",
+        "TaskStartDate": "05-09-2024",
+        "TaskDueDate": "06-09-2024",
+        "TaskStatus": "Open",
+        "EstimatedTime": {
+            "hrs": 3,
+            "mins": 0,
+            "time_estimate": 10800000
         },
-        {
-            "ListName": "ERPNext",
-            "TaskID": "86cw7wkbw",
-            "TaskSubject": "Restore V14 Data in V15",
-            "TaskStartDate": "14-08-2024",
-            "TaskDueDate": "16-08-2024",
-            "TaskStatus": "delievered",
-            "EstimatedTime": {
-                "hrs": 24,
-                "mins": 0,
-                "time_estimate": 86400000
-            },
-            "TaskPriority": "urgent",
-            "TaskAssigneesList": [
-                {
-                    "id": 67390920,
-                    "color": "",
-                    "email": "mitul@riveredgeanalytics.com",
-                    "initials": "MS",
-                    "username": "Mitul Solanki",
-                    "profilePicture": "https://attachments.clickup.com/profilePictures/67390920_BGd.jpg"
-                }
-            ],
-            "TaskIsMilestone": 0,
-            "TaskIntensity": 1,
-            "TaskScore": 3,
-            "EstimatedTaskMin": 1440,
-            "AssignTo": "Mitul Solanki"
+        "TaskPriority": "high",
+        "TaskAssigneesList": [
+            {
+                "id": 67391042,
+                "color": "#cddc39",
+                "email": "devanshi@riveredgeanalytics.com",
+                "initials": "D",
+                "username": "Devanshi",
+                "profilePicture": "https://attachments.clickup.com/profilePictures/67391042_5Q4.jpg"
+            }
+        ],
+        "TaskIsMilestone": 0,
+        "TaskIntensity": 2,
+        "TaskScore": 2,
+        "TaskCreatedDate": "04-09-2024",
+        "TotalTskEstInMins": 180,
+        "TaskExecutionDate": "05-09-2024",
+        "AssignTo": "Devanshi"
+    },
+    {
+        "ListName": "Drake",
+        "TaskID": "86cwdj5bp",
+        "TaskSubject": "Devanshi_Payroll Accrual for leach location",
+        "TaskStartDate": "05-09-2024",
+        "TaskDueDate": "06-09-2024",
+        "TaskStatus": "Open",
+        "EstimatedTime": {
+            "hrs": 2,
+            "mins": 30,
+            "time_estimate": 9000000
         },
-        {
-            "ListName": "ERPNext",
-            "TaskID": "86cw7wzx2",
-            "TaskSubject": "Mitul - Review & Test",
-            "TaskStartDate": "21-08-2024",
-            "TaskDueDate": "21-08-2024",
-            "TaskStatus": "delievered",
-            "EstimatedTime": {
-                "hrs": 0,
-                "mins": 30,
-                "time_estimate": 1800000
-            },
-            "TaskPriority": "urgent",
-            "TaskAssigneesList": [
-                {
-                    "id": 67390920,
-                    "color": "",
-                    "email": "mitul@riveredgeanalytics.com",
-                    "initials": "MS",
-                    "username": "Mitul Solanki",
-                    "profilePicture": "https://attachments.clickup.com/profilePictures/67390920_BGd.jpg"
-                }
-            ],
-            "TaskIsMilestone": 0,
-            "TaskIntensity": 1,
-            "TaskScore": 3,
-            "EstimatedTaskMin": 30,
-            "AssignTo": "Mitul Solanki"
+        "TaskPriority": "high",
+        "TaskAssigneesList": [
+            {
+                "id": 67391042,
+                "color": "#cddc39",
+                "email": "devanshi@riveredgeanalytics.com",
+                "initials": "D",
+                "username": "Devanshi",
+                "profilePicture": "https://attachments.clickup.com/profilePictures/67391042_5Q4.jpg"
+            }
+        ],
+        "TaskIsMilestone": 0,
+        "TaskIntensity": 1,
+        "TaskScore": 2,
+        "TaskCreatedDate": "04-09-2024",
+        "TotalTskEstInMins": 150,
+        "TaskExecutionDate": "06-09-2024",
+        "AssignTo": "Devanshi"
+    },
+    {
+        "ListName": "Drake",
+        "TaskID": "86cwdj5jj",
+        "TaskSubject": "Devanshi_Payroll Accrual allocation for each location",
+        "TaskStartDate": "05-09-2024",
+        "TaskDueDate": "06-09-2024",
+        "TaskStatus": "Open",
+        "EstimatedTime": {
+            "hrs": 1,
+            "mins": 30,
+            "time_estimate": 5400000
         },
-        {
-            "ListName": "ERPNext",
-            "TaskID": "86cw7wzy0",
-            "TaskSubject": "Mitul - show demo to AKS",
-            "TaskStartDate": "22-08-2024",
-            "TaskDueDate": "22-08-2024",
-            "TaskStatus": "delievered",
-            "EstimatedTime": {
-                "hrs": 0,
-                "mins": 30,
-                "time_estimate": 1800000
-            },
-            "TaskPriority": "urgent",
-            "TaskAssigneesList": [
-                {
-                    "id": 67390920,
-                    "color": "",
-                    "email": "mitul@riveredgeanalytics.com",
-                    "initials": "MS",
-                    "username": "Mitul Solanki",
-                    "profilePicture": "https://attachments.clickup.com/profilePictures/67390920_BGd.jpg"
-                }
-            ],
-            "TaskIsMilestone": 0,
-            "TaskIntensity": 1,
-            "TaskScore": 3,
-            "EstimatedTaskMin": 30,
-            "AssignTo": "Mitul Solanki"
+        "TaskPriority": "high",
+        "TaskAssigneesList": [
+            {
+                "id": 67391042,
+                "color": "#cddc39",
+                "email": "devanshi@riveredgeanalytics.com",
+                "initials": "D",
+                "username": "Devanshi",
+                "profilePicture": "https://attachments.clickup.com/profilePictures/67391042_5Q4.jpg"
+            }
+        ],
+        "TaskIsMilestone": 0,
+        "TaskIntensity": 1,
+        "TaskScore": 2,
+        "TaskCreatedDate": "04-09-2024",
+        "TotalTskEstInMins": 90,
+        "TaskExecutionDate": "06-09-2024",
+        "AssignTo": "Devanshi"
+    },
+    {
+        "ListName": "Drake",
+        "TaskID": "86cwdj5mw",
+        "TaskSubject": "Devanshi_Agency labour exps",
+        "TaskStartDate": "04-09-2024",
+        "TaskDueDate": "04-09-2024",
+        "TaskStatus": "Open",
+        "EstimatedTime": {
+            "hrs": 0,
+            "mins": 30,
+            "time_estimate": 1800000
         },
-        {
-            "ListName": "ERPNext",
-            "TaskID": "86cw7x1eg",
-            "TaskSubject": "Mitul - show demo to AKS",
-            "TaskStartDate": "30-08-2024",
-            "TaskDueDate": "30-08-2024",
-            "TaskStatus": "delievered",
-            "EstimatedTime": {
-                "hrs": 0,
-                "mins": 30,
-                "time_estimate": 1800000
-            },
-            "TaskPriority": "urgent",
-            "TaskAssigneesList": [
-                {
-                    "id": 67390920,
-                    "color": "",
-                    "email": "mitul@riveredgeanalytics.com",
-                    "initials": "MS",
-                    "username": "Mitul Solanki",
-                    "profilePicture": "https://attachments.clickup.com/profilePictures/67390920_BGd.jpg"
-                }
-            ],
-            "TaskIsMilestone": 0,
-            "TaskIntensity": 1,
-            "TaskScore": 3,
-            "EstimatedTaskMin": 30,
-            "AssignTo": "Mitul Solanki"
+        "TaskPriority": "high",
+        "TaskAssigneesList": [
+            {
+                "id": 67391042,
+                "color": "#cddc39",
+                "email": "devanshi@riveredgeanalytics.com",
+                "initials": "D",
+                "username": "Devanshi",
+                "profilePicture": "https://attachments.clickup.com/profilePictures/67391042_5Q4.jpg"
+            }
+        ],
+        "TaskIsMilestone": 0,
+        "TaskIntensity": 1,
+        "TaskScore": 2,
+        "TaskCreatedDate": "04-09-2024",
+        "TotalTskEstInMins": 30,
+        "TaskExecutionDate": "04-09-2024",
+        "AssignTo": "Devanshi"
+    },
+    {
+        "ListName": "Drake",
+        "TaskID": "86cwdj5qu",
+        "TaskSubject": "Devanshi_Agency labour Accrual",
+        "TaskStartDate": "04-09-2024",
+        "TaskDueDate": "04-09-2024",
+        "TaskStatus": "Open",
+        "EstimatedTime": {
+            "hrs": 0,
+            "mins": 30,
+            "time_estimate": 1800000
         },
-        {
-            "ListName": "ERPNext",
-            "TaskID": "86cw7x1eh",
-            "TaskSubject": "Mitul - Review & Test",
-            "TaskStartDate": "29-08-2024",
-            "TaskDueDate": "30-08-2024",
-            "TaskStatus": "delievered",
-            "EstimatedTime": {
-                "hrs": 3,
-                "mins": 0,
-                "time_estimate": 10800000
-            },
-            "TaskPriority": "urgent",
-            "TaskAssigneesList": [
-                {
-                    "id": 67390920,
-                    "color": "",
-                    "email": "mitul@riveredgeanalytics.com",
-                    "initials": "MS",
-                    "username": "Mitul Solanki",
-                    "profilePicture": "https://attachments.clickup.com/profilePictures/67390920_BGd.jpg"
-                }
-            ],
-            "TaskIsMilestone": 0,
-            "TaskIntensity": 1,
-            "TaskScore": 3,
-            "EstimatedTaskMin": 180,
-            "AssignTo": "Mitul Solanki"
+        "TaskPriority": "high",
+        "TaskAssigneesList": [
+            {
+                "id": 67391042,
+                "color": "#cddc39",
+                "email": "devanshi@riveredgeanalytics.com",
+                "initials": "D",
+                "username": "Devanshi",
+                "profilePicture": "https://attachments.clickup.com/profilePictures/67391042_5Q4.jpg"
+            }
+        ],
+        "TaskIsMilestone": 0,
+        "TaskIntensity": 1,
+        "TaskScore": 2,
+        "TaskCreatedDate": "04-09-2024",
+        "TotalTskEstInMins": 30,
+        "TaskExecutionDate": "04-09-2024",
+        "AssignTo": "Devanshi"
+    },
+    {
+        "ListName": "Drake",
+        "TaskID": "86cwdj761",
+        "TaskSubject": "Devanshi_Download byline bank",
+        "TaskStartDate": "03-09-2024",
+        "TaskDueDate": "03-09-2024",
+        "TaskStatus": "delievered",
+        "EstimatedTime": {
+            "hrs": 0,
+            "mins": 15,
+            "time_estimate": 900000
         },
-        {
-            "ListName": "ERPNext",
-            "TaskID": "86cw7x7zr",
-            "TaskSubject": "Mitul - Import Customer List & Customize Form",
-            "TaskStartDate": "16-08-2024",
-            "TaskDueDate": "16-08-2024",
-            "TaskStatus": "delievered",
-            "EstimatedTime": {
-                "hrs": 0,
-                "mins": 30,
-                "time_estimate": 1800000
-            },
-            "TaskPriority": "urgent",
-            "TaskAssigneesList": [
-                {
-                    "id": 67390920,
-                    "color": "",
-                    "email": "mitul@riveredgeanalytics.com",
-                    "initials": "MS",
-                    "username": "Mitul Solanki",
-                    "profilePicture": "https://attachments.clickup.com/profilePictures/67390920_BGd.jpg"
-                }
-            ],
-            "TaskIsMilestone": 0,
-            "TaskIntensity": 1,
-            "TaskScore": 3,
-            "EstimatedTaskMin": 30,
-            "AssignTo": "Mitul Solanki"
+        "TaskPriority": None,
+        "TaskAssigneesList": [
+            {
+                "id": 67391042,
+                "color": "#cddc39",
+                "email": "devanshi@riveredgeanalytics.com",
+                "initials": "D",
+                "username": "Devanshi",
+                "profilePicture": "https://attachments.clickup.com/profilePictures/67391042_5Q4.jpg"
+            }
+        ],
+        "TaskIsMilestone": 0,
+        "TaskIntensity": 1,
+        "TaskScore": 1,
+        "TaskCreatedDate": "04-09-2024",
+        "TotalTskEstInMins": 15,
+        "TaskExecutionDate": "03-09-2024",
+        "AssignTo": "Devanshi"
+    },
+    {
+        "ListName": "Drake",
+        "TaskID": "86cwdj78c",
+        "TaskSubject": "Devanshi_Download Wells Frago",
+        "TaskStartDate": "03-09-2024",
+        "TaskDueDate": "04-09-2024",
+        "TaskStatus": "in progress",
+        "EstimatedTime": {
+            "hrs": 0,
+            "mins": 15,
+            "time_estimate": 900000
         },
-        {
-            "ListName": "ERPNext",
-            "TaskID": "86cw7x8v2",
-            "TaskSubject": "Mitul - Department & Module Access",
-            "TaskStartDate": "15-08-2024",
-            "TaskDueDate": "15-08-2024",
-            "TaskStatus": "delievered",
-            "EstimatedTime": {
-                "hrs": 1,
-                "mins": 0,
-                "time_estimate": 3600000
-            },
-            "TaskPriority": "urgent",
-            "TaskAssigneesList": [
-                {
-                    "id": 67390920,
-                    "color": "",
-                    "email": "mitul@riveredgeanalytics.com",
-                    "initials": "MS",
-                    "username": "Mitul Solanki",
-                    "profilePicture": "https://attachments.clickup.com/profilePictures/67390920_BGd.jpg"
-                }
-            ],
-            "TaskIsMilestone": 0,
-            "TaskIntensity": 1,
-            "TaskScore": 3,
-            "EstimatedTaskMin": 60,
-            "AssignTo": "Mitul Solanki"
+        "TaskPriority": None,
+        "TaskAssigneesList": [
+            {
+                "id": 67391042,
+                "color": "#cddc39",
+                "email": "devanshi@riveredgeanalytics.com",
+                "initials": "D",
+                "username": "Devanshi",
+                "profilePicture": "https://attachments.clickup.com/profilePictures/67391042_5Q4.jpg"
+            }
+        ],
+        "TaskIsMilestone": 0,
+        "TaskIntensity": 1,
+        "TaskScore": 1,
+        "TaskCreatedDate": "04-09-2024",
+        "TotalTskEstInMins": 15,
+        "TaskExecutionDate": "03-09-2024",
+        "AssignTo": "Devanshi"
+    },
+    {
+        "ListName": "Drake",
+        "TaskID": "86cwdj7kx",
+        "TaskSubject": "T3 Devanshi_Bal Trans to Multiple location",
+        "TaskStartDate": "09-09-2024",
+        "TaskDueDate": "09-09-2024",
+        "TaskStatus": "Open",
+        "EstimatedTime": {
+            "hrs": 2,
+            "mins": 0,
+            "time_estimate": 7200000
         },
-        {
-            "ListName": "ERPNext",
-            "TaskID": "86cw7x8vu",
-            "TaskSubject": "Mitul - Role & Permissions Setup",
-            "TaskStartDate": "15-08-2024",
-            "TaskDueDate": "15-08-2024",
-            "TaskStatus": "delievered",
-            "EstimatedTime": {
-                "hrs": 1,
-                "mins": 0,
-                "time_estimate": 3600000
-            },
-            "TaskPriority": "urgent",
-            "TaskAssigneesList": [
-                {
-                    "id": 67390920,
-                    "color": "",
-                    "email": "mitul@riveredgeanalytics.com",
-                    "initials": "MS",
-                    "username": "Mitul Solanki",
-                    "profilePicture": "https://attachments.clickup.com/profilePictures/67390920_BGd.jpg"
-                }
-            ],
-            "TaskIsMilestone": 0,
-            "TaskIntensity": 1,
-            "TaskScore": 3,
-            "EstimatedTaskMin": 60,
-            "AssignTo": "Mitul Solanki"
+        "TaskPriority": "high",
+        "TaskAssigneesList": [
+            {
+                "id": 67391042,
+                "color": "#cddc39",
+                "email": "devanshi@riveredgeanalytics.com",
+                "initials": "D",
+                "username": "Devanshi",
+                "profilePicture": "https://attachments.clickup.com/profilePictures/67391042_5Q4.jpg"
+            }
+        ],
+        "TaskIsMilestone": 0,
+        "TaskIntensity": 3,
+        "TaskScore": 2,
+        "TaskCreatedDate": "04-09-2024",
+        "TotalTskEstInMins": 120,
+        "TaskExecutionDate": "09-09-2024",
+        "AssignTo": "Devanshi"
+    },
+    {
+        "ListName": "Drake",
+        "TaskID": "86cwdjfr8",
+        "TaskSubject": "Xfr Sales Tax to DAZ where paid",
+        "TaskStartDate": "09-09-2024",
+        "TaskDueDate": "09-09-2024",
+        "TaskStatus": "Open",
+        "EstimatedTime": {
+            "hrs": 2,
+            "mins": 0,
+            "time_estimate": 7200000
         },
-        {
-            "ListName": "ERPNext",
-            "TaskID": "86cw7xty4",
-            "TaskSubject": "Meet with AKS",
-            "TaskStartDate": "16-08-2024",
-            "TaskDueDate": "16-08-2024",
-            "TaskStatus": "delievered",
-            "EstimatedTime": {
-                "hrs": 0,
-                "mins": 30,
-                "time_estimate": 1800000
-            },
-            "TaskPriority": "urgent",
-            "TaskAssigneesList": [
-                {
-                    "id": 67390920,
-                    "color": "",
-                    "email": "mitul@riveredgeanalytics.com",
-                    "initials": "MS",
-                    "username": "Mitul Solanki",
-                    "profilePicture": "https://attachments.clickup.com/profilePictures/67390920_BGd.jpg"
-                }
-            ],
-            "TaskIsMilestone": 0,
-            "TaskIntensity": 1,
-            "TaskScore": 3,
-            "EstimatedTaskMin": 30,
-            "AssignTo": "Mitul Solanki"
+        "TaskPriority": "high",
+        "TaskAssigneesList": [
+            {
+                "id": 67391042,
+                "color": "#cddc39",
+                "email": "devanshi@riveredgeanalytics.com",
+                "initials": "D",
+                "username": "Devanshi",
+                "profilePicture": "https://attachments.clickup.com/profilePictures/67391042_5Q4.jpg"
+            }
+        ],
+        "TaskIsMilestone": 0,
+        "TaskIntensity": 1,
+        "TaskScore": 2,
+        "TaskCreatedDate": "04-09-2024",
+        "TotalTskEstInMins": 120,
+        "TaskExecutionDate": "09-09-2024",
+        "AssignTo": "Devanshi"
+    },
+    {
+        "ListName": "Drake",
+        "TaskID": "86cwdjfvq",
+        "TaskSubject": "Monthly Operating Lease - Amortization",
+        "TaskStartDate": "03-09-2024",
+        "TaskDueDate": "04-09-2024",
+        "TaskStatus": "Open",
+        "EstimatedTime": {
+            "hrs": 0,
+            "mins": 30,
+            "time_estimate": 1800000
         },
-        {
-            "ListName": "ERPNext",
-            "TaskID": "86cw7y1kr",
-            "TaskSubject": "Enable Streamlit Dashboard",
-            "TaskStartDate": "16-08-2024",
-            "TaskDueDate": "16-08-2024",
-            "TaskStatus": "delievered",
-            "EstimatedTime": {
-                "hrs": 2,
-                "mins": 0,
-                "time_estimate": 7200000
-            },
-            "TaskPriority": "urgent",
-            "TaskAssigneesList": [
-                {
-                    "id": 67390920,
-                    "color": "",
-                    "email": "mitul@riveredgeanalytics.com",
-                    "initials": "MS",
-                    "username": "Mitul Solanki",
-                    "profilePicture": "https://attachments.clickup.com/profilePictures/67390920_BGd.jpg"
-                }
-            ],
-            "TaskIsMilestone": 0,
-            "TaskIntensity": 1,
-            "TaskScore": 3,
-            "EstimatedTaskMin": 120,
-            "AssignTo": "Mitul Solanki"
+        "TaskPriority": "high",
+        "TaskAssigneesList": [
+            {
+                "id": 67391042,
+                "color": "#cddc39",
+                "email": "devanshi@riveredgeanalytics.com",
+                "initials": "D",
+                "username": "Devanshi",
+                "profilePicture": "https://attachments.clickup.com/profilePictures/67391042_5Q4.jpg"
+            }
+        ],
+        "TaskIsMilestone": 0,
+        "TaskIntensity": 1,
+        "TaskScore": 2,
+        "TaskCreatedDate": "04-09-2024",
+        "TotalTskEstInMins": 30,
+        "TaskExecutionDate": "03-09-2024",
+        "AssignTo": "Devanshi"
+    },
+    {
+        "ListName": "Drake",
+        "TaskID": "86cwdjfy0",
+        "TaskSubject": "Accrue Monthly Real Estate Tax   [DAZ-accrue/STB-Cr/Nev Ppd  ]",
+        "TaskStartDate": "04-09-2024",
+        "TaskDueDate": "04-09-2024",
+        "TaskStatus": "Open",
+        "EstimatedTime": {
+            "hrs": 0,
+            "mins": 30,
+            "time_estimate": 1800000
         },
-        {
-            "ListName": "ERPNext",
-            "TaskID": "86cw8arj7",
-            "TaskSubject": "Mitul - Purchase Business Paid Plan Clickup",
-            "TaskStartDate": "16-08-2024",
-            "TaskDueDate": "16-08-2024",
-            "TaskStatus": "delievered",
-            "EstimatedTime": {
-                "hrs": 0,
-                "mins": 15,
-                "time_estimate": 900000
+        "TaskPriority": "high",
+        "TaskAssigneesList": [
+            {
+                "id": 67391042,
+                "color": "#cddc39",
+                "email": "devanshi@riveredgeanalytics.com",
+                "initials": "D",
+                "username": "Devanshi",
+                "profilePicture": "https://attachments.clickup.com/profilePictures/67391042_5Q4.jpg"
             },
-            "TaskPriority": "urgent",
-            "TaskAssigneesList": [
-                {
-                    "id": 67390920,
-                    "color": "",
-                    "email": "mitul@riveredgeanalytics.com",
-                    "initials": "MS",
-                    "username": "Mitul Solanki",
-                    "profilePicture": "https://attachments.clickup.com/profilePictures/67390920_BGd.jpg"
-                }
-            ],
-            "TaskIsMilestone": 0,
-            "TaskIntensity": 1,
-            "TaskScore": 3,
-            "EstimatedTaskMin": 15,
-            "AssignTo": "Mitul Solanki"
+            {
+                "id": 73241308,
+                "color": "#8077f1",
+                "email": "nikhil@riveredgeanalytics.com",
+                "initials": "NJ",
+                "username": "Nikhil Jain",
+                "profilePicture": None
+            }
+        ],
+        "TaskIsMilestone": 0,
+        "TaskIntensity": 1,
+        "TaskScore": 2,
+        "TaskCreatedDate": "04-09-2024",
+        "TotalTskEstInMins": 30,
+        "TaskExecutionDate": "04-09-2024",
+        "AssignTo": "Devanshi"
+    },
+    {
+        "ListName": "Drake",
+        "TaskID": "86cwdjg3c",
+        "TaskSubject": "Devanshi_Prepaid Comml Insurance",
+        "TaskStartDate": "02-09-2024",
+        "TaskDueDate": "05-09-2024",
+        "TaskStatus": "delievered",
+        "EstimatedTime": {
+            "hrs": 2,
+            "mins": 0,
+            "time_estimate": 7200000
         },
-        {
-            "ListName": "ERPNext",
-            "TaskID": "86cw8atcj",
-            "TaskSubject": "Stand Up Meet Task Explanation",
-            "TaskStartDate": "23-08-2024",
-            "TaskDueDate": "26-08-2024",
-            "TaskStatus": "delievered",
-            "EstimatedTime": {
-                "hrs": 1,
-                "mins": 0,
-                "time_estimate": 3600000
-            },
-            "TaskPriority": "urgent",
-            "TaskAssigneesList": [
-                {
-                    "id": 67390920,
-                    "color": "",
-                    "email": "mitul@riveredgeanalytics.com",
-                    "initials": "MS",
-                    "username": "Mitul Solanki",
-                    "profilePicture": "https://attachments.clickup.com/profilePictures/67390920_BGd.jpg"
-                }
-            ],
-            "TaskIsMilestone": 0,
-            "TaskIntensity": 1,
-            "TaskScore": 3,
-            "EstimatedTaskMin": 60,
-            "AssignTo": "Mitul Solanki"
+        "TaskPriority": "high",
+        "TaskAssigneesList": [
+            {
+                "id": 67391042,
+                "color": "#cddc39",
+                "email": "devanshi@riveredgeanalytics.com",
+                "initials": "D",
+                "username": "Devanshi",
+                "profilePicture": "https://attachments.clickup.com/profilePictures/67391042_5Q4.jpg"
+            }
+        ],
+        "TaskIsMilestone": 0,
+        "TaskIntensity": 1,
+        "TaskScore": 2,
+        "TaskCreatedDate": "04-09-2024",
+        "TotalTskEstInMins": 120,
+        "TaskExecutionDate": "02-09-2024",
+        "AssignTo": "Devanshi"
+    },
+    {
+        "ListName": "Drake",
+        "TaskID": "86cwdjg5q",
+        "TaskSubject": "Devanshi_Goodwill Amortization",
+        "TaskStartDate": "02-09-2024",
+        "TaskDueDate": "05-09-2024",
+        "TaskStatus": "delievered",
+        "EstimatedTime": {
+            "hrs": 1,
+            "mins": 0,
+            "time_estimate": 3600000
         },
-        {
-            "ListName": "ERPNext",
-            "TaskID": "86cw8atje",
-            "TaskSubject": "Stand Up Meet Task Explanation",
-            "TaskStartDate": "16-08-2024",
-            "TaskDueDate": "16-08-2024",
-            "TaskStatus": "delievered",
-            "EstimatedTime": {
-                "hrs": 1,
-                "mins": 0,
-                "time_estimate": 3600000
-            },
-            "TaskPriority": "urgent",
-            "TaskAssigneesList": [
-                {
-                    "id": 67390920,
-                    "color": "",
-                    "email": "mitul@riveredgeanalytics.com",
-                    "initials": "MS",
-                    "username": "Mitul Solanki",
-                    "profilePicture": "https://attachments.clickup.com/profilePictures/67390920_BGd.jpg"
-                }
-            ],
-            "TaskIsMilestone": 0,
-            "TaskIntensity": 1,
-            "TaskScore": 3,
-            "EstimatedTaskMin": 60,
-            "AssignTo": "Mitul Solanki"
-        }
-    ],
-    "Mohit parmar": [
-        {
-            "ListName": "ERPNext",
-            "TaskID": "86cw7x82b",
-            "TaskSubject": "Mohit  - Import Users List",
-            "TaskStartDate": "16-08-2024",
-            "TaskDueDate": "16-08-2024",
-            "TaskStatus": "delievered",
-            "EstimatedTime": {
-                "hrs": 1,
-                "mins": 0,
-                "time_estimate": 3600000
-            },
-            "TaskPriority": "urgent",
-            "TaskAssigneesList": [
-                {
-                    "id": 96776599,
-                    "color": "",
-                    "email": "mohit.intern@riveredgeanalytics.com",
-                    "initials": "MP",
-                    "username": "Mohit parmar",
-                    "profilePicture": None
-                }
-            ],
-            "TaskIsMilestone": 0,
-            "TaskIntensity": 1,
-            "TaskScore": 3,
-            "EstimatedTaskMin": 60,
-            "AssignTo": "Mohit parmar"
+        "TaskPriority": "high",
+        "TaskAssigneesList": [
+            {
+                "id": 67391042,
+                "color": "#cddc39",
+                "email": "devanshi@riveredgeanalytics.com",
+                "initials": "D",
+                "username": "Devanshi",
+                "profilePicture": "https://attachments.clickup.com/profilePictures/67391042_5Q4.jpg"
+            }
+        ],
+        "TaskIsMilestone": 0,
+        "TaskIntensity": 1,
+        "TaskScore": 2,
+        "TaskCreatedDate": "04-09-2024",
+        "TotalTskEstInMins": 60,
+        "TaskExecutionDate": "02-09-2024",
+        "AssignTo": "Devanshi"
+    },
+    {
+        "ListName": "Drake",
+        "TaskID": "86cwdjg8n",
+        "TaskSubject": "Devanshi_Depreciation (Accum Depr…...... 164700-165700)",
+        "TaskStartDate": "02-09-2024",
+        "TaskDueDate": "05-09-2024",
+        "TaskStatus": "delievered",
+        "EstimatedTime": {
+            "hrs": 1,
+            "mins": 30,
+            "time_estimate": 5400000
         },
-        {
-            "ListName": "ERPNext",
-            "TaskID": "86cw7x83y",
-            "TaskSubject": "Mohit - Import Employee List",
-            "TaskStartDate": "16-08-2024",
-            "TaskDueDate": "16-08-2024",
-            "TaskStatus": "delievered",
-            "EstimatedTime": {
-                "hrs": 2,
-                "mins": 0,
-                "time_estimate": 7200000
-            },
-            "TaskPriority": "urgent",
-            "TaskAssigneesList": [
-                {
-                    "id": 96776599,
-                    "color": "",
-                    "email": "mohit.intern@riveredgeanalytics.com",
-                    "initials": "MP",
-                    "username": "Mohit parmar",
-                    "profilePicture": None
-                }
-            ],
-            "TaskIsMilestone": 0,
-            "TaskIntensity": 1,
-            "TaskScore": 3,
-            "EstimatedTaskMin": 120,
-            "AssignTo": "Mohit parmar"
+        "TaskPriority": "high",
+        "TaskAssigneesList": [
+            {
+                "id": 67391042,
+                "color": "#cddc39",
+                "email": "devanshi@riveredgeanalytics.com",
+                "initials": "D",
+                "username": "Devanshi",
+                "profilePicture": "https://attachments.clickup.com/profilePictures/67391042_5Q4.jpg"
+            }
+        ],
+        "TaskIsMilestone": 0,
+        "TaskIntensity": 1,
+        "TaskScore": 2,
+        "TaskCreatedDate": "04-09-2024",
+        "TotalTskEstInMins": 90,
+        "TaskExecutionDate": "02-09-2024",
+        "AssignTo": "Devanshi"
+    },
+    {
+        "ListName": "Drake",
+        "TaskID": "86cwdjgaz",
+        "TaskSubject": "Devanshi_Deferred Interest-Northcoast",
+        "TaskStartDate": "02-09-2024",
+        "TaskDueDate": "05-09-2024",
+        "TaskStatus": "delievered",
+        "EstimatedTime": {
+            "hrs": 1,
+            "mins": 0,
+            "time_estimate": 3600000
         },
-        {
-            "ListName": "ERPNext",
-            "TaskID": "86cw7x8r0",
-            "TaskSubject": "Mohit - Employee Form",
-            "TaskStartDate": "15-08-2024",
-            "TaskDueDate": "15-08-2024",
-            "TaskStatus": "delievered",
-            "EstimatedTime": {
-                "hrs": 4,
-                "mins": 0,
-                "time_estimate": 14400000
-            },
-            "TaskPriority": "urgent",
-            "TaskAssigneesList": [
-                {
-                    "id": 96776599,
-                    "color": "",
-                    "email": "mohit.intern@riveredgeanalytics.com",
-                    "initials": "MP",
-                    "username": "Mohit parmar",
-                    "profilePicture": None
-                }
-            ],
-            "TaskIsMilestone": 0,
-            "TaskIntensity": 1,
-            "TaskScore": 3,
-            "EstimatedTaskMin": 240,
-            "AssignTo": "Mohit parmar"
+        "TaskPriority": "high",
+        "TaskAssigneesList": [
+            {
+                "id": 67391042,
+                "color": "#cddc39",
+                "email": "devanshi@riveredgeanalytics.com",
+                "initials": "D",
+                "username": "Devanshi",
+                "profilePicture": "https://attachments.clickup.com/profilePictures/67391042_5Q4.jpg"
+            }
+        ],
+        "TaskIsMilestone": 0,
+        "TaskIntensity": 1,
+        "TaskScore": 2,
+        "TaskCreatedDate": "04-09-2024",
+        "TotalTskEstInMins": 60,
+        "TaskExecutionDate": "02-09-2024",
+        "AssignTo": "Devanshi"
+    },
+    {
+        "ListName": "Drake",
+        "TaskID": "86cwdjgeh",
+        "TaskSubject": "Devanshi_Deferred Interest-Seller\\",
+        "TaskStartDate": "02-09-2024",
+        "TaskDueDate": "05-09-2024",
+        "TaskStatus": "delievered",
+        "EstimatedTime": {
+            "hrs": 1,
+            "mins": 0,
+            "time_estimate": 3600000
         },
-        {
-            "ListName": "ERPNext",
-            "TaskID": "86cw7x9jk",
-            "TaskSubject": "Test V15 Implementation",
-            "TaskStartDate": "16-08-2024",
-            "TaskDueDate": "16-08-2024",
-            "TaskStatus": "delievered",
-            "EstimatedTime": {
-                "hrs": 4,
-                "mins": 0,
-                "time_estimate": 14400000
-            },
-            "TaskPriority": "urgent",
-            "TaskAssigneesList": [
-                {
-                    "id": 96776599,
-                    "color": "",
-                    "email": "mohit.intern@riveredgeanalytics.com",
-                    "initials": "MP",
-                    "username": "Mohit parmar",
-                    "profilePicture": None
-                },
-                {
-                    "id": 88895068,
-                    "color": "#622aea",
-                    "email": "mansi@riveredgeanalytics.com",
-                    "initials": "MS",
-                    "username": "mansi solanki",
-                    "profilePicture": "https://attachments.clickup.com/profilePictures/88895068_IUP.jpg"
-                }
-            ],
-            "TaskIsMilestone": 0,
-            "TaskIntensity": 1,
-            "TaskScore": 3,
-            "EstimatedTaskMin": 240,
-            "AssignTo": "Mohit parmar"
+        "TaskPriority": "high",
+        "TaskAssigneesList": [
+            {
+                "id": 67391042,
+                "color": "#cddc39",
+                "email": "devanshi@riveredgeanalytics.com",
+                "initials": "D",
+                "username": "Devanshi",
+                "profilePicture": "https://attachments.clickup.com/profilePictures/67391042_5Q4.jpg"
+            }
+        ],
+        "TaskIsMilestone": 0,
+        "TaskIntensity": 1,
+        "TaskScore": 2,
+        "TaskCreatedDate": "04-09-2024",
+        "TotalTskEstInMins": 60,
+        "TaskExecutionDate": "02-09-2024",
+        "AssignTo": "Devanshi"
+    },
+    {
+        "ListName": "Drake",
+        "TaskID": "86cwdjgk8",
+        "TaskSubject": "Devanshi_SCC Fees                   Accrual calc cautght up as of yearend",
+        "TaskStartDate": "11-09-2024",
+        "TaskDueDate": "12-09-2024",
+        "TaskStatus": "Open",
+        "EstimatedTime": {
+            "hrs": 3,
+            "mins": 0,
+            "time_estimate": 10800000
         },
-        {
-            "ListName": "ERPNext",
-            "TaskID": "86cw7y1rf",
-            "TaskSubject": "Test Real ERPNext Dashboard",
-            "TaskStartDate": "16-08-2024",
-            "TaskDueDate": "16-08-2024",
-            "TaskStatus": "delievered",
-            "EstimatedTime": {
-                "hrs": 1,
-                "mins": 0,
-                "time_estimate": 3600000
-            },
-            "TaskPriority": "urgent",
-            "TaskAssigneesList": [
-                {
-                    "id": 96776599,
-                    "color": "",
-                    "email": "mohit.intern@riveredgeanalytics.com",
-                    "initials": "MP",
-                    "username": "Mohit parmar",
-                    "profilePicture": None
-                }
-            ],
-            "TaskIsMilestone": 0,
-            "TaskIntensity": 1,
-            "TaskScore": 3,
-            "EstimatedTaskMin": 60,
-            "AssignTo": "Mohit parmar"
-        }
-    ],
-    "Nidhi": [
-        {
-            "ListName": "ERPNext",
-            "TaskID": "86cw8ap06",
-            "TaskSubject": "Nidhi - provide sample demo filled form",
-            "TaskStartDate": "21-08-2024",
-            "TaskDueDate": "22-08-2024",
-            "TaskStatus": "delievered",
-            "EstimatedTime": {
-                "hrs": 0,
-                "mins": 30,
-                "time_estimate": 1800000
-            },
-            "TaskPriority": "normal",
-            "TaskAssigneesList": [
-                {
-                    "id": 73264089,
-                    "color": "#c51162",
-                    "email": "hr@riveredgeanalytics.com",
-                    "initials": "N",
-                    "username": "Nidhi",
-                    "profilePicture": None
-                }
-            ],
-            "TaskIsMilestone": 0,
-            "TaskIntensity": 1,
-            "TaskScore": 1,
-            "EstimatedTaskMin": 30,
-            "AssignTo": "Nidhi"
+        "TaskPriority": "high",
+        "TaskAssigneesList": [
+            {
+                "id": 67391042,
+                "color": "#cddc39",
+                "email": "devanshi@riveredgeanalytics.com",
+                "initials": "D",
+                "username": "Devanshi",
+                "profilePicture": "https://attachments.clickup.com/profilePictures/67391042_5Q4.jpg"
+            }
+        ],
+        "TaskIsMilestone": 0,
+        "TaskIntensity": 1,
+        "TaskScore": 2,
+        "TaskCreatedDate": "04-09-2024",
+        "TotalTskEstInMins": 180,
+        "TaskExecutionDate": "11-09-2024",
+        "AssignTo": "Devanshi"
+    },
+    {
+        "ListName": "Drake",
+        "TaskID": "86cwdjgpr",
+        "TaskSubject": "Devanshi_Inventory adjustments to SAGE module and YE counts",
+        "TaskStartDate": "09-09-2024",
+        "TaskDueDate": "11-09-2024",
+        "TaskStatus": "Open",
+        "EstimatedTime": {
+            "hrs": 5,
+            "mins": 0,
+            "time_estimate": 18000000
         },
-        {
-            "ListName": "ERPNext",
-            "TaskID": "86cw8ap1y",
-            "TaskSubject": "Nidhi - provide sample demo filled form",
-            "TaskStartDate": "26-08-2024",
-            "TaskDueDate": "29-08-2024",
-            "TaskStatus": "delievered",
-            "EstimatedTime": {
-                "hrs": 0,
-                "mins": 30,
-                "time_estimate": 1800000
-            },
-            "TaskPriority": "normal",
-            "TaskAssigneesList": [
-                {
-                    "id": 73264089,
-                    "color": "#c51162",
-                    "email": "hr@riveredgeanalytics.com",
-                    "initials": "N",
-                    "username": "Nidhi",
-                    "profilePicture": None
-                }
-            ],
-            "TaskIsMilestone": 0,
-            "TaskIntensity": 1,
-            "TaskScore": 1,
-            "EstimatedTaskMin": 30,
-            "AssignTo": "Nidhi"
-        }
-    ]
-}
+        "TaskPriority": "high",
+        "TaskAssigneesList": [
+            {
+                "id": 67391042,
+                "color": "#cddc39",
+                "email": "devanshi@riveredgeanalytics.com",
+                "initials": "D",
+                "username": "Devanshi",
+                "profilePicture": "https://attachments.clickup.com/profilePictures/67391042_5Q4.jpg"
+            }
+        ],
+        "TaskIsMilestone": 0,
+        "TaskIntensity": 1,
+        "TaskScore": 2,
+        "TaskCreatedDate": "04-09-2024",
+        "TotalTskEstInMins": 300,
+        "TaskExecutionDate": "09-09-2024",
+        "AssignTo": "Devanshi"
+    },
+    {
+        "ListName": "Drake",
+        "TaskID": "86cwdjgt5",
+        "TaskSubject": "Devanshi_Intercompany Sales-COGS Adj per schedule",
+        "TaskStartDate": "09-09-2024",
+        "TaskDueDate": "11-09-2024",
+        "TaskStatus": "Open",
+        "EstimatedTime": {
+            "hrs": 3,
+            "mins": 0,
+            "time_estimate": 10800000
+        },
+        "TaskPriority": "high",
+        "TaskAssigneesList": [
+            {
+                "id": 67391042,
+                "color": "#cddc39",
+                "email": "devanshi@riveredgeanalytics.com",
+                "initials": "D",
+                "username": "Devanshi",
+                "profilePicture": "https://attachments.clickup.com/profilePictures/67391042_5Q4.jpg"
+            }
+        ],
+        "TaskIsMilestone": 0,
+        "TaskIntensity": 1,
+        "TaskScore": 2,
+        "TaskCreatedDate": "04-09-2024",
+        "TotalTskEstInMins": 180,
+        "TaskExecutionDate": "10-09-2024",
+        "AssignTo": "Devanshi"
+    },
+    {
+        "ListName": "Drake",
+        "TaskID": "86cwdjgw1",
+        "TaskSubject": "Devanshi_Debt Issuance Costs Amortization  [UPDATE for LGC invoice pmt in Dec ]",
+        "TaskStartDate": "06-09-2024",
+        "TaskDueDate": "06-09-2024",
+        "TaskStatus": "Open",
+        "EstimatedTime": {
+            "hrs": 2,
+            "mins": 30,
+            "time_estimate": 9000000
+        },
+        "TaskPriority": "high",
+        "TaskAssigneesList": [
+            {
+                "id": 67391042,
+                "color": "#cddc39",
+                "email": "devanshi@riveredgeanalytics.com",
+                "initials": "D",
+                "username": "Devanshi",
+                "profilePicture": "https://attachments.clickup.com/profilePictures/67391042_5Q4.jpg"
+            }
+        ],
+        "TaskIsMilestone": 0,
+        "TaskIntensity": 1,
+        "TaskScore": 2,
+        "TaskCreatedDate": "04-09-2024",
+        "TotalTskEstInMins": 150,
+        "TaskExecutionDate": "06-09-2024",
+        "AssignTo": "Devanshi"
+    },
+    {
+        "ListName": "Drake",
+        "TaskID": "86cwdjh3h",
+        "TaskSubject": "Devanshi_Interco Sales",
+        "TaskStartDate": "10-09-2024",
+        "TaskDueDate": "12-09-2024",
+        "TaskStatus": "Open",
+        "EstimatedTime": {
+            "hrs": 4,
+            "mins": 0,
+            "time_estimate": 14400000
+        },
+        "TaskPriority": "high",
+        "TaskAssigneesList": [
+            {
+                "id": 67391042,
+                "color": "#cddc39",
+                "email": "devanshi@riveredgeanalytics.com",
+                "initials": "D",
+                "username": "Devanshi",
+                "profilePicture": "https://attachments.clickup.com/profilePictures/67391042_5Q4.jpg"
+            }
+        ],
+        "TaskIsMilestone": 0,
+        "TaskIntensity": 1,
+        "TaskScore": 2,
+        "TaskCreatedDate": "04-09-2024",
+        "TotalTskEstInMins": 240,
+        "TaskExecutionDate": "10-09-2024",
+        "AssignTo": "Devanshi"
+    },
+    {
+        "ListName": "Drake",
+        "TaskID": "86cwdjh94",
+        "TaskSubject": "Devanshi_Accrual of Account Prism Fee in Accounting and Legal $10K - make it Reversal",
+        "TaskStartDate": "03-09-2024",
+        "TaskDueDate": "05-09-2024",
+        "TaskStatus": "Open",
+        "EstimatedTime": {
+            "hrs": 1,
+            "mins": 0,
+            "time_estimate": 3600000
+        },
+        "TaskPriority": "high",
+        "TaskAssigneesList": [
+            {
+                "id": 67391042,
+                "color": "#cddc39",
+                "email": "devanshi@riveredgeanalytics.com",
+                "initials": "D",
+                "username": "Devanshi",
+                "profilePicture": "https://attachments.clickup.com/profilePictures/67391042_5Q4.jpg"
+            }
+        ],
+        "TaskIsMilestone": 0,
+        "TaskIntensity": 1,
+        "TaskScore": 2,
+        "TaskCreatedDate": "04-09-2024",
+        "TotalTskEstInMins": 60,
+        "TaskExecutionDate": "03-09-2024",
+        "AssignTo": "Devanshi"
+    },
+    {
+        "ListName": "Drake",
+        "TaskID": "86cwdjhft",
+        "TaskSubject": "Devanshi_Accounting and Legal (Biech Fleischman) for 2024 Audit and Tax Expense - $4K per Month. IN August Entry will be of $28K, $24K will be OOP. Refer Email : Audit & Tax Engagement Letter - 2023",
+        "TaskStartDate": "03-09-2024",
+        "TaskDueDate": "05-09-2024",
+        "TaskStatus": "Open",
+        "EstimatedTime": {
+            "hrs": 1,
+            "mins": 0,
+            "time_estimate": 3600000
+        },
+        "TaskPriority": "high",
+        "TaskAssigneesList": [
+            {
+                "id": 67391042,
+                "color": "#cddc39",
+                "email": "devanshi@riveredgeanalytics.com",
+                "initials": "D",
+                "username": "Devanshi",
+                "profilePicture": "https://attachments.clickup.com/profilePictures/67391042_5Q4.jpg"
+            }
+        ],
+        "TaskIsMilestone": 0,
+        "TaskIntensity": 1,
+        "TaskScore": 2,
+        "TaskCreatedDate": "04-09-2024",
+        "TotalTskEstInMins": 60,
+        "TaskExecutionDate": "03-09-2024",
+        "AssignTo": "Devanshi"
+    },
+    {
+        "ListName": "Drake",
+        "TaskID": "86cwdjhuh",
+        "TaskSubject": "Devanshi_Recording of July Missed Payroll of Direct Labor - We will show it as Out of Period Expense",
+        "TaskStartDate": "10-09-2024",
+        "TaskDueDate": "10-09-2024",
+        "TaskStatus": "Open",
+        "EstimatedTime": {
+            "hrs": 1,
+            "mins": 0,
+            "time_estimate": 3600000
+        },
+        "TaskPriority": "high",
+        "TaskAssigneesList": [
+            {
+                "id": 67391042,
+                "color": "#cddc39",
+                "email": "devanshi@riveredgeanalytics.com",
+                "initials": "D",
+                "username": "Devanshi",
+                "profilePicture": "https://attachments.clickup.com/profilePictures/67391042_5Q4.jpg"
+            }
+        ],
+        "TaskIsMilestone": 0,
+        "TaskIntensity": 1,
+        "TaskScore": 2,
+        "TaskCreatedDate": "04-09-2024",
+        "TotalTskEstInMins": 60,
+        "TaskExecutionDate": "10-09-2024",
+        "AssignTo": "Devanshi"
+    },
+    {
+        "ListName": "Drake",
+        "TaskID": "86cwdjhxg",
+        "TaskSubject": "Devanshi_Reverse Sage Annual Expense Entry, move it to prepaid and then amortize over 12 months",
+        "TaskStartDate": "10-09-2024",
+        "TaskDueDate": "10-09-2024",
+        "TaskStatus": "Open",
+        "EstimatedTime": {
+            "hrs": 1,
+            "mins": 0,
+            "time_estimate": 3600000
+        },
+        "TaskPriority": "high",
+        "TaskAssigneesList": [
+            {
+                "id": 67391042,
+                "color": "#cddc39",
+                "email": "devanshi@riveredgeanalytics.com",
+                "initials": "D",
+                "username": "Devanshi",
+                "profilePicture": "https://attachments.clickup.com/profilePictures/67391042_5Q4.jpg"
+            }
+        ],
+        "TaskIsMilestone": 0,
+        "TaskIntensity": 1,
+        "TaskScore": 2,
+        "TaskCreatedDate": "04-09-2024",
+        "TotalTskEstInMins": 60,
+        "TaskExecutionDate": "10-09-2024",
+        "AssignTo": "Devanshi"
+    },
+    {
+        "ListName": "Drake",
+        "TaskID": "86cwdjj1e",
+        "TaskSubject": "Devanshi_Salt Creek Management Fee Calculations based on July Financials and Accrue based on Last 12  months EBITDA Calculations",
+        "TaskStartDate": "10-09-2024",
+        "TaskDueDate": "10-09-2024",
+        "TaskStatus": "Open",
+        "EstimatedTime": {
+            "hrs": 1,
+            "mins": 0,
+            "time_estimate": 3600000
+        },
+        "TaskPriority": "high",
+        "TaskAssigneesList": [
+            {
+                "id": 67391042,
+                "color": "#cddc39",
+                "email": "devanshi@riveredgeanalytics.com",
+                "initials": "D",
+                "username": "Devanshi",
+                "profilePicture": "https://attachments.clickup.com/profilePictures/67391042_5Q4.jpg"
+            }
+        ],
+        "TaskIsMilestone": 0,
+        "TaskIntensity": 1,
+        "TaskScore": 2,
+        "TaskCreatedDate": "04-09-2024",
+        "TotalTskEstInMins": 60,
+        "TaskExecutionDate": "10-09-2024",
+        "AssignTo": "Devanshi"
+    },
+    {
+        "ListName": "Drake",
+        "TaskID": "86cwdjp66",
+        "TaskSubject": "Posting",
+        "TaskStartDate": "04-09-2024",
+        "TaskDueDate": "04-09-2024",
+        "TaskStatus": "Open",
+        "EstimatedTime": {
+            "hrs": 0,
+            "mins": 30,
+            "time_estimate": 1800000
+        },
+        "TaskPriority": "high",
+        "TaskAssigneesList": [
+            {
+                "id": 67391042,
+                "color": "#cddc39",
+                "email": "devanshi@riveredgeanalytics.com",
+                "initials": "D",
+                "username": "Devanshi",
+                "profilePicture": "https://attachments.clickup.com/profilePictures/67391042_5Q4.jpg"
+            }
+        ],
+        "TaskIsMilestone": 0,
+        "TaskIntensity": 1,
+        "TaskScore": 2,
+        "TaskCreatedDate": "04-09-2024",
+        "TotalTskEstInMins": 30,
+        "TaskExecutionDate": "04-09-2024",
+        "AssignTo": "Devanshi"
+    },
+    {
+        "ListName": "Drake",
+        "TaskID": "86cwdjy04",
+        "TaskSubject": "Devanshi_Financial Pckg",
+        "TaskStartDate": "11-09-2024",
+        "TaskDueDate": "13-09-2024",
+        "TaskStatus": "Open",
+        "EstimatedTime": {
+            "hrs": 10,
+            "mins": 0,
+            "time_estimate": 36000000
+        },
+        "TaskPriority": "urgent",
+        "TaskAssigneesList": [
+            {
+                "id": 67391042,
+                "color": "#cddc39",
+                "email": "devanshi@riveredgeanalytics.com",
+                "initials": "D",
+                "username": "Devanshi",
+                "profilePicture": "https://attachments.clickup.com/profilePictures/67391042_5Q4.jpg"
+            }
+        ],
+        "TaskIsMilestone": 0,
+        "TaskIntensity": 1,
+        "TaskScore": 3,
+        "TaskCreatedDate": "04-09-2024",
+        "TotalTskEstInMins": 600,
+        "TaskExecutionDate": "11-09-2024",
+        "AssignTo": "Devanshi"
+    },
+    {
+        "ListName": "Drake",
+        "TaskID": "86cwdjy6q",
+        "TaskSubject": "Devanshi_Financial Workbook",
+        "TaskStartDate": "11-09-2024",
+        "TaskDueDate": "13-09-2024",
+        "TaskStatus": "Open",
+        "EstimatedTime": {
+            "hrs": 10,
+            "mins": 0,
+            "time_estimate": 36000000
+        },
+        "TaskPriority": "urgent",
+        "TaskAssigneesList": [
+            {
+                "id": 67391042,
+                "color": "#cddc39",
+                "email": "devanshi@riveredgeanalytics.com",
+                "initials": "D",
+                "username": "Devanshi",
+                "profilePicture": "https://attachments.clickup.com/profilePictures/67391042_5Q4.jpg"
+            }
+        ],
+        "TaskIsMilestone": 0,
+        "TaskIntensity": 1,
+        "TaskScore": 3,
+        "TaskCreatedDate": "04-09-2024",
+        "TotalTskEstInMins": 600,
+        "TaskExecutionDate": "11-09-2024",
+        "AssignTo": "Devanshi"
+    },
+    {
+        "ListName": "Drake",
+        "TaskID": "86cwdjybe",
+        "TaskSubject": "Devanshi_SG&A",
+        "TaskStartDate": "11-09-2024",
+        "TaskDueDate": "13-09-2024",
+        "TaskStatus": "Open",
+        "EstimatedTime": {
+            "hrs": 8,
+            "mins": 0,
+            "time_estimate": 28800000
+        },
+        "TaskPriority": "urgent",
+        "TaskAssigneesList": [
+            {
+                "id": 67391042,
+                "color": "#cddc39",
+                "email": "devanshi@riveredgeanalytics.com",
+                "initials": "D",
+                "username": "Devanshi",
+                "profilePicture": "https://attachments.clickup.com/profilePictures/67391042_5Q4.jpg"
+            }
+        ],
+        "TaskIsMilestone": 0,
+        "TaskIntensity": 1,
+        "TaskScore": 3,
+        "TaskCreatedDate": "04-09-2024",
+        "TotalTskEstInMins": 480,
+        "TaskExecutionDate": "11-09-2024",
+        "AssignTo": "Devanshi"
+    },
+    {
+        "ListName": "Drake",
+        "TaskID": "86cwdjydv",
+        "TaskSubject": "Devanshi_JE review",
+        "TaskStartDate": "12-09-2024",
+        "TaskDueDate": "16-09-2024",
+        "TaskStatus": "Open",
+        "EstimatedTime": {
+            "hrs": 16,
+            "mins": 0,
+            "time_estimate": 57600000
+        },
+        "TaskPriority": "urgent",
+        "TaskAssigneesList": [
+            {
+                "id": 67391042,
+                "color": "#cddc39",
+                "email": "devanshi@riveredgeanalytics.com",
+                "initials": "D",
+                "username": "Devanshi",
+                "profilePicture": "https://attachments.clickup.com/profilePictures/67391042_5Q4.jpg"
+            }
+        ],
+        "TaskIsMilestone": 0,
+        "TaskIntensity": 1,
+        "TaskScore": 3,
+        "TaskCreatedDate": "04-09-2024",
+        "TotalTskEstInMins": 960,
+        "TaskExecutionDate": "12-09-2024",
+        "AssignTo": "Devanshi"
+    },
+    {
+        "ListName": "Drake",
+        "TaskID": "86cwdjyjj",
+        "TaskSubject": "Devanshi_other reports",
+        "TaskStartDate": "13-09-2024",
+        "TaskDueDate": "13-09-2024",
+        "TaskStatus": "Open",
+        "EstimatedTime": {
+            "hrs": 3,
+            "mins": 0,
+            "time_estimate": 10800000
+        },
+        "TaskPriority": "urgent",
+        "TaskAssigneesList": [
+            {
+                "id": 67391042,
+                "color": "#cddc39",
+                "email": "devanshi@riveredgeanalytics.com",
+                "initials": "D",
+                "username": "Devanshi",
+                "profilePicture": "https://attachments.clickup.com/profilePictures/67391042_5Q4.jpg"
+            }
+        ],
+        "TaskIsMilestone": 0,
+        "TaskIntensity": 1,
+        "TaskScore": 3,
+        "TaskCreatedDate": "04-09-2024",
+        "TotalTskEstInMins": 180,
+        "TaskExecutionDate": "13-09-2024",
+        "AssignTo": "Devanshi"
+    },
+    {
+        "ListName": "Airen group - Customer List",
+        "TaskID": "86cwdm12v",
+        "TaskSubject": "Devanshi_Testing and Submittion",
+        "TaskStartDate": "09-09-2024",
+        "TaskDueDate": "18-09-2024",
+        "TaskStatus": "Open",
+        "EstimatedTime": {
+            "hrs": 6,
+            "mins": 0,
+            "time_estimate": 21600000
+        },
+        "TaskPriority": "high",
+        "TaskAssigneesList": [
+            {
+                "id": 67391042,
+                "color": "#cddc39",
+                "email": "devanshi@riveredgeanalytics.com",
+                "initials": "D",
+                "username": "Devanshi",
+                "profilePicture": "https://attachments.clickup.com/profilePictures/67391042_5Q4.jpg"
+            }
+        ],
+        "TaskIsMilestone": 0,
+        "TaskIntensity": 1,
+        "TaskScore": 2,
+        "TaskCreatedDate": "04-09-2024",
+        "TotalTskEstInMins": 360,
+        "TaskExecutionDate": "09-09-2024",
+        "AssignTo": "Devanshi"
+    },
+    {
+        "ListName": "IKIO - COGSAnalyzer",
+        "TaskID": "86cwdmtku",
+        "TaskSubject": "Devanshi_Ask Damini for Data",
+        "TaskStartDate": "16-09-2024",
+        "TaskDueDate": "20-09-2024",
+        "TaskStatus": "Open",
+        "EstimatedTime": {
+            "hrs": 1,
+            "mins": 30,
+            "time_estimate": 5400000
+        },
+        "TaskPriority": "urgent",
+        "TaskAssigneesList": [
+            {
+                "id": 67391042,
+                "color": "#cddc39",
+                "email": "devanshi@riveredgeanalytics.com",
+                "initials": "D",
+                "username": "Devanshi",
+                "profilePicture": "https://attachments.clickup.com/profilePictures/67391042_5Q4.jpg"
+            }
+        ],
+        "TaskIsMilestone": 0,
+        "TaskIntensity": 1,
+        "TaskScore": 3,
+        "TaskCreatedDate": "04-09-2024",
+        "TotalTskEstInMins": 90,
+        "TaskExecutionDate": "16-09-2024",
+        "AssignTo": "Devanshi"
+    },
+    {
+        "ListName": "Drake",
+        "TaskID": "86cwdr0u7",
+        "TaskSubject": "Devanshi_Liquidity report send to lenders and investors",
+        "TaskStartDate": "11-09-2024",
+        "TaskDueDate": "11-09-2024",
+        "TaskStatus": "Open",
+        "EstimatedTime": {
+            "hrs": 0,
+            "mins": 45,
+            "time_estimate": 2700000
+        },
+        "TaskPriority": "urgent",
+        "TaskAssigneesList": [
+            {
+                "id": 67391042,
+                "color": "#cddc39",
+                "email": "devanshi@riveredgeanalytics.com",
+                "initials": "D",
+                "username": "Devanshi",
+                "profilePicture": "https://attachments.clickup.com/profilePictures/67391042_5Q4.jpg"
+            }
+        ],
+        "TaskIsMilestone": 0,
+        "TaskIntensity": 1,
+        "TaskScore": 3,
+        "TaskCreatedDate": "04-09-2024",
+        "TotalTskEstInMins": 45,
+        "TaskExecutionDate": "11-09-2024",
+        "AssignTo": "Devanshi"
+    },
+    {
+        "ListName": "Drake",
+        "TaskID": "86cwfnkup",
+        "TaskSubject": "Devanshi_Liquidity report send to lenders and investors",
+        "TaskStartDate": "18-09-2024",
+        "TaskDueDate": "18-09-2024",
+        "TaskStatus": "Open",
+        "EstimatedTime": {
+            "hrs": 0,
+            "mins": 45,
+            "time_estimate": 2700000
+        },
+        "TaskPriority": "urgent",
+        "TaskAssigneesList": [
+            {
+                "id": 67391042,
+                "color": "#cddc39",
+                "email": "devanshi@riveredgeanalytics.com",
+                "initials": "D",
+                "username": "Devanshi",
+                "profilePicture": "https://attachments.clickup.com/profilePictures/67391042_5Q4.jpg"
+            }
+        ],
+        "TaskIsMilestone": 0,
+        "TaskIntensity": 1,
+        "TaskScore": 3,
+        "TaskCreatedDate": "11-09-2024",
+        "TotalTskEstInMins": 45,
+        "TaskExecutionDate": "18-09-2024",
+        "AssignTo": "Devanshi"
+    },
+    {
+        "ListName": "Drake",
+        "TaskID": "86cwdj534",
+        "TaskSubject": "T2 Devanshi_Payroll Allocation Each Location",
+        "TaskStartDate": "05-09-2024",
+        "TaskDueDate": "06-09-2024",
+        "TaskStatus": "Open",
+        "EstimatedTime": {
+            "hrs": 3,
+            "mins": 0,
+            "time_estimate": 10800000
+        },
+        "TaskPriority": "high",
+        "TaskAssigneesList": [
+            {
+                "id": 67391042,
+                "color": "#cddc39",
+                "email": "devanshi@riveredgeanalytics.com",
+                "initials": "D",
+                "username": "Devanshi",
+                "profilePicture": "https://attachments.clickup.com/profilePictures/67391042_5Q4.jpg"
+            }
+        ],
+        "TaskIsMilestone": 0,
+        "TaskIntensity": 2,
+        "TaskScore": 2,
+        "TaskCreatedDate": "04-09-2024",
+        "TotalTskEstInMins": 60,
+        "TaskExecutionDate": "06-09-2024",
+        "AssignTo": "Devanshi"
+    },
+    {
+        "ListName": "Drake",
+        "TaskID": "86cwdj5bp",
+        "TaskSubject": "Devanshi_Payroll Accrual for leach location",
+        "TaskStartDate": "05-09-2024",
+        "TaskDueDate": "06-09-2024",
+        "TaskStatus": "Open",
+        "EstimatedTime": {
+            "hrs": 2,
+            "mins": 30,
+            "time_estimate": 9000000
+        },
+        "TaskPriority": "high",
+        "TaskAssigneesList": [
+            {
+                "id": 67391042,
+                "color": "#cddc39",
+                "email": "devanshi@riveredgeanalytics.com",
+                "initials": "D",
+                "username": "Devanshi",
+                "profilePicture": "https://attachments.clickup.com/profilePictures/67391042_5Q4.jpg"
+            }
+        ],
+        "TaskIsMilestone": 0,
+        "TaskIntensity": 1,
+        "TaskScore": 2,
+        "TaskCreatedDate": "04-09-2024",
+        "TotalTskEstInMins": 150,
+        "TaskExecutionDate": "06-09-2024",
+        "AssignTo": "Devanshi"
+    },
+    {
+        "ListName": "Drake",
+        "TaskID": "86cwdj5jj",
+        "TaskSubject": "Devanshi_Payroll Accrual allocation for each location",
+        "TaskStartDate": "05-09-2024",
+        "TaskDueDate": "06-09-2024",
+        "TaskStatus": "Open",
+        "EstimatedTime": {
+            "hrs": 1,
+            "mins": 30,
+            "time_estimate": 5400000
+        },
+        "TaskPriority": "high",
+        "TaskAssigneesList": [
+            {
+                "id": 67391042,
+                "color": "#cddc39",
+                "email": "devanshi@riveredgeanalytics.com",
+                "initials": "D",
+                "username": "Devanshi",
+                "profilePicture": "https://attachments.clickup.com/profilePictures/67391042_5Q4.jpg"
+            }
+        ],
+        "TaskIsMilestone": 0,
+        "TaskIntensity": 1,
+        "TaskScore": 2,
+        "TaskCreatedDate": "04-09-2024",
+        "TotalTskEstInMins": 90,
+        "TaskExecutionDate": "06-09-2024",
+        "AssignTo": "Devanshi"
+    },
+    {
+        "ListName": "Drake",
+        "TaskID": "86cwdjgpr",
+        "TaskSubject": "Devanshi_Inventory adjustments to SAGE module and YE counts",
+        "TaskStartDate": "09-09-2024",
+        "TaskDueDate": "11-09-2024",
+        "TaskStatus": "Open",
+        "EstimatedTime": {
+            "hrs": 5,
+            "mins": 0,
+            "time_estimate": 18000000
+        },
+        "TaskPriority": "high",
+        "TaskAssigneesList": [
+            {
+                "id": 67391042,
+                "color": "#cddc39",
+                "email": "devanshi@riveredgeanalytics.com",
+                "initials": "D",
+                "username": "Devanshi",
+                "profilePicture": "https://attachments.clickup.com/profilePictures/67391042_5Q4.jpg"
+            }
+        ],
+        "TaskIsMilestone": 0,
+        "TaskIntensity": 1,
+        "TaskScore": 2,
+        "TaskCreatedDate": "04-09-2024",
+        "TotalTskEstInMins": 60,
+        "TaskExecutionDate": "10-09-2024",
+        "AssignTo": "Devanshi"
+    },
+    {
+        "ListName": "Drake",
+        "TaskID": "86cwdjgt5",
+        "TaskSubject": "Devanshi_Intercompany Sales-COGS Adj per schedule",
+        "TaskStartDate": "09-09-2024",
+        "TaskDueDate": "11-09-2024",
+        "TaskStatus": "Open",
+        "EstimatedTime": {
+            "hrs": 3,
+            "mins": 0,
+            "time_estimate": 10800000
+        },
+        "TaskPriority": "high",
+        "TaskAssigneesList": [
+            {
+                "id": 67391042,
+                "color": "#cddc39",
+                "email": "devanshi@riveredgeanalytics.com",
+                "initials": "D",
+                "username": "Devanshi",
+                "profilePicture": "https://attachments.clickup.com/profilePictures/67391042_5Q4.jpg"
+            }
+        ],
+        "TaskIsMilestone": 0,
+        "TaskIntensity": 1,
+        "TaskScore": 2,
+        "TaskCreatedDate": "04-09-2024",
+        "TotalTskEstInMins": 180,
+        "TaskExecutionDate": "10-09-2024",
+        "AssignTo": "Devanshi"
+    }
+]
