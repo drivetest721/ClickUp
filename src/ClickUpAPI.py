@@ -1,7 +1,10 @@
 import requests
 from datetime import datetime
-from DBHelper import DBHelper
+from DBHelper import CDBHelper
+from ClickUpDB import CClickUpDB
 import json
+import sys
+sys.stdout.reconfigure(encoding='utf-8')
 
 """
 Improvements - 
@@ -64,8 +67,8 @@ class ClickUpHelper:
 
     @staticmethod
     def MSInsertTaskToDB(task_data):
-        # Assuming `DBHelper.MSInsertORUpdateTask` is a function that inserts or updates task data in your database.
-        DBHelper.MSInsertORUpdateTask(task_data)
+        # Assuming `CDBHelper.MSInsertORUpdateTask` is a function that inserts or updates task data in your database.
+        CClickUpDB.MSInsertORUpdateTask(task_data)
 
     @staticmethod
     def MSFetchTaskOnListsOfIDs(strConfigPath = r"resource\clickup_config.json"):

@@ -92,6 +92,6 @@ class CDBHelper:
   
 # Example usage
 if __name__ == "__main__":
+    CDBHelper.MSCreateDatabaseAndTables()
     pass
-    # CDBHelper.MSCreateDatabaseAndTables()
     # Sample data to insert or update

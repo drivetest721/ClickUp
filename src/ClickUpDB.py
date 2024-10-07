@@ -150,8 +150,8 @@ class CClickUpDB:
         if timestamp is not None and timestamp != "None":
             # Convert timestamp (in milliseconds) to a datetime object
             date_obj = datetime.fromtimestamp(int(timestamp) / 1000)
-            # Format datetime object to 'DD-MM-YYYY HH:MM:SS' format
-            formatted_date = date_obj.strftime('%d-%m-%Y %H:%M:%S')
+            # Format datetime object to 'DD-MM-YYYY HH:MM:SS %H:%M:%S' format
+            formatted_date = date_obj.strftime('%d-%m-%Y')
             return formatted_date
         else:
             return timestamp

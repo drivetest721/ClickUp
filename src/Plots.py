@@ -41,7 +41,7 @@ class CClickUpMiddleWare:
         # Add new columns - for further processing 
         df['EstimatedTime'] = df['EstimatedTime'].apply(json.loads)
         df['TotalTskEstInMins'] = df['EstimatedTime'].apply(lambda x: (x['hrs'] * 60 + x['mins']) if x else 0)
-
+        df['TaskExecutionDate'] = df['TaskStartDate']
         # 2. 'AssignTo' - extract username from the first entry in 'TaskAssigneesList'  || WARN - (Remaining Task) In Case of Multiple Assignees EDGE Case Must Handle 
         df['AssignTo'] = df['TaskAssigneesList'].apply(lambda x: x[0]['username'] if x and len(x) > 0 else None)
 
@@ -167,169 +167,161 @@ class CClickUpMiddleWare:
         # Return the conflict status
         return is_conflict
     
-    def MSSortEmpDateWiseTskList(dictAllocatedDateWiseTask, employee_tasks, bDebug=True):
-        """
-        Purpose - to sort task in executed date according to task score , split task when task due date is later then start date
+    @staticmethod
+    def MSSt_EdDate(tasks, key="TaskStartDate"):
+        if not tasks:
+            return None, None
         
+        # Extract start and due dates from tasks
+        start_dates = [datetime.strptime(task[key], '%d-%m-%Y') for task in tasks]
+        due_dates = [datetime.strptime(task['TaskDueDate'], '%d-%m-%Y') for task in tasks]
         
-        Task Details additional Properties - 
-        1. TaskExecutionDate
-        2. IsConflict
-        3. isTaskMovable
-        4. ConflictTimeMin
-        5. AllocatedTimeMin
-        """
+        # Get earliest start date and latest due date
+        first_start_date = min(start_dates).strftime('%d-%m-%Y')
+        last_due_date = max(due_dates).strftime('%d-%m-%Y')
         
-        for EmpName, dictTskDetailsExcStDateWise in dictAllocatedDateWiseTask.items():
+        return first_start_date, last_due_date
+    
+    @staticmethod
+    def MSGetTskByExcDate(tasks, task_execution_date, key = "TaskStartDate"):
+        # Convert task_execution_date to datetime for comparison
+        task_execution_date = datetime.strptime(task_execution_date, '%d-%m-%Y')
+        
+        # Filter tasks with the same execution date
+        filtered_tasks = [task for task in tasks if datetime.strptime(task[key], '%d-%m-%Y') == task_execution_date]
+        
+        return filtered_tasks
+
+    @staticmethod
+    def MSSortDF(employee_tasks, bDebug):
+        dictEmployeeWiseTaskList = {}
+
+        for EmpName in employee_tasks.keys():
+            dictEmployeeWiseTaskList[EmpName] = []
+            lsEmployeeTsks = employee_tasks[EmpName]
             if bDebug:
                 print("1. Employee Name - ", EmpName)
-                print("2. Date Wise Tasks Arrangement - ", dictTskDetailsExcStDateWise)
+                print("2. Date Wise Tasks Arrangement - ", lsEmployeeTsks)
 
-            for strTskExcDate, dictExcDateTskDetails in list(dictTskDetailsExcStDateWise.items()):  # Use list to avoid runtime modification errors
-                IsConflictInTskExcDate = CClickUpMiddleWare.MSCheckForTskExcDateConflicts(dictExcDateTskDetails)
+            # Get the start and due dates
+            strTskExcStDate, strTskDueDate = CClickUpMiddleWare.MSSt_EdDate(lsEmployeeTsks, key='TaskExecutionDate')
+            
+            if bDebug:
+                print(f"3. Employee Task Start Date - {strTskExcStDate}, Task End Date - {strTskDueDate}")
+            
+            # Convert start and end dates to datetime objects
+            current_date = datetime.strptime(strTskExcStDate, '%d-%m-%Y')
+            end_date = datetime.strptime(strTskDueDate, '%d-%m-%Y')
+            
+            # Iterate from start date to due date
+            while current_date <= end_date:
+                # Convert current_date to string in the required format
+                strCurrentDate = current_date.strftime('%d-%m-%Y')
+
+                # Initialize available minutes
+                iTotalExcDateRemainingMin = 480  # 8 hours in minutes
                 
-                if IsConflictInTskExcDate:
-                    if bDebug:
-                        print("3. Task Start Date- ", strTskExcDate)
-                        print("4. Execution Date - Tasks Details - ", dictExcDateTskDetails)
+                # Fetch tasks for the current date
+                lsTskExcDate = CClickUpMiddleWare.MSGetTskByExcDate(lsEmployeeTsks, strCurrentDate,  key="TaskExecutionDate")
 
-                    # Get all task details for this date
-                    lsTsks = list(dictExcDateTskDetails.get("AllocatedTask", {}).values())
+                # Sort the fetched tasks by TaskScore (descending) and TaskCreatedDate
+                lsSortedTsks = sorted(
+                    lsTskExcDate,
+                    key=lambda x: (-x['TaskScore'], datetime.strptime(x['TaskCreatedDate'], '%d-%m-%Y'))
+                )
 
-                    # Sort tasks by TaskScore (highest to lowest) and then by TaskCreatedDate (latest to earliest)
-                    lsSortedTsks = sorted(
-                        lsTsks,
-                        key=lambda x: (-x['TaskScore'], datetime.strptime(x['TaskCreatedDate'], '%d-%m-%Y'))
-                    )
-
-                    # Initialize available minutes
-                    iTotalExcDateRemainingMin = 480  # 8 hours in minutes
-
-                    # Create a list to keep track of sorted task IDs
-                    lsTskScoreOrder = []
-
-                    # Iterate through sorted tasks to allocate time and check conflicts
-                    for dictTskDetail in lsSortedTsks:
-        
-                        # Access Task Properties
-                        strTskID = dictTskDetail['TaskID']
-                        iTotalTskEstMin = dictTskDetail['TotalTskEstInMins']
-                        strTskExcDate = dictTskDetail['TaskExecutionDate']
+                # Add sorted tasks to the employee's task list
+                # dictEmployeeWiseTaskList[EmpName].extend(lsSortedTsks)
+                for taskDetail in lsSortedTsks:
+                    dictTskDetail = copy.deepcopy(taskDetail)
+                    # Access Task Properties
+                    iTotalTskEstMin = dictTskDetail['TotalTskEstInMins']
+                    strTskExcDate = dictTskDetail['TaskExecutionDate']
+                    
+                    # add new properties for further processing
+                    bIsTskDueDateLater = (dictTskDetail['TaskExecutionDate'] != dictTskDetail['TaskDueDate'])
+                    
+                    # Check if the task can be allocated within the available time
+                    if iTotalTskEstMin <= iTotalExcDateRemainingMin:
+                        # Mark the task as not in conflict
+                        dictTskDetail['IsConflict'] = False
+                        dictTskDetail['ConflictTimeMin'] = 0
+                        # Allocate the full task estimated time
+                        dictTskDetail['AllocatedTimeMin'] = iTotalTskEstMin
+                        # Subtract the estimated minutes from the available time
+                        iTotalExcDateRemainingMin -= iTotalTskEstMin
+                    else:
+                        # Task Estimated Time > Execution Date Remaining Time (Minutes)
                         
-                        # add new properties for further processing
-                        dictTskDetail['isTaskMovable'] = (dictTskDetail['TaskStartDate'] != dictTskDetail['TaskDueDate'])
-                        
-                        # Check if the task can be allocated within the available time
-                        if iTotalTskEstMin <= iTotalExcDateRemainingMin:
-                            # Mark the task as not in conflict
-                            dictTskDetail['IsConflict'] = False
-                            dictTskDetail['ConflictTimeMin'] = 0
-                            # Allocate the full task estimated time
-                            dictTskDetail['AllocatedTimeMin'] = iTotalTskEstMin
-                            # Subtract the estimated minutes from the available time
-                            iTotalExcDateRemainingMin -= iTotalTskEstMin
-                        else:
-                            # Task Estimated Time > Execution Date Remaining Time (Minutes)
+                        # Task Due Date > Current Task Execution Date then TaskMovable - True else False (on same task due date and task execution date)
+                        if not bIsTskDueDateLater:
+                            # Mark Task Conflict as True, when no more days available (Task Exc Date == Task Due Date)
+                            dictTskDetail['IsConflict'] = True
                             
-                            # Task Due Date > Current Task Execution Date then TaskMovable - True else False (on same task due date and task execution date)
-                            if not dictTskDetail['isTaskMovable']:
-                                # Mark Task Conflict as no more days available (Task Exc Date == Task Due Date)
-                                dictTskDetail['IsConflict'] = True
-                                
-                                # check do i have remaining mins to work for this execution date if so then utilize Minutes else show remaining task estimate time in conflict time
-                                if iTotalExcDateRemainingMin <= 0:
-                                    dictTskDetail['AllocatedTimeMin'] = 0
-                                    dictTskDetail['ConflictTimeMin'] = iTotalTskEstMin
-                                else:
-                                    # Allocate remaining available minutes
-                                    dictTskDetail['AllocatedTimeMin'] = iTotalExcDateRemainingMin
-                                    dictTskDetail['ConflictTimeMin'] = iTotalTskEstMin - iTotalExcDateRemainingMin
-                                    # Set iTotalExcDateRemainingMin to 0 as it has been exhausted
-                                    iTotalExcDateRemainingMin = 0
-                            
-                            # Check if the task due date is later or greater than task execution date
+                            # check do i have remaining mins to work for this execution date if so then utilize Minutes else show remaining task estimate time in conflict time
+                            if iTotalExcDateRemainingMin <= 0:
+                                dictTskDetail['AllocatedTimeMin'] = 0
+                                dictTskDetail['ConflictTimeMin'] = iTotalTskEstMin
                             else:
-                                # No remaining min availabel in Task Execution Date then move current task to next closest date
-                                if iTotalExcDateRemainingMin <= 0:
-                                    
-                                    # Remove the dictTskDetail from the current date
-                                    dictExcDateTskDetails['AllocatedTask'].pop(strTskID)
-                                    
-                                    # Push to the next available date
-                                    strTskNextExcDate = CClickUpMiddleWare.MSGetNextDate(strTskExcDate)
-                                    
-                                    # Mark Task Conflict Status False as Tsk Due Date is Later
-                                    dictTskDetail['IsConflict'] = False
-                                    # Move entire task to the next execution. Date assigned time and conflict time would be zero.
-                                    dictTskDetail['AllocatedTimeMin'] = 0
-                                    dictTskDetail['ConflictTimeMin'] = 0
-                                    dictTskDetail['TaskExecutionDate'] = strTskNextExcDate
-                                    
-                                    if strTskNextExcDate not in dictTskDetailsExcStDateWise:
-                                        # Initialize the next date if it doesn't exist
-                                        dictTskDetailsExcStDateWise[strTskNextExcDate] = {
-                                            "TotalWorkMin": 480,
-                                            "AllocatedWorkingMin": iTotalTskEstMin,
-                                            "IsConflict": iTotalTskEstMin > 480,
-                                            "AllocatedTask": {strTskID:dictTskDetail}
-                                        }
-                                        continue
-                                    
-                                    # Add the task to the next date's task list
-                                    dictTskDetailsExcStDateWise[strTskNextExcDate]["AllocatedTask"][strTskID] = dictTskDetail
-                                    dictTskDetailsExcStDateWise[strTskNextExcDate]["AllocatedWorkingMin"] += iTotalTskEstMin
-                                    dictTskDetailsExcStDateWise[strTskNextExcDate]["IsConflict"] =  dictTskDetailsExcStDateWise[strTskNextExcDate]["AllocatedWorkingMin"] > dictTskDetailsExcStDateWise[strTskNextExcDate]["TotalWorkMin"]
-                                    dictTskDetailsExcStDateWise[strTskNextExcDate]["AllocatedTask"][strTskID]['isTaskMovable'] = strTskNextExcDate != dictTskDetailsExcStDateWise[strTskNextExcDate]["AllocatedTask"][strTskID]['TaskDueDate']
-                                    
-                                else:
-                                    # Push remaining part of the task to the next date
-                                    remaining_min = iTotalTskEstMin - iTotalExcDateRemainingMin
-                                    strTskNextExcDate = CClickUpMiddleWare.MSGetNextDate(strTskExcDate)
-                                    
-                                    # for current start date
-                                    dictTskDetail['IsConflict'] =  False
-                                    dictTskDetail['ConflictTimeMin'] = 0
-                                    dictTskDetail['AllocatedTimeMin'] = iTotalExcDateRemainingMin
-                                    
-                                    # Add the remaining part of the task to the next date
-                                    new_task_details = dictTskDetail.copy()
-                                    new_task_details['TotalTskEstInMins'] = remaining_min
-                                    new_task_details['isTaskMovable'] = strTskNextExcDate != new_task_details['TaskDueDate']
-                                    new_task_details['TaskExecutionDate'] = strTskNextExcDate
-                                    if strTskNextExcDate not in dictTskDetailsExcStDateWise:
-                                        new_task_details['AllocatedTimeMin'] = remaining_min if remaining_min < 480 else 480-remaining_min
-                                        # Initialize the next date if it doesn't exist
-                                        dictTskDetailsExcStDateWise[strTskNextExcDate] = {
-                                            "TotalWorkMin": 480,
-                                            "AllocatedWorkingMin": remaining_min,
-                                            "IsConflict": remaining_min > 480,
-                                            "AllocatedTask": {strTskID:new_task_details}
-                                        }
-                                        iTotalExcDateRemainingMin = 0
-                                        continue
-                                    
-                                    availbleNextDateWorkingMin = dictTskDetailsExcStDateWise[strTskNextExcDate]["TotalWorkMin"] - dictTskDetailsExcStDateWise[strTskNextExcDate]["AllocatedWorkingMin"]
-                                    new_task_details['AllocatedTimeMin'] = remaining_min if remaining_min <=  availbleNextDateWorkingMin else availbleNextDateWorkingMin
-                                    dictTskDetailsExcStDateWise[strTskNextExcDate]["AllocatedTask"][strTskID] = new_task_details
-                                    dictTskDetailsExcStDateWise[strTskNextExcDate]["IsConflict"] = (dictTskDetailsExcStDateWise[strTskNextExcDate]["AllocatedWorkingMin"] + remaining_min) > dictTskDetailsExcStDateWise[strTskNextExcDate]["TotalWorkMin"]
-                                    dictTskDetailsExcStDateWise[strTskNextExcDate]["AllocatedWorkingMin"] += new_task_details['AllocatedTimeMin']
-                                    # Set iTotalExcDateRemainingMin to 0 as it has been exhausted
-                                    iTotalExcDateRemainingMin = 0
-                                        
+                                # Allocate remaining available minutes
+                                dictTskDetail['AllocatedTimeMin'] = iTotalExcDateRemainingMin
+                                dictTskDetail['ConflictTimeMin'] = iTotalTskEstMin - iTotalExcDateRemainingMin
+                                # Set iTotalExcDateRemainingMin to 0 as it has been exhausted
+                                iTotalExcDateRemainingMin = 0
+                        
+                        # Check if the task due date is later or greater than task execution date
+                        else:
+                            # No remaining min availabel in Task Execution Date then move current task to next closest date
+                            if iTotalExcDateRemainingMin <= 0:
+                                # Push to the next available date
+                                strTskNextExcDate = CClickUpMiddleWare.MSGetNextDate(strTskExcDate)
+                                taskDetail['TaskExecutionDate'] = strTskNextExcDate
+                                # add new task for next closest execution date
+                                lsEmployeeTsks.append(taskDetail)
+                                continue
+                            else:
+                                # Push remaining part of the task to the next date
+                                iNextExcDateEstimateMin = iTotalTskEstMin - iTotalExcDateRemainingMin
+                                strTskNextExcDate = CClickUpMiddleWare.MSGetNextDate(strTskExcDate)
+                                # for current start date
+                                dictTskDetail['IsConflict'] =  False
+                                dictTskDetail['ConflictTimeMin'] = 0
+                                dictTskDetail['AllocatedTimeMin'] = iTotalExcDateRemainingMin
+                                
+                                dictNextExcDateTskDetails = copy.deepcopy(taskDetail)
+                                # Add the remaining part of the task to the next date
+                                dictNextExcDateTskDetails['TotalTskEstInMins'] = iNextExcDateEstimateMin
+                                dictNextExcDateTskDetails['TaskExecutionDate'] = strTskNextExcDate
+                                lsEmployeeTsks.append(dictNextExcDateTskDetails)
+                                # Set iTotalExcDateRemainingMin to 0 as it has been exhausted
+                                iTotalExcDateRemainingMin = 0
+                    dictEmployeeWiseTaskList[EmpName].append(dictTskDetail)
+                if bDebug:
+                    print(f"4. Execution Date - {strCurrentDate}, Task List - {lsTskExcDate}")
 
-                        # Add the task ID to the ordered list
-                        lsTskScoreOrder.append(strTskID)
+                # Move to the next day
+                current_date += timedelta(days=1)
 
-                        if bDebug:
-                            print(f"TaskID - {strTskID}, EstimatedMin - {iTotalTskEstMin}, Task Movable - {dictTskDetail['isTaskMovable']}, IsConflict - {dictTskDetail['IsConflict']}")
-                            print(f"AllocatedTimeMin - {dictTskDetail.get('AllocatedTimeMin', 'N/A')}, ConflictTimeMin - {dictTskDetail.get('ConflictTimeMin', 'N/A')}")
-                            print(f"Remaining Available Minutes - {iTotalExcDateRemainingMin}")
+        if bDebug:
+            print("Allocated Task - ", dictEmployeeWiseTaskList)
+        
+        CClickUpMiddleWare.MSExportEmployeeTask(dictEmployeeWiseTaskList, strTskExcStDate, strTskDueDate)
+        return dictEmployeeWiseTaskList
 
-                    # Update the dictionary with the ordered task IDs
-                    dictExcDateTskDetails['TaskScoreWiseOrder'] = lsTskScoreOrder
-
-        return dictAllocatedDateWiseTask
-
+    @staticmethod
+    def MSExportEmployeeTask(dictEmployeeWiseTaskList, task_start_date, task_end_date, output_directory=r'Data/'):
+        # Iterate over the dictionary containing employee task lists
+        for emp_name, task_list in dictEmployeeWiseTaskList.items():
+            # Convert the task list to a DataFrame
+            df = pd.DataFrame(task_list)
+            
+            # Construct the file name using the employee name, start date, and end date
+            filename = f"{output_directory}/{emp_name}_{task_start_date}_to_{task_end_date}.xlsx"
+            
+            # Export the DataFrame to an Excel file
+            df.to_excel(filename, index=False)
+            print(f"Exported tasks for {emp_name} to {filename}")
+            
 if __name__ == "__main__":
     
     list_id = "901600183071"  # Replace with your actual ListID
@@ -340,5 +332,8 @@ if __name__ == "__main__":
     # Fetch tasks based on the criteria
     tasks = CClickUpDB.MSGetTasksByListID(list_id, start_date, end_date)
     employee_tasks = CClickUpMiddleWare.MSGroupTaskEmployeeWise(tasks)
-    dictAllocatedDateWiseTask = CClickUpMiddleWare.MSCreateEmpDateWiseTasksList(employee_tasks, bDebug=bDebug)
-    CClickUpMiddleWare.MSSortEmpDateWiseTskList(dictAllocatedDateWiseTask=dictAllocatedDateWiseTask,employee_tasks=employee_tasks,bDebug=bDebug)
+    # dictAllocatedDateWiseTask = CClickUpMiddleWare.MSCreateEmpDateWiseTasksList(employee_tasks, bDebug=False)
+    # print(dictAllocatedDateWiseTask)
+    print(employee_tasks)
+    CClickUpMiddleWare.MSSortDF(employee_tasks, bDebug=True)
+    # CClickUpMiddleWare.MSSortEmpDateWiseTskList(dictAllocatedDateWiseTask=dictAllocatedDateWiseTask,employee_tasks=employee_tasks,bDebug=bDebug)
