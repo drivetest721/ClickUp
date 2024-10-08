@@ -213,7 +213,7 @@ class CClickUpMiddleWare:
             current_date = datetime.strptime(strTskExcStDate, '%d-%m-%Y')
             end_date = datetime.strptime(strTskDueDate, '%d-%m-%Y')
             dictAvailableMinDateTemplate = {
-                        'ListName': '', 'TaskID': '', 'TaskSubject': '{Employee} is available on day "{strDate}" for {RemainingMin} minutes.', 'TaskStartDate': '', 'TaskDueDate': '', 'TaskStatus': '', 'EstimatedTime': {}, 'TaskPriority': '', 'TaskAssigneesList': [], 'TaskIsMilestone': 0, 'TaskIntensity': 0, 'TaskScore': 0, 'TaskCreatedDate': '', 'TotalTskEstInMins': 0, 'TaskExecutionDate': '', 'AssignTo': '', 'RemainingMin': ""
+                        'ListName': '', 'TaskID': '', 'TaskSubject': '{Employee} is available on day "{strDate}" for {RemainingMin} minutes.', 'TaskStartDate': '', 'TaskDueDate': '', 'TaskStatus': '', 'EstimatedTime': {}, 'TaskPriority': '', 'TaskAssigneesList': [], 'TaskIsMilestone': 0, 'TaskIntensity': 0, 'TaskScore': 0, 'TaskCreatedDate': '', 'TotalTskEstInMins': 0, 'TaskExecutionDate': '', 'AssignTo': ''
                     }
             # Iterate from start date to due date
             while current_date <= end_date:
@@ -248,7 +248,6 @@ class CClickUpMiddleWare:
                         # Mark the task as not in conflict
                         dictTskDetail['IsConflict'] = False
                         dictTskDetail['ConflictTimeMin'] = 0
-                        dictTskDetail['RemainingMin'] = ""
                         # Allocate the full task estimated time
                         dictTskDetail['AllocatedTimeMin'] = iTotalTskEstMin
                         # Subtract the estimated minutes from the available time
@@ -260,7 +259,6 @@ class CClickUpMiddleWare:
                         if not bIsTskDueDateLater:
                             # Mark Task Conflict as True, when no more days available (Task Exc Date == Task Due Date)
                             dictTskDetail['IsConflict'] = True
-                            dictTskDetail['RemainingMin'] = ""
                             # check do i have remaining mins to work for this execution date if so then utilize Minutes else show remaining task estimate time in conflict time
                             if iTotalExcDateRemainingMin <= 0:
                                 dictTskDetail['AllocatedTimeMin'] = 0
@@ -291,7 +289,6 @@ class CClickUpMiddleWare:
                                 dictTskDetail['IsConflict'] =  False
                                 dictTskDetail['ConflictTimeMin'] = 0
                                 dictTskDetail['AllocatedTimeMin'] = iTotalExcDateRemainingMin
-                                dictTskDetail['RemainingMin'] = ""
                                 
                                 dictNextExcDateTskDetails = copy.deepcopy(taskDetail)
                                 # Add the remaining part of the task to the next date
@@ -309,7 +306,15 @@ class CClickUpMiddleWare:
                         RemainingMin=iTotalExcDateRemainingMin
                     )
                     dictAvailableTime['AssignTo'] = EmpName
-                    dictAvailableTime['RemainingMin'] = iTotalExcDateRemainingMin
+                    dictAvailableTime['TaskStartDate'] = strCurrentDate
+                    dictAvailableTime['TaskDueDate'] = strCurrentDate
+                    dictAvailableTime['TaskCreatedDate'] = strCurrentDate
+                    dictAvailableTime['TaskExecutionDate'] = strCurrentDate
+                    dictAvailableTime['TaskStatus'] = 'idle time'
+                    dictAvailableTime['TaskPriority'] = ''
+                    # Allocate Idle Time Min
+                    dictAvailableTime['AllocatedTimeMin'] = iTotalExcDateRemainingMin
+                    dictAvailableTime['TotalTskEstInMins'] = iTotalExcDateRemainingMin
                     dictEmployeeWiseTaskList[EmpName].append(dictAvailableTime)
                 if bDebug:
                     print(f"4. Execution Date - {strCurrentDate}, Task List - {lsTskExcDate}")
@@ -336,20 +341,135 @@ class CClickUpMiddleWare:
             # Export the DataFrame to an Excel file
             df.to_excel(filename, index=False)
             print(f"Exported tasks for {emp_name} to {filename}")
-            
-if __name__ == "__main__":
-    listIds = ['901601699012', '901604046396', '901600183071', '901604035672', '901604046411', '901604272654', '901603806927', '901603898346']
 
-    # list_id = "901600183071"  # Replace with your actual ListID
-    start_date = "01-07-2024"  # Replace with your desired start date
-    end_date = "20-09-2024"    # Replace with your desired end date
-    bDebug = True
+def update_task_dict(task_dict):
+    updated_dict = {}
+
+    # Loop through each employee and their tasks
+    for employee, tasks in task_dict.items():
+        updated_dict[employee] = []  # Initialize an empty list for updated tasks
+
+        # Iterate over each task for the employee
+        for task in tasks:
+
+            # If the task has a conflict and AllocatedTimeMin > 0, split into two tasks
+            if task.get('IsConflict', False) and task.get('AllocatedTimeMin', 0) > 0:
+                # Create two new tasks based on AllocatedTimeMin and ConflictTimeMin
+
+                # Task with AllocatedTimeMin
+                allocated_time_task = task.copy()
+                allocated_time_task['AllocatedTimeMin'] = task.get('AllocatedTimeMin', 0)
+                allocated_time_task['IsConflict'] = False
+                updated_dict[employee].append(allocated_time_task)
+
+                # Task with ConflictTimeMin
+                conflict_time_task = task.copy()
+                conflict_time_task['AllocatedTimeMin'] = task.get('ConflictTimeMin', 0)
+                updated_dict[employee].append(conflict_time_task)
+                continue
+            # Add the original task to the list
+            updated_dict[employee].append(task)
+    return updated_dict
+
+        
+if __name__ == "__main__":
+    # listIds = ['901601699012', '901604046396', '901600183071', '901604035672', '901604046411', '901604272654', '901603806927', '901603898346']
+
+    # # list_id = "901600183071"  # Replace with your actual ListID
+    # start_date = "02-09-2024"  # Replace with your desired start date
+    # end_date = "20-09-2024"    # Replace with your desired end date
+    # bDebug = True
     
-    # Fetch tasks based on the criteria
-    tasks = CClickUpDB.MSGetTasksByListID(listIds, start_date, end_date)
-    employee_tasks = CClickUpMiddleWare.MSGroupTaskEmployeeWise(tasks)
-    # dictAllocatedDateWiseTask = CClickUpMiddleWare.MSCreateEmpDateWiseTasksList(employee_tasks, bDebug=False)
-    # print(dictAllocatedDateWiseTask)
-    print(employee_tasks)
-    CClickUpMiddleWare.MSSortDF(employee_tasks, bDebug=True)
+    # # Fetch tasks based on the criteria
+    # tasks = CClickUpDB.MSGetTasksByListIDs(listIds, start_date, end_date)
+    # employee_tasks = CClickUpMiddleWare.MSGroupTaskEmployeeWise(tasks)
+    # # dictAllocatedDateWiseTask = CClickUpMiddleWare.MSCreateEmpDateWiseTasksList(employee_tasks, bDebug=False)
+    # # print(dictAllocatedDateWiseTask)
+    # print(employee_tasks)
+    # input_dict = CClickUpMiddleWare.MSSortDF(employee_tasks, bDebug=True)
     # CClickUpMiddleWare.MSSortEmpDateWiseTskList(dictAllocatedDateWiseTask=dictAllocatedDateWiseTask,employee_tasks=employee_tasks,bDebug=bDebug)
+    
+    # Example input
+    task_dict = {
+        "Mitul Solanki": [
+            {
+                "ListName": "ERPNext",
+                "TaskID": "86cw7wkbw",
+                "TaskSubject": "Restore V14 Data in V15",
+                "TaskStartDate": "04-08-2024",
+                "TaskDueDate": "05-08-2024",
+                "TaskStatus": "delivered",
+                "EstimatedTime": {"hrs": 24, "mins": 0, "time_estimate": 86400000},
+                "TaskPriority": "urgent",
+                "TaskAssigneesList": [
+                    {"id": 67390920, "color": "", "email": "mitul@riveredgeanalytics.com", "initials": "MS", "username": "Mitul Solanki", "profilePicture": "https://attachments.clickup.com/profilePictures/67390920_BGd.jpg"}
+                ],
+                "TaskIsMilestone": 0,
+                "TaskIntensity": 1,
+                "TaskScore": 3,
+                "TaskCreatedDate": "14-08-2024 12:34:56",
+                "TotalTskEstInMins": 90,
+                "TaskExecutionDate": "05-09-2024",
+                "AssignTo": "Mitul Solanki",
+                "IsConflict": False,
+                "ConflictTimeMin": 0,
+                "AllocatedTimeMin": 90,
+                "RemainingMin": ""
+            },
+            {
+                "ListName": "ERPNext",
+                "TaskID": "86cw7wkbw",
+                "TaskSubject": "Restore V14 Data in V15",
+                "TaskStartDate": "04-08-2024",
+                "TaskDueDate": "05-08-2024",
+                "TaskStatus": "delivered",
+                "EstimatedTime": {"hrs": 24, "mins": 0, "time_estimate": 86400000},
+                "TaskPriority": "urgent",
+                "TaskAssigneesList": [
+                    {"id": 67390920, "color": "", "email": "mitul@riveredgeanalytics.com", "initials": "MS", "username": "Mitul Solanki", "profilePicture": "https://attachments.clickup.com/profilePictures/67390920_BGd.jpg"}
+                ],
+                "TaskIsMilestone": 0,
+                "TaskIntensity": 1,
+                "TaskScore": 3,
+                "TaskCreatedDate": "14-08-2024 12:34:56",
+                "TotalTskEstInMins": 480,
+                "TaskExecutionDate": "05-09-2024",
+                "AssignTo": "Mitul Solanki",
+                "IsConflict": True,
+                "ConflictTimeMin": 90,
+                "AllocatedTimeMin": 390,
+                "RemainingMin": ""
+            },
+            {
+                "ListName": "ERPNext",
+                "TaskID": "86cw7x8v2",
+                "TaskSubject": "Mitul - Department & Module Access",
+                "TaskStartDate": "06-08-2024",
+                "TaskDueDate": "06-08-2024",
+                "TaskStatus": "delivered",
+                "EstimatedTime": {"hrs": 1, "mins": 0, "time_estimate": 3600000},
+                "TaskPriority": "urgent",
+                "TaskAssigneesList": [
+                    {"id": 67390920, "color": "", "email": "mitul@riveredgeanalytics.com", "initials": "MS", "username": "Mitul Solanki", "profilePicture": "https://attachments.clickup.com/profilePictures/67390920_BGd.jpg"}
+                ],
+                "TaskIsMilestone": 0,
+                "TaskIntensity": 1,
+                "TaskScore": 2,
+                "TaskCreatedDate": "14-08-2024 13:34:34",
+                "TotalTskEstInMins": 240,
+                "TaskExecutionDate": "06-08-2024",
+                "AssignTo": "Mitul Solanki",
+                "IsConflict": False,
+                "RemainingMin": "",
+                "AllocatedTimeMin": 240,
+                "ConflictTimeMin": 0
+            }
+        ]
+    }
+
+    # Call the function
+    updated_dict = update_task_dict(task_dict)
+
+    # Print updated dict
+    import pprint
+    pprint.pprint(updated_dict)

@@ -68,6 +68,7 @@ class CClickUpDB:
             task_is_milestone = CClickUpDB.MSIsTaskMileStone(task_subject)
             task_intensity = CClickUpDB.MSGetTaskIntensity(task_subject)
             TaskCheckLists = json.dumps(data.get('checklists',None))
+            task_color_details = CClickUpDB.MSGetTaskColorDetails(task_priority, task_status)
             if result[0] > 0:
                 # Update the existing entry
                 update_sql = """
@@ -78,14 +79,14 @@ class CClickUpDB:
                     AssignByPersonDetails = %s, TaskAssigneesList = %s, WatchersList = %s,
                     TaskCreatedDate = %s, TaskUpdateDate = %s, TaskDateClosed = %s,
                     TaskDateDone = %s, TaskTags = %s, TaskDependencies = %s,
-                    TaskIsMilestone = %s, TaskIntensity = %s, TaskCheckLists = %s
+                    TaskIsMilestone = %s, TaskIntensity = %s, TaskCheckLists = %s, TaskColorDetails=%s
                 WHERE TaskID = %s
                 """
                 update_values = (
                     list_name, list_id, folder_name, space_id, task_subject, start_date, due_date, parent_task_id,
                     estimated_time, task_priority, task_status, creator_name, task_assignees_list, watchers_list,
                     task_created_date, task_update_date, task_date_closed, task_date_done, task_tags, task_dependencies,
-                    task_is_milestone, task_intensity, TaskCheckLists, data['id']
+                    task_is_milestone, task_intensity, TaskCheckLists, task_color_details, data['id']
                 )
                 cursor.execute(update_sql, update_values)
                 print(f"TaskID {data['id']} updated successfully.")
@@ -97,14 +98,14 @@ class CClickUpDB:
                     TaskStartDate, TaskDueDate, ParentTaskID, EstimatedTime, TaskPriority,
                     TaskStatus, AssignByPersonDetails, TaskAssigneesList, WatchersList,
                     TaskCreatedDate, TaskUpdateDate, TaskDateClosed, TaskDateDone,
-                    TaskTags, TaskDependencies, TaskIsMilestone, TaskIntensity, TaskCheckLists
-                ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                    TaskTags, TaskDependencies, TaskIsMilestone, TaskIntensity, TaskCheckLists, TaskColorDetails
+                ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
                 """
                 insert_values = (
                     list_name, list_id, folder_name, space_id, data['id'], task_subject, start_date, due_date,
                     parent_task_id, estimated_time, task_priority, task_status, creator_name, task_assignees_list,
                     watchers_list, task_created_date, task_update_date, task_date_closed, task_date_done,
-                    task_tags, task_dependencies, task_is_milestone, task_intensity, TaskCheckLists
+                    task_tags, task_dependencies, task_is_milestone, task_intensity, TaskCheckLists,task_color_details
                 )
                 cursor.execute(insert_sql, insert_values)
                 print(f"TaskID {data['id']} inserted successfully.")
@@ -118,6 +119,39 @@ class CClickUpDB:
                 cursor.close()
                 connection.close()
     
+    @staticmethod
+    def MSGetTaskColorDetails(task_priority, task_status):
+        # Mapping task status to colors
+        status_color_map = {
+            "open": "#d8d8d8",  # light grey
+            "in progress": "#48d2ff",  # light blue
+            "delivered": "#008844",  # success green
+            "closed": "#008844",  # success green (same as delivered)
+            "review": "#9370DB"  # cute purple
+        }
+
+        # Mapping task priority to colors
+        priority_color_map = {
+            "low": "#48d2ff",  # light blue
+            "normal": "#48d2ff",  # light blue
+            "high": "#FFA500",  # cute orange
+            "urgent": "#FF00FF"  # magenta
+        }
+
+        # Assign status color based on task status
+        status_color = status_color_map.get(task_status.get("status").lower(), "#48d2ff")  # Default red (conflict color)
+
+        # Assign priority color based on task priority
+        priority_color = priority_color_map.get(task_priority.get("priority").lower(), "#48d2ff")  # Default red (conflict color)
+
+        # Return the dictionary with color details
+        return {
+            "statuscolor": status_color,
+            "prioritycolor": priority_color,
+            "conflictcolor": "#FF0000"  # Red for conflicts
+        }
+
+        
     @staticmethod
     def MSGetTaskIntensity(strTaskSubject):
         # Regular expression to find T1, T2, T3, <T1>, <T2>, <T3>
@@ -172,7 +206,7 @@ class CClickUpDB:
             return {'hrs': 0, 'mins': 0,'time_estimate':time_estimate}
     
     @staticmethod
-    def MSGetTasksByListID(list_id, start_date, end_date):
+    def MSGetTasksByListIDss(list_id, start_date, end_date):
         """
         Retrieves tasks from ClickUpList based on ListID, TaskStartDate, and TaskDueDate.
 
