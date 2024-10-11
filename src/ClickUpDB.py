@@ -68,7 +68,7 @@ class CClickUpDB:
             task_is_milestone = CClickUpDB.MSIsTaskMileStone(task_subject)
             task_intensity = CClickUpDB.MSGetTaskIntensity(task_subject)
             TaskCheckLists = json.dumps(data.get('checklists',None))
-            task_color_details = CClickUpDB.MSGetTaskColorDetails(task_priority, task_status)
+            task_color_details = json.dumps(CClickUpDB.MSGetTaskColorDetails(data.get('priority'), data['status']))
             if result[0] > 0:
                 # Update the existing entry
                 update_sql = """
@@ -120,12 +120,22 @@ class CClickUpDB:
                 connection.close()
     
     @staticmethod
+    def hex_to_rgb(hex_color):
+        """
+        Convert hex color code to rgb(r, g, b) format.
+        :param hex_color: Hex color code (e.g., '#d8d8d8')
+        :return: String in the format 'rgb(r, g, b)'
+        """
+        hex_color = hex_color.lstrip('#')
+        return f"rgb({int(hex_color[0:2], 16)}, {int(hex_color[2:4], 16)}, {int(hex_color[4:6], 16)})"
+    
+    @staticmethod
     def MSGetTaskColorDetails(task_priority, task_status):
         # Mapping task status to colors
         status_color_map = {
             "open": "#d8d8d8",  # light grey
             "in progress": "#48d2ff",  # light blue
-            "delivered": "#008844",  # success green
+            "delievered": "#008844",  # success green
             "closed": "#008844",  # success green (same as delivered)
             "review": "#9370DB"  # cute purple
         }
@@ -134,21 +144,24 @@ class CClickUpDB:
         priority_color_map = {
             "low": "#48d2ff",  # light blue
             "normal": "#48d2ff",  # light blue
-            "high": "#FFA500",  # cute orange
+            "high": "#FFA500",  # orange
             "urgent": "#FF00FF"  # magenta
         }
 
         # Assign status color based on task status
-        status_color = status_color_map.get(task_status.get("status").lower(), "#48d2ff")  # Default red (conflict color)
-
+        status_color = status_color_map.get(task_status.get("status", "open").lower(), "#48d2ff")  # Default light blue
         # Assign priority color based on task priority
-        priority_color = priority_color_map.get(task_priority.get("priority").lower(), "#48d2ff")  # Default red (conflict color)
+        priority_color = priority_color_map.get(task_priority.get("priority", "low").lower() if task_priority else "low", "#48d2ff")  # Default light blue
 
-        # Return the dictionary with color details
+        # Convert the hex colors to rgb format
+        status_color_rgb = CClickUpDB.hex_to_rgb(status_color)
+        priority_color_rgb = CClickUpDB.hex_to_rgb(priority_color)
+
+        # Return the dictionary with RGB color details
         return {
-            "statuscolor": status_color,
-            "prioritycolor": priority_color,
-            "conflictcolor": "#FF0000"  # Red for conflicts
+            "statuscolor": status_color_rgb,
+            "prioritycolor": priority_color_rgb,
+            "conflictcolor": CClickUpDB.hex_to_rgb("#FF0000")  # Red for conflicts
         }
 
         
@@ -206,7 +219,7 @@ class CClickUpDB:
             return {'hrs': 0, 'mins': 0,'time_estimate':time_estimate}
     
     @staticmethod
-    def MSGetTasksByListIDss(list_id, start_date, end_date):
+    def MSGetTasksByListIDs(list_id, start_date, end_date):
         """
         Retrieves tasks from ClickUpList based on ListID, TaskStartDate, and TaskDueDate.
 
@@ -324,7 +337,7 @@ class CClickUpDB:
         # Drop columns except the specified list
         columns_to_keep = ['ListName', 'TaskID', 'TaskSubject', 'TaskStartDate', 'TaskDueDate', 
                         'EstimatedTime', 'TaskPriority', 'TaskAssigneesList', 
-                        'TaskIsMilestone', 'TaskIntensity', 'TaskScore']
+                        'TaskIsMilestone', 'TaskIntensity', 'TaskScore','TaskColorDetails']
         df = df[columns_to_keep]
         
         # Creating employee-wise DataFrames
@@ -477,12 +490,13 @@ if __name__ == "__main__":
     # print(CClickUpDB.MSConvertMilliSecondsToHrs(312900000))
     
     # Define your query parameters
-    list_id = ["901600183071"]  # Replace with your actual ListID
-    start_date = "01-06-2024"  # Replace with your desired start date
-    end_date = "01-10-2024"    # Replace with your desired end date
+    # list_id = ["901600183071"]  # Replace with your actual ListID
+    # start_date = "01-06-2024"  # Replace with your desired start date
+    # end_date = "01-10-2024"    # Replace with your desired end date
 
-    # Fetch tasks based on the criteria
-    tasks = CClickUpDB.MSGetTasksByListID(list_id, start_date, end_date)
-    print(tasks)
-    print(len(tasks))
+    # # Fetch tasks based on the criteria
+    # tasks = CClickUpDB.MSGetTasksByListID(list_id, start_date, end_date)
+    # print(tasks)
+    # print(len(tasks))
+    print(CClickUpDB.hex_to_rgb("#FF0000"))
     

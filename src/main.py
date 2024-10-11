@@ -33,7 +33,7 @@ class CClickUpMiddleWare:
         # Drop columns except the specified list
         columns_to_keep = ['ListName', 'TaskID', 'TaskSubject', 'TaskStartDate', 'TaskDueDate', 'TaskStatus',
                         'EstimatedTime', 'TaskPriority', 'TaskAssigneesList', 
-                        'TaskIsMilestone', 'TaskIntensity', 'TaskScore','TaskCreatedDate']
+                        'TaskIsMilestone', 'TaskIntensity', 'TaskScore','TaskCreatedDate','TaskColorDetails']
         
         df = df[columns_to_keep]
         
@@ -52,6 +52,7 @@ class CClickUpMiddleWare:
         df['TaskStatus'] = df['TaskStatus'].apply(json.loads)
         df['TaskStatus'] = df['TaskStatus'].apply(lambda x: x['status'] if isinstance(x, dict) else None)
 
+        df['TaskColorDetails'] = df['TaskColorDetails'].apply(json.loads)
         # Creating employee-wise task lists
         dictFilteredEmpWiseTsk = {}
         for _, row in df.iterrows():
@@ -213,7 +214,7 @@ class CClickUpMiddleWare:
             current_date = datetime.strptime(strTskExcStDate, '%d-%m-%Y')
             end_date = datetime.strptime(strTskDueDate, '%d-%m-%Y')
             dictAvailableMinDateTemplate = {
-                        'ListName': '', 'TaskID': '', 'TaskSubject': '{Employee} is available on day "{strDate}" for {RemainingMin} minutes.', 'TaskStartDate': '', 'TaskDueDate': '', 'TaskStatus': '', 'EstimatedTime': {}, 'TaskPriority': '', 'TaskAssigneesList': [], 'TaskIsMilestone': 0, 'TaskIntensity': 0, 'TaskScore': 0, 'TaskCreatedDate': '', 'TotalTskEstInMins': 0, 'TaskExecutionDate': '', 'AssignTo': ''
+                        'ListName': '', 'TaskID': '', 'TaskSubject': '{Employee} is available on day "{strDate}" for {RemainingMin} minutes.', 'TaskStartDate': '', 'TaskDueDate': '', 'TaskStatus': '', 'EstimatedTime': {}, 'TaskPriority': '', 'TaskAssigneesList': [], 'TaskIsMilestone': 0, 'TaskIntensity': 0, 'TaskScore': 0, 'TaskCreatedDate': '', 'TotalTskEstInMins': 0, 'TaskExecutionDate': '', 'AssignTo': '','IsConflict':False,'ConflictTimeMin':0,'AllocatedTimeMin':0
                     }
             # Iterate from start date to due date
             while current_date <= end_date:
