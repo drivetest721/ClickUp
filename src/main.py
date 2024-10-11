@@ -33,7 +33,7 @@ class CClickUpMiddleWare:
         # Drop columns except the specified list
         columns_to_keep = ['ListName', 'TaskID', 'TaskSubject', 'TaskStartDate', 'TaskDueDate', 'TaskStatus',
                         'EstimatedTime', 'TaskPriority', 'TaskAssigneesList', 
-                        'TaskIsMilestone', 'TaskIntensity', 'TaskScore','TaskCreatedDate','TaskColorDetails']
+                        'TaskIsMilestone', 'TaskIntensity', 'TaskScore','TaskCreatedDate']
         
         df = df[columns_to_keep]
         
@@ -52,7 +52,7 @@ class CClickUpMiddleWare:
         df['TaskStatus'] = df['TaskStatus'].apply(json.loads)
         df['TaskStatus'] = df['TaskStatus'].apply(lambda x: x['status'] if isinstance(x, dict) else None)
 
-        df['TaskColorDetails'] = df['TaskColorDetails'].apply(json.loads)
+        # df['TaskColorDetails'] = {df['TaskColorDetails'].apply(json.loads)}
         # Creating employee-wise task lists
         dictFilteredEmpWiseTsk = {}
         for _, row in df.iterrows():
@@ -377,7 +377,7 @@ if __name__ == "__main__":
     # listIds = ['901601699012', '901604046396', '901600183071', '901604035672', '901604046411', '901604272654', '901603806927', '901603898346']
 
     # # list_id = "901600183071"  # Replace with your actual ListID
-    # start_date = "02-09-2024"  # Replace with your desired start date
+    # start_date = "02-08-2024"  # Replace with your desired start date
     # end_date = "20-09-2024"    # Replace with your desired end date
     # bDebug = True
     
@@ -391,86 +391,86 @@ if __name__ == "__main__":
     # CClickUpMiddleWare.MSSortEmpDateWiseTskList(dictAllocatedDateWiseTask=dictAllocatedDateWiseTask,employee_tasks=employee_tasks,bDebug=bDebug)
     
     # Example input
-    task_dict = {
-        "Mitul Solanki": [
-            {
-                "ListName": "ERPNext",
-                "TaskID": "86cw7wkbw",
-                "TaskSubject": "Restore V14 Data in V15",
-                "TaskStartDate": "04-08-2024",
-                "TaskDueDate": "05-08-2024",
-                "TaskStatus": "delivered",
-                "EstimatedTime": {"hrs": 24, "mins": 0, "time_estimate": 86400000},
-                "TaskPriority": "urgent",
-                "TaskAssigneesList": [
-                    {"id": 67390920, "color": "", "email": "mitul@riveredgeanalytics.com", "initials": "MS", "username": "Mitul Solanki", "profilePicture": "https://attachments.clickup.com/profilePictures/67390920_BGd.jpg"}
-                ],
-                "TaskIsMilestone": 0,
-                "TaskIntensity": 1,
-                "TaskScore": 3,
-                "TaskCreatedDate": "14-08-2024 12:34:56",
-                "TotalTskEstInMins": 90,
-                "TaskExecutionDate": "05-09-2024",
-                "AssignTo": "Mitul Solanki",
-                "IsConflict": False,
-                "ConflictTimeMin": 0,
-                "AllocatedTimeMin": 90,
-                "RemainingMin": ""
-            },
-            {
-                "ListName": "ERPNext",
-                "TaskID": "86cw7wkbw",
-                "TaskSubject": "Restore V14 Data in V15",
-                "TaskStartDate": "04-08-2024",
-                "TaskDueDate": "05-08-2024",
-                "TaskStatus": "delivered",
-                "EstimatedTime": {"hrs": 24, "mins": 0, "time_estimate": 86400000},
-                "TaskPriority": "urgent",
-                "TaskAssigneesList": [
-                    {"id": 67390920, "color": "", "email": "mitul@riveredgeanalytics.com", "initials": "MS", "username": "Mitul Solanki", "profilePicture": "https://attachments.clickup.com/profilePictures/67390920_BGd.jpg"}
-                ],
-                "TaskIsMilestone": 0,
-                "TaskIntensity": 1,
-                "TaskScore": 3,
-                "TaskCreatedDate": "14-08-2024 12:34:56",
-                "TotalTskEstInMins": 480,
-                "TaskExecutionDate": "05-09-2024",
-                "AssignTo": "Mitul Solanki",
-                "IsConflict": True,
-                "ConflictTimeMin": 90,
-                "AllocatedTimeMin": 390,
-                "RemainingMin": ""
-            },
-            {
-                "ListName": "ERPNext",
-                "TaskID": "86cw7x8v2",
-                "TaskSubject": "Mitul - Department & Module Access",
-                "TaskStartDate": "06-08-2024",
-                "TaskDueDate": "06-08-2024",
-                "TaskStatus": "delivered",
-                "EstimatedTime": {"hrs": 1, "mins": 0, "time_estimate": 3600000},
-                "TaskPriority": "urgent",
-                "TaskAssigneesList": [
-                    {"id": 67390920, "color": "", "email": "mitul@riveredgeanalytics.com", "initials": "MS", "username": "Mitul Solanki", "profilePicture": "https://attachments.clickup.com/profilePictures/67390920_BGd.jpg"}
-                ],
-                "TaskIsMilestone": 0,
-                "TaskIntensity": 1,
-                "TaskScore": 2,
-                "TaskCreatedDate": "14-08-2024 13:34:34",
-                "TotalTskEstInMins": 240,
-                "TaskExecutionDate": "06-08-2024",
-                "AssignTo": "Mitul Solanki",
-                "IsConflict": False,
-                "RemainingMin": "",
-                "AllocatedTimeMin": 240,
-                "ConflictTimeMin": 0
-            }
-        ]
-    }
+    # task_dict = {
+    #     "Mitul Solanki": [
+    #         {
+    #             "ListName": "ERPNext",
+    #             "TaskID": "86cw7wkbw",
+    #             "TaskSubject": "Restore V14 Data in V15",
+    #             "TaskStartDate": "04-08-2024",
+    #             "TaskDueDate": "05-08-2024",
+    #             "TaskStatus": "delivered",
+    #             "EstimatedTime": {"hrs": 24, "mins": 0, "time_estimate": 86400000},
+    #             "TaskPriority": "urgent",
+    #             "TaskAssigneesList": [
+    #                 {"id": 67390920, "color": "", "email": "mitul@riveredgeanalytics.com", "initials": "MS", "username": "Mitul Solanki", "profilePicture": "https://attachments.clickup.com/profilePictures/67390920_BGd.jpg"}
+    #             ],
+    #             "TaskIsMilestone": 0,
+    #             "TaskIntensity": 1,
+    #             "TaskScore": 3,
+    #             "TaskCreatedDate": "14-08-2024 12:34:56",
+    #             "TotalTskEstInMins": 90,
+    #             "TaskExecutionDate": "05-09-2024",
+    #             "AssignTo": "Mitul Solanki",
+    #             "IsConflict": False,
+    #             "ConflictTimeMin": 0,
+    #             "AllocatedTimeMin": 90,
+    #             "RemainingMin": ""
+    #         },
+    #         {
+    #             "ListName": "ERPNext",
+    #             "TaskID": "86cw7wkbw",
+    #             "TaskSubject": "Restore V14 Data in V15",
+    #             "TaskStartDate": "04-08-2024",
+    #             "TaskDueDate": "05-08-2024",
+    #             "TaskStatus": "delivered",
+    #             "EstimatedTime": {"hrs": 24, "mins": 0, "time_estimate": 86400000},
+    #             "TaskPriority": "urgent",
+    #             "TaskAssigneesList": [
+    #                 {"id": 67390920, "color": "", "email": "mitul@riveredgeanalytics.com", "initials": "MS", "username": "Mitul Solanki", "profilePicture": "https://attachments.clickup.com/profilePictures/67390920_BGd.jpg"}
+    #             ],
+    #             "TaskIsMilestone": 0,
+    #             "TaskIntensity": 1,
+    #             "TaskScore": 3,
+    #             "TaskCreatedDate": "14-08-2024 12:34:56",
+    #             "TotalTskEstInMins": 480,
+    #             "TaskExecutionDate": "05-09-2024",
+    #             "AssignTo": "Mitul Solanki",
+    #             "IsConflict": True,
+    #             "ConflictTimeMin": 90,
+    #             "AllocatedTimeMin": 390,
+    #             "RemainingMin": ""
+    #         },
+    #         {
+    #             "ListName": "ERPNext",
+    #             "TaskID": "86cw7x8v2",
+    #             "TaskSubject": "Mitul - Department & Module Access",
+    #             "TaskStartDate": "06-08-2024",
+    #             "TaskDueDate": "06-08-2024",
+    #             "TaskStatus": "delivered",
+    #             "EstimatedTime": {"hrs": 1, "mins": 0, "time_estimate": 3600000},
+    #             "TaskPriority": "urgent",
+    #             "TaskAssigneesList": [
+    #                 {"id": 67390920, "color": "", "email": "mitul@riveredgeanalytics.com", "initials": "MS", "username": "Mitul Solanki", "profilePicture": "https://attachments.clickup.com/profilePictures/67390920_BGd.jpg"}
+    #             ],
+    #             "TaskIsMilestone": 0,
+    #             "TaskIntensity": 1,
+    #             "TaskScore": 2,
+    #             "TaskCreatedDate": "14-08-2024 13:34:34",
+    #             "TotalTskEstInMins": 240,
+    #             "TaskExecutionDate": "06-08-2024",
+    #             "AssignTo": "Mitul Solanki",
+    #             "IsConflict": False,
+    #             "RemainingMin": "",
+    #             "AllocatedTimeMin": 240,
+    #             "ConflictTimeMin": 0
+    #         }
+    #     ]
+    # }
 
-    # Call the function
-    updated_dict = update_task_dict(task_dict)
+    # # Call the function
+    # updated_dict = update_task_dict(task_dict)
 
-    # Print updated dict
-    import pprint
-    pprint.pprint(updated_dict)
+    # # Print updated dict
+    # import pprint
+    # pprint.pprint(updated_dict)

@@ -68,7 +68,7 @@ class CClickUpDB:
             task_is_milestone = CClickUpDB.MSIsTaskMileStone(task_subject)
             task_intensity = CClickUpDB.MSGetTaskIntensity(task_subject)
             TaskCheckLists = json.dumps(data.get('checklists',None))
-            task_color_details = json.dumps(CClickUpDB.MSGetTaskColorDetails(data.get('priority'), data['status']))
+            task_color_details =None #json.dumps(CClickUpDB.MSGetTaskColorDetails(data.get('priority'), data['status']))
             if result[0] > 0:
                 # Update the existing entry
                 update_sql = """
@@ -498,5 +498,14 @@ if __name__ == "__main__":
     # tasks = CClickUpDB.MSGetTasksByListID(list_id, start_date, end_date)
     # print(tasks)
     # print(len(tasks))
-    print(CClickUpDB.hex_to_rgb("#FF0000"))
+    # status_color_map = {
+    #             "low": "#48d2ff",  # light blue
+    #             "normal": "#48d2ff",  # light blue
+    #             "high": "#FFA500",  # orange
+    #             "urgent": "#FF00FF"  # magenta
+    #         }
+    # lsColors = []
+    # for value in status_color_map.values():
+    #     lsColors.append(CClickUpDB.hex_to_rgb(value))
+    # print(lsColors)
     

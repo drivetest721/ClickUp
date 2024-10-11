@@ -7,6 +7,9 @@ class GanttChart:
     def __init__(self):
         self.tasks = []
     def add_task(self, task_name, person, start_datetime, duration, color=None, pattern=None, bar_width=None):
+        # Ensure duration is a timedelta
+        if not isinstance(duration, timedelta):
+            raise ValueError("Duration must be a timedelta object")
         end_datetime = start_datetime + duration
         self.tasks.append({
             'Task': task_name,
@@ -89,10 +92,10 @@ class GanttChart:
         :return: A dictionary where keys are color names and values are RGB tuples.
         """
         return {
-            # 'red': (255, 0, 0),
-            # 'green': (0, 255, 0),
-            # 'blue': (0, 0, 255),
-            'yellow': (255, 255, 0),
+            'red': (255, 0, 0),
+            'green': (0, 255, 0),
+            'blue': (0, 0, 255),
+            # 'yellow': (255, 255, 0),
             'cyan': (0, 255, 255),
             'magenta': (255, 0, 255),
             'black': (0, 0, 0),
@@ -127,28 +130,44 @@ class GanttChart:
 
 # Example usage of generate_color_family method
 if __name__ == "__main__":
+    # import datetime  # Correct import
     chart = GanttChart()
     
     # Generate a family of red colors
-    red_family = chart.generate_color_family(chart.get_common_base_colors()['teal'], 8)
+    red_family = chart.generate_color_family(chart.get_common_base_colors()['red'], 4)
     
     # Generate a family of blue colors
-    blue_family = chart.generate_color_family(chart.get_common_base_colors()['yellow'], 6)
-    
-    # Use the generated colors in tasks
-    start_time = datetime(2023, 5, 1, 9, 0)  # May 1, 2023, 9:00 AM
-    print(red_family, isinstance(red_family, str))
-    for i, color in enumerate(red_family):
-        print("Color ", color, isinstance(color, str), "thickness", i*0.2 +0.2)
-        chart.add_task(f"Red Task {i+1}", "Mitul", start_time + timedelta(hours=i*2), timedelta(hours=2), color=color, pattern=chart.get_patterns()[i], bar_width=i*0.1 +0.1)
-    
-    for i, color in enumerate(blue_family):
-        chart.add_task(f"Blue Task {i+1}", "Person B", start_time + timedelta(hours=i*3), timedelta(hours=3), color=color, pattern=chart.get_patterns()[i], bar_width=i*0.2 +0.2)
+    blue_family = chart.generate_color_family(chart.get_common_base_colors()['navy'], 6)
+    # green_family = chart.generate_color_family(chart.get_common_base_colors()['green'], 6)
+    print("colors ", red_family, "blue_family",blue_family)
+    # Correct duration to be a timedelta object
+    chart.add_task(f"Restore V14 Data in V15 3", "Mitul", datetime(2024, 8, 14, 0, 0),
+                   timedelta(hours=8), color=red_family[0], pattern="\\", bar_width=0.6)
+
+    chart.add_task(f"Restore V14 Data in V15 2 ", "Mitul", datetime(2024, 8, 18, 8, 0),
+                   timedelta(hours=6), color=red_family[1], pattern="\\", bar_width=1.6)
+
+    # chart.add_task(f"Mitul - Department & Module Access", "Mitul", datetime(2024, 8, 15, 8, 0),
+    #                timedelta(hours=0), color=red_family[2], pattern="\\", bar_width=0.4)
+
+    # chart.add_task(f"Restore V14 Data in V15", "Mitul", datetime(2024, 8, 16, 0, 0),
+    #                timedelta(hours=8), color=red_family[3], pattern="\\", bar_width=0.6)
+
+    chart.add_task(f"Mitul - Import Customer List & Customize Form", "Mansi", datetime(2024, 8, 16, 0, 0),
+                   timedelta(hours=4), color=blue_family[2], pattern="-", bar_width=1.4)
+
+    chart.add_task(f"Restore V14 Data in V15 1", "Mansi", datetime(2024, 8, 16, 4, 0),
+                   timedelta(hours=2), color=blue_family[1], pattern="+", bar_width=0.8)
+    # Create and show the chart
+    fig = chart.create_chart(title="Color Family Example 2")
+    fig.show()
+    # for i, color in enumerate(blue_family):
+        # chart.add_task(f"Blue Task {i+1}", "Person B", start_time + timedelta(hours=i*3), timedelta(hours=3), color="rgb(255,0,0)", pattern=chart.get_patterns()[i], bar_width=i*0.2 +0.2)
 
     
     # Create and show the chart
-    fig = chart.create_chart(title="Color Family Example")
-    fig.show()
+    # fig = chart.create_chart(title="Color Family Example")
+    # fig.show()
 
 
 # # Example usage
