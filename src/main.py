@@ -9,6 +9,8 @@ from DBHelper import CDBHelper
 from datetime import datetime, timedelta
 from ClickUpDB import CClickUpDB
 import os
+from ClickUpHelper import CClickUpHelper
+
 
 class CClickUpMiddleWare:
     # Purpose - Sort Task Base on Score : Priority Wise =  Normal or Low - 1, High - 2, Urgent - 3 , use list of task for plot
@@ -25,10 +27,10 @@ class CClickUpMiddleWare:
         df['TaskAssigneesList'] = df['TaskAssigneesList'].apply(json.loads)
         
         # Determine Each Task - Task Score Base on Several Criteria
-        df['TaskScore'] = df.apply(CClickUpDB.MSCalculateTaskScore, include_toughness=False, axis=1)
+        df['TaskScore'] = df.apply(CClickUpHelper.MSCalculateTaskScore, include_toughness=False, axis=1)
         
         # Filter Task List - no Estimated Time is Provided
-        df = df[df['EstimatedTime'].apply(CClickUpDB.MSIsEstimatedTimeProvided)]
+        df = df[df['EstimatedTime'].apply(CClickUpHelper.MSIsEstimatedTimeProvided)]
 
         # Drop columns except the specified list
         columns_to_keep = ['ListName', 'TaskID', 'TaskSubject', 'TaskStartDate', 'TaskDueDate', 'TaskStatus',
@@ -374,6 +376,7 @@ def update_task_dict(task_dict):
 
         
 if __name__ == "__main__":
+    pass
     # listIds = ['901601699012', '901604046396', '901600183071', '901604035672', '901604046411', '901604272654', '901603806927', '901603898346']
 
     # # list_id = "901600183071"  # Replace with your actual ListID

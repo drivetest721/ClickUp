@@ -13,7 +13,7 @@ Improvements -
 2. Check Assignee in task , subtask , checklist, dependencies task
 3. 
 """
-class ClickUpHelper:
+class CClickUpAPI:
     API_URL = "https://api.clickup.com/api/v2/list/"
     AUTH_HEADER = {"Authorization": "pk_67390920_KWG9KAUXYQBLX2I4XL7EBXMHNA247V86"}
 
@@ -42,14 +42,14 @@ class ClickUpHelper:
                 due_date_lt = int(end_date.timestamp() * 1000)
                 query["due_date_lt"] = due_date_lt
             # API call to fetch tasks
-            response = requests.get(ClickUpHelper.API_URL + list_id + "/task", headers=ClickUpHelper.AUTH_HEADER, params=query)
+            response = requests.get(CClickUpAPI.API_URL + list_id + "/task", headers=CClickUpAPI.AUTH_HEADER, params=query)
             data = response.json()
             print(data.keys())
             print(data)
             if "tasks" in data:
                 # Loop through each task and insert it into the database
                 for task in data["tasks"]:
-                    ClickUpHelper.MSInsertTaskToDB(task)
+                    CClickUpAPI.MSInsertTaskToDB(task)
                     tasks_inserted += 1
                 print(f"Inserted {len(data['tasks'])} tasks from page {current_page}.")
             else:
@@ -71,7 +71,7 @@ class ClickUpHelper:
         CClickUpDB.MSInsertORUpdateTask(task_data)
 
     @staticmethod
-    def MSFetchTaskOnListsOfIDs(strConfigPath = r"resource\clickup_config.json"):
+    def MSFetchTaskFromConfigFile(strConfigPath = r"resource\clickup_config.json"):
         # Read ClickUp Config
         with open(strConfigPath) as f:
             dictClickUpConfig = json.load(f)
@@ -84,14 +84,26 @@ class ClickUpHelper:
             # Sync - Decide to fetch new latest for particular List
             sync = dictListProperties.get("sync", True)
             if (listID is not None and sync ):
-                ClickUpHelper.MSFetchTaskOnListID(listID)
+                CClickUpAPI.MSFetchTaskOnListID(listID)
+    
+    @staticmethod
+    def MSFetchTaskOnListsOfIDs(lsListIDs = []):
+        result = True
+        for listID in lsListIDs:
+            try:
+                CClickUpAPI.MSFetchTaskOnListID(listID)
+            except:
+                print(f"Error occur while fetch task for listId {listID}")
+                result = False
+        return result
 
 if __name__ == "__main__":
-    ClickUpHelper.MSFetchTaskOnListsOfIDs()
-    # pass
+    CClickUpAPI.MSFetchTaskFromConfigFile()
+    pass
+    # CClickUpAPI.MSFetchTaskOnListsOfIDs(strConfigPath = r"resource\clickup_config.json")
     # # Example usage
     # list_id = "901601699012"
-    # ClickUpHelper.MSFetchTaskOnListID(list_id)
+    # CClickUpAPI.MSFetchTaskOnListID(list_id)
     # Parse the date strings into datetime objects
     # start_date_str = None
     # end_date_str = None
@@ -101,6 +113,6 @@ if __name__ == "__main__":
     # date_format = "%d-%m-%Y"
     # start_date = datetime.strptime(start_date_str, date_format) if start_date_str else None
     # end_date = datetime.strptime(end_date_str, date_format) if end_date_str else None
-    # ClickUpHelper.MSFetchTaskOnListID(listId,start_date,end_date)
+    # CClickUpAPI.MSFetchTaskOnListID(listId,start_date,end_date)
     
     

@@ -1,31 +1,30 @@
 {
     "color": {
-        "selected": "status",
-        "options": ["project", "priority", "status"],
+        "selected": "project",
+        "options": ["project", "project", "status"],
         "optiondetails": {
             "project": "random",
             "priority": {
-                "normal": "rgb(72, 210, 255)",        
-                "low": "rgb(72, 210, 255)",           
-                "high": "rgb(255, 165, 0)",           
-                "urgent": "rgb(255, 0, 255)"          
+                "normal": "rgb(72, 210, 255)",        // italics 
+                "low": "rgb(72, 210, 255)",           // normal font
+                "high": "rgb(255, 165, 0)",           // remove this 
+                "urgent": "rgb(255, 0, 255)"          // BOLD
             },
             "status": {
-                "open": "rgb(255, 255, 255)",         
-                "in progress": "rgb(0, 255, 255)",   
-                "review": "rgb(144, 238, 144)",      
-                "delievered": "rgb(0, 100, 0)",      
-                "hold": "rgb(255, 105, 180)",        
-                "idle time": "rgb(0, 0, 139)"
-
-            }
+                "open": "rgb(216, 216, 216)",         // white
+                "in progress": "rgb(72, 210, 255)",   // cyan
+                "review": "rgb(147, 112, 219)",       // light green
+                "completed": "rgb(0, 136, 68)",       // dark green
+                "delievered": "rgb(0, 136, 68)",      // remove this
+                "hold": "rgb(255, 0, 255)",           // pink
+                "idle time": "rgb(197, 197, 197)"     // dark blue
+            }   // conflict - red
         }
     },
     "pattern": {
-        "selected": "project",
-        "options": ["project","priority", "status"],
+        "selected": "status",
+        "options": ["priority", "status"],
         "optiondetails": {
-            "project": "random",
             "priority": {
                 "normal": "+",
                 "low": "+",
@@ -36,6 +35,7 @@
                 "open": "",
                 "in progress": "|",
                 "review": ".",
+                "completed": "x",
                 "delievered": "x",
                 "hold": "-",
                 "idle time": "+"
@@ -43,7 +43,7 @@
         }
     },
     "thickness": {
-        "selected": "",
+        "selected": "priority",
         "options": ["priority", "status"],
         "optiondetails": {
             "priority": {
@@ -56,6 +56,7 @@
                 "open": 0.3,
                 "in progress": 0.5,
                 "review": 0.7,
+                "completed": 0.9,
                 "delievered": 0.9,
                 "hold": 0.4,
                 "idle time": 1
