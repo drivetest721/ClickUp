@@ -46,5 +46,47 @@
         "sync": true,
         "Project": "Drake",
         "Customer": "AP Office"
+    },
+    {
+        "ListID": "901604664293",
+        "sync": true,
+        "Project": "IKIO",
+        "Customer": "IKIO"
+    },
+    {
+        "ListID": "901604664323",
+        "sync": true,
+        "Project": "Bright Future",
+        "Customer": "Bright Future"
+    },
+    {
+        "ListID": "901604664325",
+        "sync": true,
+        "Project": "DHOA",
+        "Customer": "DHOA"
+    },
+    {
+        "ListID": "901604664326",
+        "sync": true,
+        "Project": "EKam",
+        "Customer": "EKam"
+    },
+    {
+        "ListID": "901604664327",
+        "sync": true,
+        "Project": "Royalux",
+        "Customer": "Royalux"
+    },
+    {
+        "ListID": "901604664329",
+        "sync": true,
+        "Project": "RV",
+        "Customer": "RV"
+    },
+    {
+        "ListID": "901604664340",
+        "sync": true,
+        "Project": "IKIO 150 Industrial",
+        "Customer": "IKIO"
     }
 ]

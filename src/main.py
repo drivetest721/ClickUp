@@ -16,10 +16,16 @@ class CClickUpMiddleWare:
     # Purpose - Sort Task Base on Score : Priority Wise =  Normal or Low - 1, High - 2, Urgent - 3 , use list of task for plot
     
     @staticmethod
-    def MSGroupTaskEmployeeWise(lsTasks, bDebug= False,bSaveFilteredExcelSheet=False, strFilterTaskDirPath= r"Data/"):
+    def MSGroupTaskEmployeeWise(lsTasks, include_toughness=False, bDebug= False,bSaveFilteredExcelSheet=False, strFilterTaskDirPath= r"Data/"):
         """
         Purpose - To clean list of task such as handling null values or none or Empty values
         """
+        dictUserName = {
+        'mitul@riveredgeanalytics.com':"Mitul Solanki", 'mansi@riveredgeanalytics.com':"Mansi Solanki", 'hr@riveredgeanalytics.com':"Nidhi",
+        'devanshi@riveredgeanalytics.com':"Devanshi Joshi", 'dhruvin@riveredgeanalytics.com':"Dhruvin Kapadiya",
+        'mohit.intern@riveredgeanalytics.com':"Mohit", 'harshil@riveredgeanalytics.com':"Harshil Chauhan","fenil@riveredgeanalytics.com":"Fenil","punesh@riveredgeanalytics.com":"Punesh","ankita@riveredgeanalytics.com":"Ankita","nikhil@riveredgeanalytics.com":"Nikhil","mansip@riveredgeanalytics.com":"Mansi P","zahid@riveredgeanalytics.com":"Zahid"
+    
+        }
         # Creating a DataFrame from the list of tasks
         df = pd.DataFrame(lsTasks)
         
@@ -27,7 +33,7 @@ class CClickUpMiddleWare:
         df['TaskAssigneesList'] = df['TaskAssigneesList'].apply(json.loads)
         
         # Determine Each Task - Task Score Base on Several Criteria
-        df['TaskScore'] = df.apply(CClickUpHelper.MSCalculateTaskScore, include_toughness=False, axis=1)
+        df['TaskScore'] = df.apply(CClickUpHelper.MSCalculateTaskScore, include_toughness=include_toughness, axis=1)
         
         # Filter Task List - no Estimated Time is Provided
         df = df[df['EstimatedTime'].apply(CClickUpHelper.MSIsEstimatedTimeProvided)]
@@ -45,7 +51,9 @@ class CClickUpMiddleWare:
         df['TotalTskEstInMins'] = df['EstimatedTime'].apply(lambda x: (x['hrs'] * 60 + x['mins']) if x else 0)
         df['TaskExecutionDate'] = df['TaskStartDate']
         # 2. 'AssignTo' - extract username from the first entry in 'TaskAssigneesList'  || WARN - (Remaining Task) In Case of Multiple Assignees EDGE Case Must Handle 
-        df['AssignTo'] = df['TaskAssigneesList'].apply(lambda x: x[0]['username'] if x and len(x) > 0 else None)
+        df['AssignTo'] = df['TaskAssigneesList'].apply(
+            lambda x: x[0]['username'] if x and x[0].get('username') else (x[0]['email'] if x else None)
+        )
 
         # 3. 'TaskPriority' - extract priority
         df['TaskPriority'] = df['TaskPriority'].apply(lambda x: x['priority'] if x else None)
@@ -61,7 +69,8 @@ class CClickUpMiddleWare:
             assignees = row['TaskAssigneesList']
             if assignees:
                 for assignee in assignees:
-                    username = assignee['username']
+                    emailId = assignee['email']
+                    username = dictUserName.get(emailId, assignee.get("username")) 
                     if username not in dictFilteredEmpWiseTsk:
                         dictFilteredEmpWiseTsk[username] = []
                     # Convert the row to a dictionary and append to the list
@@ -196,7 +205,7 @@ class CClickUpMiddleWare:
         return filtered_tasks
 
     @staticmethod
-    def MSSortDF(employee_tasks, bDebug):
+    def MSSortDF(employee_tasks, bDebug, bSaveReportToExcel = False):
         dictEmployeeWiseTaskList = {}
 
         for EmpName in employee_tasks.keys():
@@ -327,8 +336,8 @@ class CClickUpMiddleWare:
 
         if bDebug:
             print("Allocated Task - ", dictEmployeeWiseTaskList)
-        
-        CClickUpMiddleWare.MSExportEmployeeTask(dictEmployeeWiseTaskList, strTskExcStDate, strTskDueDate)
+        if bSaveReportToExcel:
+            CClickUpMiddleWare.MSExportEmployeeTask(dictEmployeeWiseTaskList, strTskExcStDate, strTskDueDate)
         return dictEmployeeWiseTaskList
 
     @staticmethod

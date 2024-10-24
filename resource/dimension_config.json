@@ -16,13 +16,13 @@
                 "review": "rgb(144, 238, 144)",      
                 "delievered": "rgb(0, 100, 0)",      
                 "hold": "rgb(255, 105, 180)",        
-                "idle time": "rgb(0, 0, 139)"
+                "idle time": "rgb(255, 255, 237)"
 
             }
         }
     },
     "pattern": {
-        "selected": "project",
+        "selected": "",
         "options": ["project","priority", "status"],
         "optiondetails": {
             "project": "random",

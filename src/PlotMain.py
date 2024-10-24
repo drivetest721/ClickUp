@@ -9,6 +9,8 @@ from main import CClickUpMiddleWare
 import os
 import random
 import json
+from ClickUpAPI import CClickUpAPI
+from helperFunc import readJson
 
 class GanttChart:
     
@@ -42,25 +44,23 @@ class GanttChart:
             'BarWidth': bar_width,
             'strLegendData':strLegendData
         })
-
+    
     # def create_chart(self, title="Gantt Chart", height=800, width=1800, bar_thickness=0.5):
     #     df = pd.DataFrame(self.tasks)
-        
-    #     # Define the relative path for saving the data
-    #     relative_path = os.path.join("Data", "gantt_chart_data.csv")
-        
-    #     # Ensure the 'Data' directory exists
-    #     os.makedirs(os.path.dirname(relative_path), exist_ok=True)
-        
-    #     # Save DataFrame as CSV in the 'Data' directory
-    #     df.to_csv(relative_path, index=False)
 
-    #     # Generate the Gantt chart without using color="Task"
-    #     fig = px.timeline(df, x_start="Start", x_end="Finish", y="Person",
-    #                       title=title, height=height, width=width,
-    #                       hover_data={'strLegendData': True})  # Add custom legend data as hover info
+    #     # Add a new column 'HoverInfo' that contains the desired detailed information
+    #     df['HoverInfo'] = df['strLegendData']
 
+    #     # Create the Gantt chart using Plotly Express
+    #     fig = px.timeline(
+    #         df, x_start="Start", x_end="Finish", y="Person", color="Task",
+    #         title=title, height=height, width=width, hover_data={'HoverInfo': True}
+    #     )
+
+    #     # Reverse the y-axis to ensure tasks are listed top-down
     #     fig.update_yaxes(autorange="reversed")
+
+    #     # Configure layout to add scrollbars and modify axis behavior
     #     fig.update_layout(
     #         xaxis_title="Time",
     #         yaxis_title="Person",
@@ -69,34 +69,72 @@ class GanttChart:
     #         ),
     #         yaxis=dict(
     #             fixedrange=False  # Allow vertical scrolling
-    #         )
+    #         ),  
+    #         showlegend=False  # Hide default legend
     #     )
 
-    #     # Manually apply custom colors, patterns, and widths
+    #     # Customize hover template to only show `strLegendData` and hide other default properties
+    #     fig.update_traces(
+    #         hovertemplate="%{customdata[0]}"  # Show only the content of `HoverInfo`
+    #     )
+
+    #     # Add zoom control buttons for 1 Day and 1 Week
+    #     fig.update_layout(
+    #         updatemenus=[
+    #             dict(
+    #                 type="buttons",
+    #                 direction="left",
+    #                 x=0.5,
+    #                 y=1.2,
+    #                 buttons=list([
+    #                     dict(
+    #                         args=[{"xaxis.range": [df['Start'].min(), df['Start'].min() + pd.DateOffset(days=1)]}],
+    #                         label="1 Day",
+    #                         method="relayout"
+    #                     ),
+    #                     dict(
+    #                         args=[{"xaxis.range": [df['Start'].min(), df['Start'].min() + pd.DateOffset(weeks=1)]}],
+    #                         label="1 Week",
+    #                         method="relayout"
+    #                     ),
+    #                     dict(
+    #                         args=[{"xaxis.autorange": True}],  # Reset to full zoom
+    #                         label="Reset",
+    #                         method="relayout"
+    #                     )
+    #                 ]),
+    #                 showactive=True,
+    #                 xanchor="center"
+    #             )
+    #         ]
+    #     )
+
+    #     # Apply custom colors, patterns, and bar widths
     #     for i, task in enumerate(fig.data):
+    #         # Use `strLegendData` for the hover information
+    #         task.customdata = df[['HoverInfo']].values
     #         task.text = df['Task'].iloc[i]
     #         task.textposition = 'inside'
-            
-    #         # Manually set color
+
     #         if df['Color'].iloc[i]:
     #             task.marker.color = df['Color'].iloc[i]
-            
+
     #         # Manually set pattern
     #         if df['Pattern'].iloc[i]:
     #             task.marker.pattern.shape = df['Pattern'].iloc[i]
-            
-    #         # Manually set width
-    #         if df['BarWidth'].iloc[i]:
+
+    #         # Apply custom bar width if specified, default to bar_thickness
+    #         if 'BarWidth' in df.columns and pd.notna(df['BarWidth'].iloc[i]):
     #             task.width = df['BarWidth'].iloc[i]
     #         else:
     #             task.width = bar_thickness
-        
+
     #     return fig
     def create_chart(self, title="Gantt Chart", height=800, width=1800, bar_thickness=0.5):
         df = pd.DataFrame(self.tasks)
         
         fig = px.timeline(df, x_start="Start", x_end="Finish", y="Person", color="Task",
-                          title=title, height=height, width=width)
+                          title=title, height=height, width=width)  # Use the Date column to create animation frames)
         
         fig.update_yaxes(autorange="reversed")
         fig.update_layout(
@@ -156,15 +194,19 @@ class GanttChart:
                 task.width = df['BarWidth'].iloc[i]
             else:
                 task.width = bar_thickness
-        
+
+            # Update hover template to display strLegendData
+            task.hovertemplate = df['strLegendData'].iloc[i]  # Customize hover text
         return fig
+
 
 
     @staticmethod
     def Main(lsListIDs=["901600183071"], 
              strTskStDate=(datetime.now() - timedelta(weeks=1)).strftime('%d-%m-%Y'), 
              strTskEndDate=(datetime.now() + timedelta(weeks=3)).strftime('%d-%m-%Y'), 
-             bDebug=True):
+             lsEmployees=[],
+             bDebug=True,include_toughness=False):
         try:
             # Ensure the dates are strings
             if isinstance(strTskStDate, datetime):
@@ -177,19 +219,20 @@ class GanttChart:
                 print(f"Task Start Date: {strTskStDate}, Task End Date: {strTskEndDate}")
 
             # Fetch tasks based on the list IDs and date criteria
-            tasks = CClickUpDB.MSGetTasksByListIDs(lsListIDs, strTskStDate, strTskEndDate)
+            # tasks = CClickUpDB.MSGetTasksByListIDs(lsListIDs, strTskStDate, strTskEndDate)
+            tasks = CClickUpDB.MSGetTasksByListIDsWithEmpFilter(lsListIDs, strTskStDate, strTskEndDate, lsEmployees, bDebug=False)
 
             # If there is any employee filter criteria, apply here (assumed logic)
             # employee_filter = 'John Doe' # Example: filter for a specific employee, if needed
             # employee_tasks = filter_tasks_by_employee(tasks, employee_filter)
             
             # Group tasks employee-wise
-            employee_tasks = CClickUpMiddleWare.MSGroupTaskEmployeeWise(tasks)
+            employee_tasks = CClickUpMiddleWare.MSGroupTaskEmployeeWise(tasks,include_toughness=include_toughness)
             if bDebug:
                 print(f"Employee tasks: {employee_tasks}")
 
             # Sort tasks and return sorted employee-wise task dictionary
-            input_dict = CClickUpMiddleWare.MSSortDF(employee_tasks, bDebug=bDebug)
+            input_dict = CClickUpMiddleWare.MSSortDF(employee_tasks, bDebug=bDebug, bSaveReportToExcel= False)
             
             if bDebug:
                 print(f"Sorted Task list Employee Wise: {input_dict}")
@@ -222,6 +265,7 @@ class GanttChart:
         assignees = task_detail.get('TaskAssigneesList', [])
         score = task_detail.get('TaskScore', "Not Found")
         conflict = task_detail.get("IsConflict",False)
+        conflict_time = task_detail.get('ConflictTimeMin', 0)
         
         # Format assignees
         assignee_details = []
@@ -233,18 +277,10 @@ class GanttChart:
 
         # Create the legend string with better formatting for readability
         legend = (
-            f"<b>TaskID</b>: {taskId}<br>"
-            f"<b>Task Subject</b>: {task_subject}<br>"
-            f"<b>List Name</b>: {list_name}<br>"
-            f"<b>Execution Date</b>: {execution_date}<br>"
-            f"<b>Due Date</b>: {due_date}<br>"
-            f"<b>Status</b>: {status}<br>"
-            f"<b>Priority</b>: {priority}<br>"
-            f"<b>Total Task Est Time</b>: {estimated_time} minutes<br>"
-            f"<b>Allocated Task Est Time</b>: {allocated_time} minutes<br>"
-            f"<b>Assignees</b>: {assignees_str}<br>"
+            f"<b>Task Subject</b>: {task_subject} - ({status}, {priority}) <br>"
+            f"{f'<b>Concflicted Task Time</b>: {conflict_time} minutes<br>' if conflict else f'<b>Allocated Task Est Time</b>: {allocated_time} minutes<br>'}"
             f"<b>Score</b>: {score}"
-            f"<b>Conflict</b>: {conflict}"
+            f"<b>TaskID</b>: {taskId}<br>"
         )
 
         return legend
@@ -340,7 +376,9 @@ class GanttChart:
         if strSelectedThickness == "priority":
             priority_thickness_map = dictThicknessDimConfig.get("optiondetails", {}).get("priority", {})
             # Assign priority thickness based on task priority
-            priority_thickness = priority_thickness_map.get(dictTskDetails.get("TaskPriority", "low").lower(), 0.4)  # Default thickness
+            if dictTskDetails.get("TaskPriority") is None:
+                dictTskDetails["TaskPriority"] = "low" 
+            priority_thickness = priority_thickness_map.get(dictTskDetails.get("TaskPriority").lower(), 0.4)  # Default thickness
             return priority_thickness
         else:
             # Mapping task status to thickness
@@ -348,54 +386,148 @@ class GanttChart:
             # Assign status thickness based on task status
             status_thickness = status_thickness_map.get(dictTskDetails.get("TaskStatus", "open").lower(), 0.4)  # Default thickness
             return status_thickness
-        
-if __name__ == "__main__":
-    with open(r"resource\dimension_config.json") as f:
-        dictDimensionConfig = json.load(f)
-    isThicknessEnabled = (dictDimensionConfig.get("thickness").get("selected")) != ""
-    isPatternEnabled = (dictDimensionConfig.get("pattern").get("selected")) != ""
-    isColorEnabled =  (dictDimensionConfig.get("color").get("selected")) != ""
     
-    # Assuming the GanttChart class is already defined
-    objGanttChart = GanttChart()
-    lsSelectedEmployee = ["Mitul Solanki","mansi solanki","Mohit parmar","Nidhi"]
-    # Fetching employee tasks for the given date range
-    dictEmptasks = objGanttChart.Main(lsListIDs= ["901601699012", "901604046396", "901600183071" , "901604035672", "901604046411", "901604272654", "901603806927", "901603898346"], strTskStDate="25-08-2024", strTskEndDate="20-09-2024")
-    strColorType = "status"  # Could also be "priority"
+    @staticmethod
+    def Master(lsEmps, lsProjects, StartDate="25-08-2024", EndDate="20-09-2024", bTaskIntensityInclude=False, bFetchLatest=False,bShowPlot=False):
+        """
+        Placeholder Master function returning a dummy Plotly figure.
+        """
+        """
+            Input:-  1. lsEmps - List of Employee uniquely identified emailIds
+                    2. lsProjects - List of clickup unique ListID
+                    3. StartDate - date range start date
+                    4. EndDate - date range end date
+                    5. bFetchLatest - to fetch new data then perform further operation
+        """      
+        if bFetchLatest:
+            # lsProjects - Clickup Unique ListIDs
+            CClickUpAPI.MSFetchTaskOnListsOfIDs(lsListIDs=lsProjects)
+        
+        dictDimensionConfig = readJson(r"resource\dimension_config.json")
+        isThicknessEnabled = (dictDimensionConfig.get("thickness").get("selected")) != ""
+        isPatternEnabled = (dictDimensionConfig.get("pattern").get("selected")) != ""
+        isColorEnabled =  (dictDimensionConfig.get("color").get("selected")) != ""
+        
+        # Assuming the GanttChart class is already defined
+        objGanttChart = GanttChart()
+        
+        # Fetching employee tasks for the given date range
+        dictEmptasks = objGanttChart.Main(lsListIDs= lsProjects, strTskStDate=StartDate, strTskEndDate=EndDate, lsEmployees=lsEmps,include_toughness=bTaskIntensityInclude)
 
-    # Dictionary to store the last task end time for each employee per day
-    last_task_end_time_per_emp = {}
 
-    # Iterate over employees and their tasks
-    Idx = 0
-    for EmpName, lsEmpTasks in dictEmptasks.items():
-        lsColors = ['rgb(127, 0, 0)','rgb(0, 0, 64)', 'rgb(255, 0, 0)']
-        count = 1
-        for taskDetail in lsEmpTasks:
-            
-            
-            # Check if the task has a conflict and if AllocatedTimeMin > 0
-            if taskDetail.get("IsConflict", False) and taskDetail.get("AllocatedTimeMin", 0) > 0:
-                # Split into two tasks: allocated time and conflict time
+        # Dictionary to store the last task end time for each employee per day
+        last_task_end_time_per_emp = {}
 
-                # Task with AllocatedTimeMin
-                allocated_time_task = taskDetail.copy()
-                allocated_time_task['AllocatedTimeMin'] = taskDetail.get('AllocatedTimeMin', 0)
-                allocated_time_task['IsConflict'] = False
+        for EmpName, lsEmpTasks in dictEmptasks.items():
+            count = 1
+            for taskDetail in lsEmpTasks:
+                
+                
+                # Check if the task has a conflict and if AllocatedTimeMin > 0
+                if taskDetail.get("IsConflict", False) and taskDetail.get("AllocatedTimeMin", 0) > 0:
+                    # Split into two tasks: allocated time and conflict time
 
-                # Task with ConflictTimeMin
-                conflict_time_task = taskDetail.copy()
+                    # Task with AllocatedTimeMin
+                    allocated_time_task = taskDetail.copy()
+                    allocated_time_task['AllocatedTimeMin'] = taskDetail.get('AllocatedTimeMin', 0)
+                    allocated_time_task['IsConflict'] = False
 
-                conflict_time_task['TotalTskEstInMins'] = allocated_time_task['TotalTskEstInMins'] - allocated_time_task['AllocatedTimeMin']
-                conflict_time_task['AllocatedTimeMin'] = taskDetail.get('ConflictTimeMin', 0)
-                conflict_time_task['IsConflict'] = True
+                    # Task with ConflictTimeMin
+                    conflict_time_task = taskDetail.copy()
 
-                # Process the allocated task
-                for task in [allocated_time_task, conflict_time_task]:
-                    start_time_str = task['TaskExecutionDate']
-                    if task['TaskExecutionDate']:
+                    conflict_time_task['TotalTskEstInMins'] = allocated_time_task['TotalTskEstInMins'] - allocated_time_task['AllocatedTimeMin']
+                    conflict_time_task['AllocatedTimeMin'] = taskDetail.get('ConflictTimeMin', 0)
+                    conflict_time_task['IsConflict'] = True
+
+                    # Process the allocated task
+                    for task in [allocated_time_task, conflict_time_task]:
+                        start_time_str = task['TaskExecutionDate']
+                        if task['TaskExecutionDate']:
+                            try:
+                                start_time_str += ' ' + task['TaskExecutionDate'].split(' ')[1]
+                            except IndexError:
+                                start_time_str += ' 00:00:00'  # Default to midnight if no time is present
+                        else:
+                            start_time_str += ' 00:00:00'  # Default to midnight if no time is present
+
+                        # Convert the start_time_str to a datetime object
                         try:
-                            start_time_str += ' ' + task['TaskExecutionDate'].split(' ')[1]
+                            start_time = datetime.strptime(start_time_str, '%d-%m-%Y %H:%M:%S')
+                        except ValueError:
+                            print(f"Error parsing start time: {start_time_str}")
+                            start_time = datetime.strptime(task['TaskExecutionDate'], '%d-%m-%Y')
+
+                        # Determine task duration (in minutes)
+                        duration = timedelta(minutes=task.get('AllocatedTimeMin', 0))
+
+                        # Track the last end time for each employee and day
+                        task_date = start_time.date()
+
+                        if EmpName not in last_task_end_time_per_emp:
+                            last_task_end_time_per_emp[EmpName] = {}
+
+                        if task_date in last_task_end_time_per_emp[EmpName]:
+                            # Start the task from the previous task's end time
+                            start_time = last_task_end_time_per_emp[EmpName][task_date]
+                        else:
+                            # It's a new day for this employee, start as per the task's TaskExecutionDate
+                            last_task_end_time_per_emp[EmpName][task_date] = start_time
+
+                        # Calculate the task's end time (start_time + duration)
+                        end_time = start_time + duration
+                        # Update the last task end time for this date
+                        last_task_end_time_per_emp[EmpName][task_date] = end_time
+
+                        # Get color based on color type (status or priority)
+                        if task.get("IsConflict",False):
+                            color = "rgb(255, 0, 0)"
+                            print("Conflict color choosen ---------------",color)
+                        # elif task.get("TaskStatus").lower() == "idle time":
+                        #     color = "rgb(197, 197, 197)"
+                        else:
+                            color = objGanttChart.MGetTskColor(dictDimensionConfig=dictDimensionConfig, dictTskDetails=task)
+                        if isThicknessEnabled:
+                            bar_width = GanttChart.MSGetThickness(dictDimensionConfig=dictDimensionConfig, dictTskDetails=task)
+
+
+                        pattern = objGanttChart.MGetPattern(dictDimensionConfig=dictDimensionConfig, dictTskDetails=task)
+                        # Get pattern based on task status
+                        status = task.get("TaskStatus", "open")  # Assuming status is a string
+                        # print("status", status, "pattern---------", pattern, "bar_width", bar_width)
+                        priority = task.get("TaskPriority", "low")
+                        if priority is None:
+                            priority = "low" 
+                        # Handle task conflict color
+                        strTaskDetail = objGanttChart.MSGenerateLegend(task)
+                        
+                        # strTskSubject = f"<b>{count}. {task.get('TaskSubject', '')}</b> {status} {priority}"
+                        # strTskSubject =  f"<span style='font-size:20px;'><b>{count}. {task.get('TaskSubject', '')}</b> {status} {priority}</span>"
+                        if priority == "urgent":
+                            strTskSubject = f"<span style='font-size:20px;'><b>{count}. {task.get('TaskSubject', '')}</b> {status} {priority}</span>"
+                        elif priority in ["normal", "high"]:
+                            strTskSubject = f"<span style='font-size:20px;'><i>{count}. {task.get('TaskSubject', '')}</i> {status} {priority}</span>"
+                        elif priority == "low":
+                            strTskSubject = f"<span style='font-size:20px;'>{count}. {task.get('TaskSubject', '')} {status} {priority}</span>"
+                        else:
+                            strTskSubject = f"<span style='font-size:20px;'>{count}. {task.get('TaskSubject', '')} {status} No-Priority</span>"
+                        # Add task to Gantt chart
+                        objGanttChart.add_task(
+                            task_name=strTskSubject,
+                            person=EmpName,
+                            start_datetime=start_time,
+                            duration=duration,
+                            color=color,
+                            pattern=pattern,
+                            bar_width=bar_width,
+                            strLegendData=strTaskDetail
+                        )
+                        count+=1
+                else:
+                    # Process the task as usual if there is no conflict
+                    start_time_str = taskDetail['TaskExecutionDate']
+                    if taskDetail['TaskExecutionDate']:
+                        try:
+                            start_time_str += ' ' + taskDetail['TaskExecutionDate'].split(' ')[1]
                         except IndexError:
                             start_time_str += ' 00:00:00'  # Default to midnight if no time is present
                     else:
@@ -406,10 +538,13 @@ if __name__ == "__main__":
                         start_time = datetime.strptime(start_time_str, '%d-%m-%Y %H:%M:%S')
                     except ValueError:
                         print(f"Error parsing start time: {start_time_str}")
-                        start_time = datetime.strptime(task['TaskExecutionDate'], '%d-%m-%Y')
+                        start_time = datetime.strptime(taskDetail['TaskExecutionDate'], '%d-%m-%Y')
 
                     # Determine task duration (in minutes)
-                    duration = timedelta(minutes=task.get('AllocatedTimeMin', 0))
+                    if taskDetail.get("IsConflict", False) and taskDetail.get("ConflictTimeMin", 0) > 0:
+                        duration = timedelta(minutes=taskDetail.get('ConflictTimeMin', 0))
+                    else:
+                        duration = timedelta(minutes=taskDetail.get('AllocatedTimeMin', 0))
 
                     # Track the last end time for each employee and day
                     task_date = start_time.date()
@@ -430,35 +565,46 @@ if __name__ == "__main__":
                     last_task_end_time_per_emp[EmpName][task_date] = end_time
 
                     # Get color based on color type (status or priority)
-                    if task.get("IsConflict",False):
-                        color = "rgb(255, 0, 0)"
-                        print("Conflict color choosen ---------------",color)
-                    elif task.get("TaskStatus").lower() == "idle time":
-                        color = "rgb(197, 197, 197)"
+                    if isColorEnabled:
+                        if taskDetail.get("IsConflict",False):
+                            color = "rgb(255, 0, 0)"
+                            print("Conflict color choosen ---------------",color)
+                        # elif taskDetail.get("TaskStatus").lower() == "idle time":
+                        #     color = "rgb(197, 197, 197)"
+                        #     print("Idle color choosen ---------------",color)
+                        else:
+                            color = objGanttChart.MGetTskColor(dictDimensionConfig=dictDimensionConfig, dictTskDetails=taskDetail)
                     else:
-                        color = objGanttChart.MGetTskColor(dictDimensionConfig=dictDimensionConfig, dictTskDetails=task)
+                        color = None
+                        
                     if isThicknessEnabled:
-                        bar_width = GanttChart.MSGetThickness(dictDimensionConfig=dictDimensionConfig, dictTskDetails=task)
-
-
-                    pattern = objGanttChart.MGetPattern(dictDimensionConfig=dictDimensionConfig, dictTskDetails=task)
-                    # Get pattern based on task status
-                    status = task.get("TaskStatus", "open")  # Assuming status is a string
-                    # print("status", status, "pattern---------", pattern, "bar_width", bar_width)
-                    priority = task.get("TaskPriority", "low")
-                    # Handle task conflict color
-                    strTaskDetail = objGanttChart.MSGenerateLegend(task)
-                    
-                    # strTskSubject = f"<b>{count}. {task.get('TaskSubject', '')}</b> {status} {priority}"
-                    # strTskSubject =  f"<span style='font-size:20px;'><b>{count}. {task.get('TaskSubject', '')}</b> {status} {priority}</span>"
-                    if priority == "urgent":
-                        strTskSubject = f"<span style='font-size:20px;'><b>{count}. {task.get('TaskSubject', '')}</b> {status} {priority}</span>"
-                    elif priority in ["normal", "high"]:
-                        strTskSubject = f"<span style='font-size:20px;'><i>{count}. {task.get('TaskSubject', '')}</i> {status} {priority}</span>"
-                    elif priority == "low":
-                        strTskSubject = f"<span style='font-size:20px;'>{count}. {task.get('TaskSubject', '')} {status} {priority}</span>"
+                        bar_width = GanttChart.MSGetThickness(dictDimensionConfig=dictDimensionConfig, dictTskDetails=taskDetail)
                     else:
-                        strTskSubject = f"<span style='font-size:20px;'>{count}. {task.get('TaskSubject', '')} {status} No-Priority</span>"
+                        bar_width = None
+
+                    if isPatternEnabled:
+                        pattern = objGanttChart.MGetPattern(dictDimensionConfig=dictDimensionConfig, dictTskDetails=taskDetail)
+                    else:
+                        pattern = None
+                    
+                    # Get pattern based on task status
+                    status = taskDetail.get("TaskStatus", "open")  # Assuming status is a string
+                    priority = taskDetail.get("TaskPriority", "low")
+                    if priority is None:
+                        priority = "low" 
+                    # Handle task conflict color
+                    strTaskDetail = objGanttChart.MSGenerateLegend(taskDetail)
+                    # strTskSubject = f"<b>{count}. {taskDetail.get('TaskSubject', '')}</b> {status} {priority}"
+                    # strTskSubject = f"<span style='font-size:20px;'><b>{count}. {taskDetail.get('TaskSubject', '')}</b> {status} {priority}</span>"
+
+                    if priority == "urgent":
+                        strTskSubject = f"<span style='font-size:20px;'><b>{count}. {taskDetail.get('TaskSubject', '')}</b> {status} {priority}</span>"
+                    elif priority in ["normal", "high"]:
+                        strTskSubject = f"<span style='font-size:20px;'><i>{count}. {taskDetail.get('TaskSubject', '')}</i> {status} {priority}</span>"
+                    elif priority == "low":
+                        strTskSubject = f"<span style='font-size:20px;'>{count}. {taskDetail.get('TaskSubject', '')} {status} {priority}</span>"
+                    else:
+                        strTskSubject = f"<span style='font-size:20px;'>{count}. {taskDetail.get('TaskSubject', '')} {status} No-Priority</span>"
                     # Add task to Gantt chart
                     objGanttChart.add_task(
                         task_name=strTskSubject,
@@ -470,100 +616,248 @@ if __name__ == "__main__":
                         bar_width=bar_width,
                         strLegendData=strTaskDetail
                     )
-                    count+=1
-            else:
-                # Process the task as usual if there is no conflict
-                start_time_str = taskDetail['TaskExecutionDate']
-                if taskDetail['TaskExecutionDate']:
-                    try:
-                        start_time_str += ' ' + taskDetail['TaskExecutionDate'].split(' ')[1]
-                    except IndexError:
-                        start_time_str += ' 00:00:00'  # Default to midnight if no time is present
-                else:
-                    start_time_str += ' 00:00:00'  # Default to midnight if no time is present
+                    count +=1
+        # Create and display the Gantt chart
+        fig = objGanttChart.create_chart(title="Employee Wise Gantt Chart")
+        if bShowPlot:
+            fig.show()
+        return fig
+if __name__ == "__main__":
+    # with open(r"resource\dimension_config.json") as f:
+    #     dictDimensionConfig = json.load(f)
+    # isThicknessEnabled = (dictDimensionConfig.get("thickness").get("selected")) != ""
+    # isPatternEnabled = (dictDimensionConfig.get("pattern").get("selected")) != ""
+    # isColorEnabled =  (dictDimensionConfig.get("color").get("selected")) != ""
+    
+    # # Assuming the GanttChart class is already defined
+    # objGanttChart = GanttChart()
+    # lsSelectedEmployee = ["Mitul Solanki","mansi solanki","Mohit parmar","Nidhi"]
+    # # Fetching employee tasks for the given date range
+    # dictEmptasks = objGanttChart.Main(lsListIDs= ['901601699012', '901600183071', '901603806927',"901604664293","901604664323","901604664325","901604664326","901604664327","901604664329","901604664340"], strTskStDate="25-09-2024", strTskEndDate="20-11-2024")
+    # strColorType = "status"  # Could also be "priority"
 
-                # Convert the start_time_str to a datetime object
-                try:
-                    start_time = datetime.strptime(start_time_str, '%d-%m-%Y %H:%M:%S')
-                except ValueError:
-                    print(f"Error parsing start time: {start_time_str}")
-                    start_time = datetime.strptime(taskDetail['TaskExecutionDate'], '%d-%m-%Y')
+    # # Dictionary to store the last task end time for each employee per day
+    # last_task_end_time_per_emp = {}
 
-                # Determine task duration (in minutes)
-                duration = timedelta(minutes=taskDetail.get('AllocatedTimeMin', 0))
+    # # Iterate over employees and their tasks
+    # Idx = 0
+    # for EmpName, lsEmpTasks in dictEmptasks.items():
+    #     lsColors = ['rgb(127, 0, 0)','rgb(0, 0, 64)', 'rgb(255, 0, 0)']
+    #     count = 1
+    #     for taskDetail in lsEmpTasks:
+            
+            
+    #         # Check if the task has a conflict and if AllocatedTimeMin > 0
+    #         if taskDetail.get("IsConflict", False) and taskDetail.get("AllocatedTimeMin", 0) > 0:
+    #             # Split into two tasks: allocated time and conflict time
 
-                # Track the last end time for each employee and day
-                task_date = start_time.date()
+    #             # Task with AllocatedTimeMin
+    #             allocated_time_task = taskDetail.copy()
+    #             allocated_time_task['AllocatedTimeMin'] = taskDetail.get('AllocatedTimeMin', 0)
+    #             allocated_time_task['IsConflict'] = False
 
-                if EmpName not in last_task_end_time_per_emp:
-                    last_task_end_time_per_emp[EmpName] = {}
+    #             # Task with ConflictTimeMin
+    #             conflict_time_task = taskDetail.copy()
 
-                if task_date in last_task_end_time_per_emp[EmpName]:
-                    # Start the task from the previous task's end time
-                    start_time = last_task_end_time_per_emp[EmpName][task_date]
-                else:
-                    # It's a new day for this employee, start as per the task's TaskExecutionDate
-                    last_task_end_time_per_emp[EmpName][task_date] = start_time
+    #             conflict_time_task['TotalTskEstInMins'] = allocated_time_task['TotalTskEstInMins'] - allocated_time_task['AllocatedTimeMin']
+    #             conflict_time_task['AllocatedTimeMin'] = taskDetail.get('ConflictTimeMin', 0)
+    #             conflict_time_task['IsConflict'] = True
 
-                # Calculate the task's end time (start_time + duration)
-                end_time = start_time + duration
-                # Update the last task end time for this date
-                last_task_end_time_per_emp[EmpName][task_date] = end_time
+    #             # Process the allocated task
+    #             for task in [allocated_time_task, conflict_time_task]:
+    #                 start_time_str = task['TaskExecutionDate']
+    #                 if task['TaskExecutionDate']:
+    #                     try:
+    #                         start_time_str += ' ' + task['TaskExecutionDate'].split(' ')[1]
+    #                     except IndexError:
+    #                         start_time_str += ' 00:00:00'  # Default to midnight if no time is present
+    #                 else:
+    #                     start_time_str += ' 00:00:00'  # Default to midnight if no time is present
 
-                # Get color based on color type (status or priority)
-                if isColorEnabled:
-                    if taskDetail.get("IsConflict",False):
-                        color = "rgb(255, 0, 0)"
-                        print("Conflict color choosen ---------------",color)
-                    elif taskDetail.get("TaskStatus").lower() == "idle time":
-                        color = "rgb(197, 197, 197)"
-                        print("Idle color choosen ---------------",color)
-                    else:
-                        color = objGanttChart.MGetTskColor(dictDimensionConfig=dictDimensionConfig, dictTskDetails=taskDetail)
-                else:
-                    color = None
+    #                 # Convert the start_time_str to a datetime object
+    #                 try:
+    #                     start_time = datetime.strptime(start_time_str, '%d-%m-%Y %H:%M:%S')
+    #                 except ValueError:
+    #                     print(f"Error parsing start time: {start_time_str}")
+    #                     start_time = datetime.strptime(task['TaskExecutionDate'], '%d-%m-%Y')
+
+    #                 # Determine task duration (in minutes)
+    #                 duration = timedelta(minutes=task.get('AllocatedTimeMin', 0))
+
+    #                 # Track the last end time for each employee and day
+    #                 task_date = start_time.date()
+
+    #                 if EmpName not in last_task_end_time_per_emp:
+    #                     last_task_end_time_per_emp[EmpName] = {}
+
+    #                 if task_date in last_task_end_time_per_emp[EmpName]:
+    #                     # Start the task from the previous task's end time
+    #                     start_time = last_task_end_time_per_emp[EmpName][task_date]
+    #                 else:
+    #                     # It's a new day for this employee, start as per the task's TaskExecutionDate
+    #                     last_task_end_time_per_emp[EmpName][task_date] = start_time
+
+    #                 # Calculate the task's end time (start_time + duration)
+    #                 end_time = start_time + duration
+    #                 # Update the last task end time for this date
+    #                 last_task_end_time_per_emp[EmpName][task_date] = end_time
+
+    #                 # Get color based on color type (status or priority)
+    #                 if task.get("IsConflict",False):
+    #                     color = "rgb(255, 0, 0)"
+    #                     print("Conflict color choosen ---------------",color)
+    #                 elif task.get("TaskStatus").lower() == "idle time":
+    #                     color = "rgb(197, 197, 197)"
+    #                 else:
+    #                     color = objGanttChart.MGetTskColor(dictDimensionConfig=dictDimensionConfig, dictTskDetails=task)
+    #                 if isThicknessEnabled:
+    #                     bar_width = GanttChart.MSGetThickness(dictDimensionConfig=dictDimensionConfig, dictTskDetails=task)
+
+
+    #                 pattern = objGanttChart.MGetPattern(dictDimensionConfig=dictDimensionConfig, dictTskDetails=task)
+    #                 # Get pattern based on task status
+    #                 status = task.get("TaskStatus", "open")  # Assuming status is a string
+    #                 # print("status", status, "pattern---------", pattern, "bar_width", bar_width)
+    #                 priority = task.get("TaskPriority", "low")
+    #                 if priority is None:
+    #                     priority = "low" 
+    #                 # Handle task conflict color
+    #                 strTaskDetail = objGanttChart.MSGenerateLegend(task)
                     
-                if isThicknessEnabled:
-                    bar_width = GanttChart.MSGetThickness(dictDimensionConfig=dictDimensionConfig, dictTskDetails=taskDetail)
-                else:
-                    bar_width = None
+    #                 # strTskSubject = f"<b>{count}. {task.get('TaskSubject', '')}</b> {status} {priority}"
+    #                 # strTskSubject =  f"<span style='font-size:20px;'><b>{count}. {task.get('TaskSubject', '')}</b> {status} {priority}</span>"
+    #                 if priority == "urgent":
+    #                     strTskSubject = f"<span style='font-size:20px;'><b>{count}. {task.get('TaskSubject', '')}</b> ({status}, {priority})</span>"
+    #                 elif priority in ["normal", "high"]:
+    #                     strTskSubject = f"<span style='font-size:20px;'><i>{count}. {task.get('TaskSubject', '')}</i> ({status}, {priority})</span>"
+    #                 elif priority == "low":
+    #                     strTskSubject = f"<span style='font-size:20px;'>{count}. {task.get('TaskSubject', '')} ({status}, {priority})</span>"
+    #                 else:
+    #                     strTskSubject = f"<span style='font-size:20px;'>{count}. {task.get('TaskSubject', '')} ({status}, No-Priority)</span>"
+    #                 # Add task to Gantt chart
+    #                 objGanttChart.add_task(
+    #                     task_name=strTskSubject,
+    #                     person=EmpName,
+    #                     start_datetime=start_time,
+    #                     duration=duration,
+    #                     color=color,
+    #                     pattern=pattern,
+    #                     bar_width=bar_width,
+    #                     strLegendData=strTaskDetail
+    #                 )
+    #                 count+=1
+    #         else:
+    #             # Process the task as usual if there is no conflict
+    #             start_time_str = taskDetail['TaskExecutionDate']
+    #             if taskDetail['TaskExecutionDate']:
+    #                 try:
+    #                     start_time_str += ' ' + taskDetail['TaskExecutionDate'].split(' ')[1]
+    #                 except IndexError:
+    #                     start_time_str += ' 00:00:00'  # Default to midnight if no time is present
+    #             else:
+    #                 start_time_str += ' 00:00:00'  # Default to midnight if no time is present
 
-                if isPatternEnabled:
-                    pattern = objGanttChart.MGetPattern(dictDimensionConfig=dictDimensionConfig, dictTskDetails=taskDetail)
-                else:
-                    pattern = None
+    #             # Convert the start_time_str to a datetime object
+    #             try:
+    #                 start_time = datetime.strptime(start_time_str, '%d-%m-%Y %H:%M:%S')
+    #             except ValueError:
+    #                 print(f"Error parsing start time: {start_time_str}")
+    #                 start_time = datetime.strptime(taskDetail['TaskExecutionDate'], '%d-%m-%Y')
+
+    #             # Determine task duration (in minutes)
+    #             if taskDetail.get("IsConflict", False) and taskDetail.get("ConflictTimeMin", 0) > 0:
+    #                 duration = timedelta(minutes=taskDetail.get('ConflictTimeMin', 0))
+    #             else:
+    #                 duration = timedelta(minutes=taskDetail.get('AllocatedTimeMin', 0))
+    #             # Track the last end time for each employee and day
+    #             task_date = start_time.date()
+
+    #             if EmpName not in last_task_end_time_per_emp:
+    #                 last_task_end_time_per_emp[EmpName] = {}
+
+    #             if task_date in last_task_end_time_per_emp[EmpName]:
+    #                 # Start the task from the previous task's end time
+    #                 start_time = last_task_end_time_per_emp[EmpName][task_date]
+    #             else:
+    #                 # It's a new day for this employee, start as per the task's TaskExecutionDate
+    #                 last_task_end_time_per_emp[EmpName][task_date] = start_time
+
+    #             # Calculate the task's end time (start_time + duration)
+    #             end_time = start_time + duration
+    #             # Update the last task end time for this date
+    #             last_task_end_time_per_emp[EmpName][task_date] = end_time
+
+    #             # Get color based on color type (status or priority)
+    #             if isColorEnabled:
+    #                 if taskDetail.get("IsConflict",False):
+    #                     color = "rgb(255, 0, 0)"
+    #                     print("Conflict color choosen ---------------",color)
+    #                 elif taskDetail.get("TaskStatus").lower() == "idle time":
+    #                     color = "rgb(197, 197, 197)"
+    #                     print("Idle color choosen ---------------",color)
+    #                 else:
+    #                     color = objGanttChart.MGetTskColor(dictDimensionConfig=dictDimensionConfig, dictTskDetails=taskDetail)
+    #             else:
+    #                 color = None
+                    
+    #             if isThicknessEnabled:
+    #                 bar_width = GanttChart.MSGetThickness(dictDimensionConfig=dictDimensionConfig, dictTskDetails=taskDetail)
+    #             else:
+    #                 bar_width = None
+
+    #             if isPatternEnabled:
+    #                 pattern = objGanttChart.MGetPattern(dictDimensionConfig=dictDimensionConfig, dictTskDetails=taskDetail)
+    #             else:
+    #                 pattern = None
                 
-                # Get pattern based on task status
-                status = taskDetail.get("TaskStatus", "open")  # Assuming status is a string
-                priority = taskDetail.get("TaskPriority", "low")
-                priority = priority if priority else ""
-                # Handle task conflict color
-                strTaskDetail = objGanttChart.MSGenerateLegend(taskDetail)
-                # strTskSubject = f"<b>{count}. {taskDetail.get('TaskSubject', '')}</b> {status} {priority}"
-                # strTskSubject = f"<span style='font-size:20px;'><b>{count}. {taskDetail.get('TaskSubject', '')}</b> {status} {priority}</span>"
+    #             # Get pattern based on task status
+    #             status = taskDetail.get("TaskStatus", "open")  # Assuming status is a string
+    #             priority = taskDetail.get("TaskPriority", "low")
+    #             if priority is None:
+    #                 priority = "low" 
+    #             # Handle task conflict color
+    #             strTaskDetail = objGanttChart.MSGenerateLegend(taskDetail)
+    #             # strTskSubject = f"<b>{count}. {taskDetail.get('TaskSubject', '')}</b> {status} {priority}"
+    #             # strTskSubject = f"<span style='font-size:20px;'><b>{count}. {taskDetail.get('TaskSubject', '')}</b> {status} {priority}</span>"
 
-                if priority == "urgent":
-                    strTskSubject = f"<span style='font-size:20px;'><b>{count}. {taskDetail.get('TaskSubject', '')}</b> {status} {priority}</span>"
-                elif priority in ["normal", "high"]:
-                    strTskSubject = f"<span style='font-size:20px;'><i>{count}. {taskDetail.get('TaskSubject', '')}</i> {status} {priority}</span>"
-                elif priority == "low":
-                    strTskSubject = f"<span style='font-size:20px;'>{count}. {taskDetail.get('TaskSubject', '')} {status} {priority}</span>"
-                else:
-                    strTskSubject = f"<span style='font-size:20px;'>{count}. {taskDetail.get('TaskSubject', '')} {status} No-Priority</span>"
-                # Add task to Gantt chart
-                objGanttChart.add_task(
-                    task_name=strTskSubject,
-                    person=EmpName,
-                    start_datetime=start_time,
-                    duration=duration,
-                    color=color,
-                    pattern=pattern,
-                    bar_width=bar_width,
-                    strLegendData=strTaskDetail
-                )
-                count +=1
-        Idx +=1
-    print("---------------------",objGanttChart.tasks)
-    # Create and display the Gantt chart
-    fig = objGanttChart.create_chart(title="Employee Wise Gantt Chart")
-    fig.show()
+    #             if priority == "urgent":
+    #                 strTskSubject = f"<span style='font-size:20px;'><b>{count}. {taskDetail.get('TaskSubject', '')}</b> ({status}, {priority})</span>"
+    #             elif priority in ["normal", "high"]:
+    #                 strTskSubject = f"<span style='font-size:20px;'><i>{count}. {taskDetail.get('TaskSubject', '')}</i> ({status}, {priority})</span>"
+    #             elif priority == "low":
+    #                 strTskSubject = f"<span style='font-size:20px;'>{count}. {taskDetail.get('TaskSubject', '')} ({status}, {priority})</span>"
+    #             else:
+    #                 strTskSubject = f"<span style='font-size:20px;'>{count}. {taskDetail.get('TaskSubject', '')} ({status}, No-Priority)</span>"
+    #             # Add task to Gantt chart
+    #             objGanttChart.add_task(
+    #                 task_name=strTskSubject,
+    #                 person=EmpName,
+    #                 start_datetime=start_time,
+    #                 duration=duration,
+    #                 color=color,
+    #                 pattern=pattern,
+    #                 bar_width=bar_width,
+    #                 strLegendData=strTaskDetail
+    #             )
+    #             count +=1
+    #     Idx +=1
+    # print("---------------------",objGanttChart.tasks)
+    # # Create and display the Gantt chart
+    # fig = objGanttChart.create_chart(title="Employee Wise Gantt Chart")
+    # fig.show()
+    
+    objFigure = GanttChart.Master(lsEmps= [
+        'mitul@riveredgeanalytics.com', 'mansi@riveredgeanalytics.com', 'hr@riveredgeanalytics.com',
+        'devanshi@riveredgeanalytics.com', 'dhruvin@riveredgeanalytics.com',
+        'mohit.intern@riveredgeanalytics.com', 'harshil@riveredgeanalytics.com',"fenil@riveredgeanalytics.com","punesh@riveredgeanalytics.com","ankita@riveredgeanalytics.com","nikhil@riveredgeanalytics.com","mansip@riveredgeanalytics.com","zahid@riveredgeanalytics.com"
+    ], lsProjects=['901601699012', '901600183071', '901603806927',"901604664293","901604664323","901604664325","901604664326","901604664327","901604664329","901604664340"], StartDate="01-09-2024",EndDate="01-12-2024",bTaskIntensityInclude=False, bFetchLatest=False,bShowPlot=True)
+    
+    # GanttChart.Main(lsListIDs=['901601699012', '901600183071', '901603806927',"901604664293","901604664323","901604664325","901604664326","901604664327","901604664329","901604664340"], 
+    #          strTskStDate=(datetime.now() - timedelta(weeks=1)).strftime('%d-%m-%Y'), 
+    #          strTskEndDate=(datetime.now() + timedelta(weeks=3)).strftime('%d-%m-%Y'), 
+    #          lsEmployees=[
+    #     'mitul@riveredgeanalytics.com', 'mansi@riveredgeanalytics.com', 'hr@riveredgeanalytics.com',
+    #     'devanshi@riveredgeanalytics.com', 'dhruvin@riveredgeanalytics.com',
+    #     'mohit.intern@riveredgeanalytics.com', 'harshil@riveredgeanalytics.com',"fenil@riveredgeanalytics.com","punesh@riveredgeanalytics.com","ankita@riveredgeanalytics.com","nikhil@riveredgeanalytics.com","mansip@riveredgeanalytics.com","zahid@riveredgeanalytics.com"
+    # ],
+    #          bDebug=True,include_toughness=False)

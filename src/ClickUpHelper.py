@@ -132,14 +132,14 @@ class CClickUpHelper:
         return not (estimated_time.get('hrs', 0) == 0 and estimated_time.get('mins', 0) == 0)
     
     @staticmethod
-    def MSCreateDataframe(lsTasks):
+    def MSCreateDataframe(lsTasks,include_toughness=False):
     # Creating a DataFrame from the list of tasks
     
         df = pd.DataFrame(lsTasks)
         # Parsing JSON strings in 'TaskPriority' and 'TaskAssigneesList'
         df['TaskPriority'] = df['TaskPriority'].apply(lambda x: json.loads(x) if x != 'null' else None)
         df['TaskAssigneesList'] = df['TaskAssigneesList'].apply(json.loads)
-        df['TaskScore'] = df.apply(CClickUpHelper.MSCalculateTaskScore, include_toughness=False, axis=1)
+        df['TaskScore'] = df.apply(CClickUpHelper.MSCalculateTaskScore, include_toughness=include_toughness, axis=1)
         
         df = df[df['EstimatedTime'].apply(CClickUpHelper.MSIsEstimatedTimeProvided)]
 

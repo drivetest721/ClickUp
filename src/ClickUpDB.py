@@ -167,15 +167,15 @@ class CClickUpDB:
                 connection.close()
     
     @staticmethod
-    def MSGetTasksByListIDsWithEmpFilter(list_id, start_date, end_date, lsEmployees, bDebug=False):
+    def MSGetTasksByListIDsWithEmpFilter(list_id, start_date, end_date, lsEmployees=None, bDebug=False):
         """
-        Retrieves tasks from ClickUpList based on ListID, TaskStartDate, TaskDueDate, and TaskAssigneeEmailId.
+        Retrieves tasks from ClickUpList based on ListID, TaskStartDate, TaskDueDate, and optional TaskAssigneeEmailId.
         Additionally, returns the unique assignees with their respective task counts.
 
         :param list_id: The ID of the list to filter tasks.
         :param start_date: The start date (inclusive) in 'YYYY-MM-DD' format.
         :param end_date: The due date (inclusive) in 'YYYY-MM-DD' format.
-        :param lsEmployees: A list of employee email addresses to filter tasks by TaskAssigneeEmailId.
+        :param lsEmployees: (Optional) A list of employee email addresses to filter tasks by TaskAssigneeEmailId.
         :return: A tuple containing:
                 - tasks: A list of dictionaries representing the filtered tasks.
                 - assignee_counts: A dictionary where the key is the assignee email and the value is the count of tasks.
@@ -188,21 +188,29 @@ class CClickUpDB:
             cursor.execute(f"USE {CDBHelper.DATABASE_NAME}")
             
             placeholders_list_id = ', '.join(['%s'] * len(list_id))  # Create placeholders for ListIDs
-            placeholders_email = ', '.join(['%s'] * len(lsEmployees))  # Create placeholders for email filtering
             
-            # Define the query with placeholders for ListIDs and filtering by TaskAssigneeEmailId
+            # Create placeholders for employee email filtering if provided
+            if lsEmployees:
+                placeholders_email = ', '.join(['%s'] * len(lsEmployees))
+                email_condition = f"AND LOWER(TRIM(TaskAssigneeEmailId)) IN ({placeholders_email})"
+                email_params = [email.lower() for email in lsEmployees]
+            else:
+                email_condition = ""  # No filtering by email if lsEmployees is not provided
+                email_params = []
+
+            # Define the query with conditional email filtering
             query = f"""
                 SELECT TaskAssigneeEmailId, COUNT(*) as TaskCount
                 FROM ClickUpList
                 WHERE ListID IN ({placeholders_list_id})
                 AND STR_TO_DATE(TaskStartDate, '%d-%m-%Y') >= STR_TO_DATE(%s, '%d-%m-%Y')
                 AND STR_TO_DATE(TaskDueDate, '%d-%m-%Y') <= STR_TO_DATE(%s, '%d-%m-%Y')
-                AND LOWER(TRIM(TaskAssigneeEmailId)) IN ({placeholders_email})
+                {email_condition}
                 GROUP BY TaskAssigneeEmailId
             """
             
             # Combine list of ListIDs, dates, and employee emails
-            params = list_id + [start_date, end_date] + [email.lower() for email in lsEmployees]
+            params = list_id + [start_date, end_date] + email_params
 
             # Execute the query
             cursor.execute(query, params)
@@ -217,7 +225,7 @@ class CClickUpDB:
                 WHERE ListID IN ({placeholders_list_id})
                 AND STR_TO_DATE(TaskStartDate, '%d-%m-%Y') >= STR_TO_DATE(%s, '%d-%m-%Y')
                 AND STR_TO_DATE(TaskDueDate, '%d-%m-%Y') <= STR_TO_DATE(%s, '%d-%m-%Y')
-                AND LOWER(TRIM(TaskAssigneeEmailId)) IN ({placeholders_email})
+                {email_condition}
             """
             
             cursor.execute(query_tasks, params)
@@ -227,16 +235,18 @@ class CClickUpDB:
             assignee_counts_dict = {row['TaskAssigneeEmailId']: row['TaskCount'] for row in assignee_counts}
 
             if bDebug:
-                print(f"Retrieved {len(tasks)} task(s) from ListID {list_id} between {start_date} and {end_date} filtered by employees.")
-            return tasks, assignee_counts_dict
+                print("assignee_counts_dict",assignee_counts_dict)
+                print(f"Retrieved {len(tasks)} task(s) from ListID {list_id} between {start_date} and {end_date}.")
+            return tasks
 
         except Error as e:
             print(f"Error while fetching tasks: {e}")
-            return [], {}
-        finally:
-            if connection.is_connected():
-                cursor.close()
-                connection.close()
+            return []
+        # finally:
+        #     if connection.is_connected():
+        #         cursor.close()
+        #         connection.close()
+
     # Adding the 'TaskScore' column
     
 
@@ -247,7 +257,11 @@ class CClickUpDB:
 if __name__ == "__main__":
     # CDBHelper.MSCreateDatabaseAndTables()
     # Sample data to insert or update
-    print(CClickUpDB.MSGetTasksByListIDsWithEmpFilter(["901600183071"], "10-09-2024",  "25-09-2024",  ['mitul@riveredgeanalytics.com', 'hr@riveredgeanalytics.com']))
+    print(CClickUpDB.MSGetTasksByListIDsWithEmpFilter(['901601699012', '901600183071', '901603806927',"901604664293","901604664323","901604664325","901604664326","901604664327","901604664329","901604664340"], "10-09-2024",  "25-11-2024",  [
+        'mitul@riveredgeanalytics.com', 'mansi@riveredgeanalytics.com', 'hr@riveredgeanalytics.com',
+        'devanshi@riveredgeanalytics.com', 'dhruvin@riveredgeanalytics.com',
+        'mohit.intern@riveredgeanalytics.com', 'harshil@riveredgeanalytics.com',"fenil@riveredgeanalytics.com","punesh@riveredgeanalytics.com","ankita@riveredgeanalytics.com","nikhil@riveredgeanalytics.com","mansip@riveredgeanalytics.com","zahid@riveredgeanalytics.com"
+    ]))
     # CClickUpDB.MSInsertORUpdateTask(sample_data)
     # print(CClickUpDB.MSReadTasKByID("86cw75tp8"))
     # print(CClickUpHelper.MSGetTaskIntensity("IKIO - COGSAnalyzer -<t-3>klsfjldsjft3sdfgt4"))
