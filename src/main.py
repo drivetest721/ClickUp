@@ -11,22 +11,19 @@ from ClickUpDB import CClickUpDB
 import os
 from ClickUpHelper import CClickUpHelper
 from dateutil.relativedelta import relativedelta
-
+from helperFunc import GetTimeInHrsAndMins, readJson, find_employee_info
 
 class CClickUpMiddleWare:
     # Purpose - Sort Task Base on Score : Priority Wise =  Normal or Low - 1, High - 2, Urgent - 3 , use list of task for plot
+    strEmployeeConfig = r"resource\employeeConfig.json"
+    dictEmployee = readJson(strEmployeeConfig)
     
     @staticmethod
     def MSGroupTaskEmployeeWise(lsTasks, include_toughness=False, bDebug= False,bSaveFilteredExcelSheet=False, strFilterTaskDirPath= r"Data/"):
         """
         Purpose - To clean list of task such as handling null values or none or Empty values
         """
-        dictUserName = {
-        'mitul@riveredgeanalytics.com':"Mitul Solanki", 'mansi@riveredgeanalytics.com':"Mansi Solanki", 'hr@riveredgeanalytics.com':"Nidhi",
-        'devanshi@riveredgeanalytics.com':"Devanshi Joshi", 'dhruvin@riveredgeanalytics.com':"Dhruvin Kapadiya",
-        'mohit.intern@riveredgeanalytics.com':"Mohit", 'harshil@riveredgeanalytics.com':"Harshil Chauhan","fenil@riveredgeanalytics.com":"Fenil","punesh@riveredgeanalytics.com":"Punesh","ankita@riveredgeanalytics.com":"Ankita","nikhil@riveredgeanalytics.com":"Nikhil","mansip@riveredgeanalytics.com":"Mansi P","zahid@riveredgeanalytics.com":"Zahid"
-    
-        }
+        dictUserName = CClickUpMiddleWare.dictEmployee
         # Creating a DataFrame from the list of tasks
         df = pd.DataFrame(lsTasks)
         
@@ -333,7 +330,7 @@ class CClickUpMiddleWare:
             current_date = datetime.strptime(strTskExcStDate, '%d-%m-%Y')
             end_date = datetime.strptime(strTskDueDate, '%d-%m-%Y')
             dictAvailableMinDateTemplate = {
-                        'ListName': '', 'TaskID': '', 'TaskSubject': '{Employee} is available on day "{strDate}" for {RemainingMin} minutes.', 'TaskStartDate': '', 'TaskDueDate': '', 'TaskStatus': '', 'EstimatedTime': {}, 'TaskPriority': '', 'TaskAssigneesList': [], 'TaskIsMilestone': 0, 'TaskIntensity': 0, 'TaskScore': 0, 'TaskCreatedDate': '', 'TotalTskEstInMins': 0, 'TaskExecutionDate': '', 'AssignTo': '','IsConflict':False,'ConflictTimeMin':0,'AllocatedTimeMin':0
+                        'ListName': '', 'TaskID': '', 'TaskSubject': '{Employee} is available on day "{strDate}" for {RemainingMin}.', 'TaskStartDate': '', 'TaskDueDate': '', 'TaskStatus': '', 'EstimatedTime': {}, 'TaskPriority': '', 'TaskAssigneesList': [], 'TaskIsMilestone': 0, 'TaskIntensity': 0, 'TaskScore': 0, 'TaskCreatedDate': '', 'TotalTskEstInMins': 0, 'TaskExecutionDate': '', 'AssignTo': '','IsConflict':False,'ConflictTimeMin':0,'AllocatedTimeMin':0, "TaskAssigneeEmailId":""
                     }
             # Iterate from start date to due date
             while current_date <= end_date:
@@ -419,23 +416,32 @@ class CClickUpMiddleWare:
                                 iTotalExcDateRemainingMin = 0
                     dictEmployeeWiseTaskList[EmpName].append(dictTskDetail)
                 if iTotalExcDateRemainingMin > 0:
+                    formatedEstimatedTime = GetTimeInHrsAndMins(iTotalExcDateRemainingMin)
+                    
                     dictAvailableTime = copy.deepcopy(dictAvailableMinDateTemplate)
                     dictAvailableTime['TaskSubject'] = dictAvailableTime['TaskSubject'].format(
                         Employee=EmpName, 
                         strDate=strCurrentDate, 
-                        RemainingMin=iTotalExcDateRemainingMin
+                        RemainingMin=formatedEstimatedTime
                     )
-                    dictAvailableTime['AssignTo'] = EmpName
-                    dictAvailableTime['TaskStartDate'] = strCurrentDate
-                    dictAvailableTime['TaskDueDate'] = strCurrentDate
-                    dictAvailableTime['TaskCreatedDate'] = strCurrentDate
-                    dictAvailableTime['TaskExecutionDate'] = strCurrentDate
-                    dictAvailableTime['TaskStatus'] = 'idle time'
-                    dictAvailableTime['TaskPriority'] = ''
-                    # Allocate Idle Time Min
-                    dictAvailableTime['AllocatedTimeMin'] = iTotalExcDateRemainingMin
-                    dictAvailableTime['TotalTskEstInMins'] = iTotalExcDateRemainingMin
-                    dictEmployeeWiseTaskList[EmpName].append(dictAvailableTime)
+                    dictEmpInfo = find_employee_info(EmpName, CClickUpMiddleWare.dictEmployee) 
+                    if dictEmpInfo is not None:
+                        Email , username = dictEmpInfo[0], dictEmpInfo[1]
+                        dictAvailableTime["TaskAssigneesList"] = [{"username":username, "email":Email}]
+                        dictAvailableTime["TaskAssigneeEmailId"] = Email
+                        dictAvailableTime['AssignTo'] = EmpName
+                        dictAvailableTime['TaskStartDate'] = strCurrentDate
+                        dictAvailableTime['TaskDueDate'] = strCurrentDate
+                        dictAvailableTime['TaskCreatedDate'] = strCurrentDate
+                        dictAvailableTime['TaskExecutionDate'] = strCurrentDate
+                        dictAvailableTime['TaskStatus'] = 'idle time'
+                        dictAvailableTime['TaskPriority'] = ''
+                        # Allocate Idle Time Min
+                        dictAvailableTime['AllocatedTimeMin'] = iTotalExcDateRemainingMin
+                        dictAvailableTime['TotalTskEstInMins'] = iTotalExcDateRemainingMin
+                        dictEmployeeWiseTaskList[EmpName].append(dictAvailableTime)
+                    else:
+                        print(f"Warning-  Unable to add idle time for Employee {EmpName}")
                 if bDebug:
                     print(f"4. Execution Date - {strCurrentDate}, Task List - {lsTskExcDate}")
 

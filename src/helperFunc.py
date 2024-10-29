@@ -1,4 +1,5 @@
-
+import random
+import string
 import json
 import pandas as pd
 
@@ -7,6 +8,23 @@ def readJson(strFileName):
     with open(strFileName,'r') as file:
         dictData = json.load(file)
     return dictData
+
+# Function to get unique customers and projects
+def get_filtered_data(data, customer=None):
+    if customer:
+        filtered_data = [entry for entry in data if entry['Customer'] == customer]
+    else:
+        filtered_data = data
+    return filtered_data
+
+# Helper function to convert minutes to "hours and minutes" format
+def GetTimeInHrsAndMins(minutes):
+    if minutes <= 0:
+        return "0 minutes"
+    hours = minutes // 60
+    remaining_minutes = minutes % 60
+    time_str = (f"{hours} hrs " if hours > 0 else "") + (f"{remaining_minutes} mins" if remaining_minutes > 0 else "")
+    return time_str
 
 def FilterOutIdleTasks(lsEmpTasks):
     """
@@ -30,8 +48,6 @@ def FilterOutIdleTasks(lsEmpTasks):
     return filtered_tasks
 
 
-import random
-import string
 
 def generate_random_alphanumeric_code(length=5):
     """
@@ -46,3 +62,21 @@ def generate_random_alphanumeric_code(length=5):
     characters = string.ascii_letters + string.digits
     random_code = ''.join(random.choices(characters, k=length))
     return random_code
+
+
+
+def find_employee_info(employee_name, employee_dict):
+    """
+    Finds the email and name of an employee given the employee's name.
+
+    Parameters:
+    - employee_name (str): The name of the employee to search for.
+    - employee_dict (dict): A dictionary with email as keys and full names as values.
+
+    Returns:
+    - tuple: (email, full_name) if a match is found, else None.
+    """
+    for email, full_name in employee_dict.items():
+        if full_name == employee_name:
+            return email, full_name
+    return False

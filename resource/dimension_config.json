@@ -20,7 +20,7 @@
                 "closed": "rgb(0, 100, 0)",        
                 "hold": "rgb(255, 105, 180)",
                 "on hold": "rgb(255, 105, 180)",         
-                "idle time": "rgb(112, 128, 144)"
+                "idle time": "rgb(238, 237, 9)"
 
             }
         }
@@ -31,10 +31,10 @@
         "optiondetails": {
             "project": "random",
             "priority": {
-                "normal": "+",
-                "low": "+",
+                "urgent": "x",
                 "high": "//",
-                "urgent": "x"
+                "normal": "+",
+                "low": "+"
             },
             "status": {
                 "open": "",
@@ -47,14 +47,14 @@
         }
     },
     "thickness": {
-        "selected": "",
+        "selected": "priority",
         "options": ["priority", "status"],
         "optiondetails": {
             "priority": {
-                "normal": 0.2,
-                "low": 0.2,
+                "urgent": 0.6,
                 "high": 0.4,
-                "urgent": 0.6
+                "normal": 0.2,
+                "low": 0.2
             },
             "status": {
                 "open": 0.3,
