@@ -4,7 +4,7 @@ import plotly.graph_objs as go
 from datetime import datetime, timedelta
 from PlotMain import GanttChart
 from ClickUpAPI import CClickUpAPI
-from helperFunc import readJson
+from helperFunc import readJson, FilterOutIdleTasks
 
 # Helper function to calculate default dates
 def get_default_dates():
@@ -142,8 +142,8 @@ def Master(lsEmps, lsProjects, StartDate="25-08-2024", EndDate="20-09-2024", bTa
                     if task.get("IsConflict",False):
                         color = "rgb(255, 0, 0)"
                         print("Conflict color choosen ---------------",color)
-                    elif task.get("TaskStatus").lower() == "idle time":
-                        color = "rgb(197, 197, 197)"
+                    # elif task.get("TaskStatus").lower() == "idle time":
+                    #     color = "rgb(197, 197, 197)"
                     else:
                         color = objGanttChart.MGetTskColor(dictDimensionConfig=dictDimensionConfig, dictTskDetails=task)
                     if isThicknessEnabled:
@@ -229,8 +229,8 @@ def Master(lsEmps, lsProjects, StartDate="25-08-2024", EndDate="20-09-2024", bTa
                     if taskDetail.get("IsConflict",False):
                         color = "rgb(255, 0, 0)"
                         print("Conflict color choosen ---------------",color)
-                    elif taskDetail.get("TaskStatus").lower() == "idle time":
-                        color = "rgb(197, 197, 197)"
+                    # elif taskDetail.get("TaskStatus").lower() == "idle time":
+                    #     color = "rgb(197, 197, 197)"
                         print("Idle color choosen ---------------",color)
                     else:
                         color = objGanttChart.MGetTskColor(dictDimensionConfig=dictDimensionConfig, dictTskDetails=taskDetail)
@@ -288,17 +288,49 @@ default_start_date, default_end_date = get_default_dates()
 st.set_page_config(layout="wide")
 st.title("Task Management Dashboard")
 
+# Define the status and their corresponding RGB colors
+status_colors = {
+    "open": "rgb(255, 255, 255)",
+    "in progress": "rgb(0, 255, 255)",
+    "review": "rgb(144, 238, 144)",
+    "delievered": "rgb(0, 100, 0)",
+    "on hold": "rgb(255, 105, 180)",
+    "idle time": "rgb(112, 128, 144)"
+}
+
+# Create columns dynamically based on the number of statuses
+cols = st.columns(len(status_colors))  # Create columns for each status
+
+# Iterate over each status and display the colored box with the status name in a single row
+for idx, (status, color) in enumerate(status_colors.items()):
+    with cols[idx]:  # Use each column for each status
+        st.markdown(
+            f"""
+            <div style="display: flex; align-items: center;">
+                <div style="
+                    width: 20px;
+                    height: 20px;
+                    background-color: {color};
+                    border: 1px solid #000;
+                    border-radius: 4px;
+                    margin-right: 5px;
+                "></div>
+                <span style="font-size: 14px;">{status.capitalize()}</span>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
 # Sidebar Section
 st.sidebar.header("Filters")
 
 # Toggle Button for Report Overview (Use expander in Streamlit)
-with st.sidebar.expander("Report Overview ▶", expanded=False):
-    st.write("Selected Employees: ...")
-    st.write("Selected Projects: ...")
-    st.write(f"Start Date: {default_start_date}")
-    st.write(f"End Date: {default_end_date}")
-    st.write("Task Intensity Wise Score: ...")
-    st.write("Fetch Latest Date: ...")
+# with st.sidebar.expander("Report Overview ▶", expanded=False):
+#     st.write("Selected Employees: ...")
+#     st.write("Selected Projects: ...")
+#     st.write(f"Start Date: {default_start_date}")
+#     st.write(f"End Date: {default_end_date}")
+#     st.write("Task Intensity Wise Score: ...")
+#     st.write("Fetch Latest Date: ...")
 
 # Inputs Section
 st.sidebar.subheader("Select Employee Name:")
@@ -307,25 +339,16 @@ employee_names = st.sidebar.multiselect(
     "Employees",
     options=[
         'mitul@riveredgeanalytics.com', 'mansi@riveredgeanalytics.com', 'hr@riveredgeanalytics.com',
-        'devanshi@riveredgeanalytics.com', 'dhruvin@riveredgeanalytics.com',
+        'devanshi@riveredgeanalytics.com', 'dhruvin@riveredgeanalytics.com','manthan@riveredgeanalytics.com',
         'mohit.intern@riveredgeanalytics.com', 'harshil@riveredgeanalytics.com',"fenil@riveredgeanalytics.com","punesh@riveredgeanalytics.com","ankita@riveredgeanalytics.com","nikhil@riveredgeanalytics.com","mansip@riveredgeanalytics.com","zahid@riveredgeanalytics.com"
     ],
     default=[] if not select_all_employees else [
         'mitul@riveredgeanalytics.com', 'mansi@riveredgeanalytics.com', 'hr@riveredgeanalytics.com',
         'devanshi@riveredgeanalytics.com', 'dhruvin@riveredgeanalytics.com',
-        'mohit.intern@riveredgeanalytics.com', 'harshil@riveredgeanalytics.com',"fenil@riveredgeanalytics.com","punesh@riveredgeanalytics.com","ankita@riveredgeanalytics.com","nikhil@riveredgeanalytics.com","mansip@riveredgeanalytics.com","zahid@riveredgeanalytics.com"
+        'mohit.intern@riveredgeanalytics.com', 'harshil@riveredgeanalytics.com','manthan@riveredgeanalytics.com',"fenil@riveredgeanalytics.com","punesh@riveredgeanalytics.com","ankita@riveredgeanalytics.com","nikhil@riveredgeanalytics.com","mansip@riveredgeanalytics.com","zahid@riveredgeanalytics.com"
     ]
 )
-"""
-IKIO - https://app.clickup.com/9002231030/v/li/901604664293
-Bright Future - https://app.clickup.com/9002231030/v/li/901604664323
-DHOA - https://app.clickup.com/9002231030/v/li/901604664325
-EKam - https://app.clickup.com/9002231030/v/li/901604664326
-Royalux - https://app.clickup.com/9002231030/v/li/901604664327
-RV - https://app.clickup.com/9002231030/v/li/901604664329
-IKIO 150 Industrial - https://app.clickup.com/9002231030/v/li/901604664340
 
-"""
 st.sidebar.subheader("Select Project Name:")
 select_all_projects = st.sidebar.checkbox("Select All Projects", False)
 project_names = st.sidebar.multiselect(
@@ -350,7 +373,7 @@ if st.sidebar.button("Generate Report"):
     end_date = end_date.strftime('%d-%m-%Y')
 
     # Assume Master returns a plotly figure based on inputs
-    fig = Master(
+    fig = GanttChart.Master(
         lsEmps=employee_names, 
         lsProjects=project_names, 
         StartDate=start_date, 
@@ -382,7 +405,8 @@ if st.sidebar.button("Generate Report"):
 
     # Display Data Tables for each employee
     for EmpName, lsEmpTasks in cleaned_dictEmptasks.items():
-        df_tasks = pd.DataFrame(lsEmpTasks)
+        lsFilteredTasks = FilterOutIdleTasks(lsEmpTasks)
+        df_tasks = pd.DataFrame(lsFilteredTasks)
         st.subheader(f"Tasks for {EmpName}")
         st.dataframe(df_tasks)
         

@@ -10,6 +10,7 @@ from datetime import datetime, timedelta
 from ClickUpDB import CClickUpDB
 import os
 from ClickUpHelper import CClickUpHelper
+from dateutil.relativedelta import relativedelta
 
 
 class CClickUpMiddleWare:
@@ -101,6 +102,113 @@ class CClickUpMiddleWare:
         # Return the dictionary where keys are employee names and values are lists of task dictionaries
         return dictFilteredEmpWiseTsk
 
+    @staticmethod
+    def MSExpandTasksBasedOnRules(dictFilteredEmpWiseTsk, temp_rules):
+        """
+        Expands tasks based on the rules provided in the temp dictionary, skipping Saturdays and Sundays.
+        
+        Args:
+        - dictFilteredEmpWiseTsk (dict): Dictionary with employee names as keys and lists of tasks as values.
+        - temp_rules (dict): Dictionary where keys are task IDs and values indicate the repetition rules.
+        
+        Returns:
+        - dict: Dictionary with expanded tasks.
+        """
+        
+        # List to collect all expanded tasks
+        dictExtendedTasks = {}
+        for employee, tasks in dictFilteredEmpWiseTsk.items():
+            expanded_tasks = []
+            for task in tasks:
+                task_id = task.get("TaskID")
+                if task_id in temp_rules:
+                    rule = temp_rules[task_id]
+                    count = rule.get("count", 1)
+                    days = rule.get("days", None)
+                    month = rule.get("month", None)
+                    
+                    # Convert date strings to datetime objects
+                    original_start_date = datetime.strptime(task["TaskStartDate"], "%d-%m-%Y")
+                    original_due_date = datetime.strptime(task["TaskDueDate"], "%d-%m-%Y")
+
+                    for i in range(count):
+                        # Create a new task based on the original task
+                        new_task = task.copy()
+                        
+                        if days:
+                            # Increment dates by the specified number of days, excluding weekends
+                            if i == 0:
+                                new_start_date = original_start_date + timedelta(days=days)
+                                new_due_date = original_due_date + timedelta(days=days)
+                            else:
+                                new_start_date = previous_start_date + timedelta(days=days)
+                                new_due_date = previous_due_date + timedelta(days=days)
+                            
+                            # Ensure dates skip weekends
+                            new_start_date = CClickUpMiddleWare.skip_weekends(new_start_date)
+                            new_due_date = CClickUpMiddleWare.skip_weekends(new_due_date)
+
+                            # Set the dates in the new task
+                            new_task["TaskStartDate"] = new_start_date.strftime("%d-%m-%Y")
+                            new_task["TaskExecutionDate"] = new_start_date.strftime("%d-%m-%Y")
+                            new_task["TaskDueDate"] = new_due_date.strftime("%d-%m-%Y")
+                            
+                            # Update previous start and due dates for the next iteration
+                            previous_start_date = new_start_date
+                            previous_due_date = new_due_date
+
+                        elif month:
+                            # For monthly repetition, increment month correctly, skipping weekends
+                            if i == 0:
+                                new_start_date = (original_start_date + relativedelta(months=1)).replace(day=1)
+                                new_due_date = new_start_date + (original_due_date - original_start_date)
+                            else:
+                                new_start_date = (previous_start_date + relativedelta(months=1)).replace(day=1)
+                                new_due_date = new_start_date + (previous_due_date - previous_start_date)
+                            
+                            # Ensure dates skip weekends
+                            new_start_date = CClickUpMiddleWare.skip_weekends(new_start_date)
+                            new_due_date = CClickUpMiddleWare.skip_weekends(new_due_date)
+                            
+                            # Set the dates in the new task
+                            new_task["TaskStartDate"] = new_start_date.strftime("%d-%m-%Y")
+                            new_task["TaskExecutionDate"] = new_start_date.strftime("%d-%m-%Y")
+                            new_task["TaskDueDate"] = new_due_date.strftime("%d-%m-%Y")
+                            
+                            # Update previous start and due dates for the next iteration
+                            previous_start_date = new_start_date
+                            previous_due_date = new_due_date
+
+                        # Add the new task to the list
+                        expanded_tasks.append(new_task)
+                        
+                else:
+                    # If no rules for the task, just add the original task
+                    expanded_tasks.append(task)
+            
+            dictExtendedTasks[employee] = expanded_tasks
+
+        return dictExtendedTasks
+
+    @staticmethod
+    def skip_weekends(date):
+        """
+        Adjusts the date to skip Saturdays and Sundays.
+        
+        Args:
+        - date (datetime): The date to be checked.
+        
+        Returns:
+        - datetime: Adjusted date, moved to the next weekday if necessary.
+        """
+        # If the date falls on a Saturday, move it to Monday
+        if date.weekday() == 5:  # Saturday
+            date += timedelta(days=2)
+        # If the date falls on a Sunday, move it to Monday
+        elif date.weekday() == 6:  # Sunday
+            date += timedelta(days=1)
+        return date
+    
     @staticmethod
     def MSCreateEmpDateWiseTasksList(dictFilteredEmpWiseTsk, bDebug=True):
         # Purpose - Group Employee Tasks Start Date or Execution Date Wise 

@@ -11,12 +11,16 @@
                 "urgent": "rgb(255, 0, 255)"          
             },
             "status": {
-                "open": "rgb(255, 255, 255)",         
+                "open": "rgb(255, 255, 255)",   
+                "to do": "rgb(255, 255, 255)",        
                 "in progress": "rgb(0, 255, 255)",   
-                "review": "rgb(144, 238, 144)",      
-                "delievered": "rgb(0, 100, 0)",      
-                "hold": "rgb(255, 105, 180)",        
-                "idle time": "rgb(255, 255, 237)"
+                "review": "rgb(144, 238, 144)", 
+                "in review": "rgb(144, 238, 144)",      
+                "delievered": "rgb(0, 100, 0)",
+                "closed": "rgb(0, 100, 0)",        
+                "hold": "rgb(255, 105, 180)",
+                "on hold": "rgb(255, 105, 180)",         
+                "idle time": "rgb(112, 128, 144)"
 
             }
         }

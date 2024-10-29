@@ -10,7 +10,9 @@ import os
 import random
 import json
 from ClickUpAPI import CClickUpAPI
-from helperFunc import readJson
+from helperFunc import readJson,generate_random_alphanumeric_code
+
+temp_rules= readJson(r"resource\recurring_task.json")
 
 class GanttChart:
     
@@ -45,22 +47,14 @@ class GanttChart:
             'strLegendData':strLegendData
         })
     
+    
     # def create_chart(self, title="Gantt Chart", height=800, width=1800, bar_thickness=0.5):
     #     df = pd.DataFrame(self.tasks)
-
-    #     # Add a new column 'HoverInfo' that contains the desired detailed information
-    #     df['HoverInfo'] = df['strLegendData']
-
-    #     # Create the Gantt chart using Plotly Express
-    #     fig = px.timeline(
-    #         df, x_start="Start", x_end="Finish", y="Person", color="Task",
-    #         title=title, height=height, width=width, hover_data={'HoverInfo': True}
-    #     )
-
-    #     # Reverse the y-axis to ensure tasks are listed top-down
+        
+    #     fig = px.timeline(df, x_start="Start", x_end="Finish", y="Person", color="Task",
+    #                       title=title, height=height, width=width)  # Use the Date column to create animation frames)
+        
     #     fig.update_yaxes(autorange="reversed")
-
-    #     # Configure layout to add scrollbars and modify axis behavior
     #     fig.update_layout(
     #         xaxis_title="Time",
     #         yaxis_title="Person",
@@ -69,15 +63,9 @@ class GanttChart:
     #         ),
     #         yaxis=dict(
     #             fixedrange=False  # Allow vertical scrolling
-    #         ),  
-    #         showlegend=False  # Hide default legend
+    #         ),
+    #         showlegend=False  # Turn off the legend
     #     )
-
-    #     # Customize hover template to only show `strLegendData` and hide other default properties
-    #     fig.update_traces(
-    #         hovertemplate="%{customdata[0]}"  # Show only the content of `HoverInfo`
-    #     )
-
     #     # Add zoom control buttons for 1 Day and 1 Week
     #     fig.update_layout(
     #         updatemenus=[
@@ -108,47 +96,107 @@ class GanttChart:
     #             )
     #         ]
     #     )
-
-    #     # Apply custom colors, patterns, and bar widths
+    #     # Add task names on the bars and apply custom colors, patterns, and bar widths
     #     for i, task in enumerate(fig.data):
-    #         # Use `strLegendData` for the hover information
-    #         task.customdata = df[['HoverInfo']].values
     #         task.text = df['Task'].iloc[i]
     #         task.textposition = 'inside'
-
+            
     #         if df['Color'].iloc[i]:
     #             task.marker.color = df['Color'].iloc[i]
-
-    #         # Manually set pattern
+            
     #         if df['Pattern'].iloc[i]:
-    #             task.marker.pattern.shape = df['Pattern'].iloc[i]
-
-    #         # Apply custom bar width if specified, default to bar_thickness
-    #         if 'BarWidth' in df.columns and pd.notna(df['BarWidth'].iloc[i]):
+    #             task.marker.pattern = {'shape': df['Pattern'].iloc[i]}
+            
+    #         # Apply custom bar width if specified
+    #         if df['BarWidth'].iloc[i]:
     #             task.width = df['BarWidth'].iloc[i]
     #         else:
     #             task.width = bar_thickness
 
+    #         # Update hover template to display strLegendData
+    #         task.hovertemplate = df['strLegendData'].iloc[i]  # Customize hover text
     #     return fig
+
     def create_chart(self, title="Gantt Chart", height=800, width=1800, bar_thickness=0.5):
         df = pd.DataFrame(self.tasks)
-        
+
+        # Create the Gantt chart using Plotly
         fig = px.timeline(df, x_start="Start", x_end="Finish", y="Person", color="Task",
-                          title=title, height=height, width=width)  # Use the Date column to create animation frames)
+                        title=title, height=height, width=width)
         
+        # Update y-axis to reverse order (for Gantt charts)
         fig.update_yaxes(autorange="reversed")
+        
+        # Add layout configurations
         fig.update_layout(
             xaxis_title="Time",
             yaxis_title="Person",
             xaxis=dict(
                 rangeslider=dict(visible=True),  # Add horizontal scrollbar
+                fixedrange=False,  # Allow panning/zooming horizontally
+                side="top"  # Position x-axis on top for better Gantt chart view
             ),
             yaxis=dict(
-                fixedrange=False  # Allow vertical scrolling
+                fixedrange=False,  # Allow vertical scrolling
+                automargin=True,  # Adjust margins to accommodate labels
             ),
-            showlegend=False  # Turn off the legend
+            showlegend=False,  # Turn off the legend
+            height=height,
+            width=width
         )
-        # Add zoom control buttons for 1 Day and 1 Week
+
+        # Add alternating date background shades
+        min_date = df['Start'].min().floor('D')
+        max_date = df['Finish'].max().ceil('D')
+        num_days = (max_date - min_date).days + 1
+        
+        shapes = []
+        light_grey = "rgba(211, 215, 223,0.5)"  # Soft, subtle gray for light sections
+        dark_grey = "rgb(122, 136, 159,0.5)"  # Slightly brighter but still subtle for alternating sections
+
+        for i in range(num_days):
+            start_date = min_date + pd.Timedelta(days=i)
+            end_date = start_date + pd.Timedelta(days=1)
+            
+            # Alternate the color based on the day index
+            color = light_grey if i % 2 == 0 else dark_grey
+            
+            # Add shape to the list
+            shapes.append(dict(
+                type="rect",
+                x0=start_date, x1=end_date,
+                y0=0, y1=1,  # Extend the rectangle vertically across the plot
+                xref="x", yref="paper",  # x-axis refers to data, y-axis spans full plot height
+                fillcolor=color,
+                opacity=0.3,
+                layer="below",  # Ensure it is behind the chart elements
+                line_width=0
+            ))
+        
+        # Add the shapes to the chart layout
+        fig.update_layout(shapes=shapes)
+
+        # Create buttons for zooming to specific dates and months
+        unique_dates = sorted(df['Start'].dt.date.unique())
+        unique_months = sorted(df['Start'].dt.to_period("M").unique())
+
+        date_buttons = [
+            dict(
+                args=[{"xaxis.range": [pd.Timestamp(date), pd.Timestamp(date) + pd.Timedelta(days=1)]}],
+                label=date.strftime("%Y-%m-%d"),
+                method="relayout"
+            ) for date in unique_dates
+        ]
+
+        month_buttons = [
+            dict(
+                args=[{"xaxis.range": [pd.Timestamp(str(month)), pd.Timestamp(str(month)) + pd.DateOffset(months=1)]}],
+                label=str(month),
+                method="relayout"
+            ) for month in unique_months
+        ]
+
+        # Add zoom control buttons for 1 Day, 1 Week, specific dates, and specific months
         fig.update_layout(
             updatemenus=[
                 dict(
@@ -175,20 +223,40 @@ class GanttChart:
                     ]),
                     showactive=True,
                     xanchor="center"
+                ),
+                dict(
+                    type="dropdown",
+                    direction="down",
+                    x=0.6,
+                    y=1.2,
+                    buttons=date_buttons,
+                    showactive=True,
+                    xanchor="center",
+                ),
+                dict(
+                    type="dropdown",
+                    direction="down",
+                    x=0.7,
+                    y=1.2,
+                    buttons=month_buttons,
+                    showactive=True,
+                    xanchor="center",
                 )
             ]
         )
+        
         # Add task names on the bars and apply custom colors, patterns, and bar widths
         for i, task in enumerate(fig.data):
             task.text = df['Task'].iloc[i]
             task.textposition = 'inside'
+            task.hoverinfo = "skip"  # Disable the default hoverinfo to avoid extra tooltips
             
             if df['Color'].iloc[i]:
                 task.marker.color = df['Color'].iloc[i]
-            
+
             if df['Pattern'].iloc[i]:
                 task.marker.pattern = {'shape': df['Pattern'].iloc[i]}
-            
+
             # Apply custom bar width if specified
             if df['BarWidth'].iloc[i]:
                 task.width = df['BarWidth'].iloc[i]
@@ -197,6 +265,7 @@ class GanttChart:
 
             # Update hover template to display strLegendData
             task.hovertemplate = df['strLegendData'].iloc[i]  # Customize hover text
+
         return fig
 
 
@@ -228,11 +297,12 @@ class GanttChart:
             
             # Group tasks employee-wise
             employee_tasks = CClickUpMiddleWare.MSGroupTaskEmployeeWise(tasks,include_toughness=include_toughness)
+            extendedEmployeeTasks = CClickUpMiddleWare.MSExpandTasksBasedOnRules(employee_tasks, temp_rules = temp_rules)
             if bDebug:
                 print(f"Employee tasks: {employee_tasks}")
 
             # Sort tasks and return sorted employee-wise task dictionary
-            input_dict = CClickUpMiddleWare.MSSortDF(employee_tasks, bDebug=bDebug, bSaveReportToExcel= False)
+            input_dict = CClickUpMiddleWare.MSSortDF(extendedEmployeeTasks, bDebug=bDebug, bSaveReportToExcel= False)
             
             if bDebug:
                 print(f"Sorted Task list Employee Wise: {input_dict}")
@@ -277,9 +347,9 @@ class GanttChart:
 
         # Create the legend string with better formatting for readability
         legend = (
-            f"<b>Task Subject</b>: {task_subject} - ({status}, {priority}) <br>"
+            f"<b>Task Subject</b>: {task_subject} - ({status}, {priority}, {assignees_str}) <br>"
             f"{f'<b>Concflicted Task Time</b>: {conflict_time} minutes<br>' if conflict else f'<b>Allocated Task Est Time</b>: {allocated_time} minutes<br>'}"
-            f"<b>Score</b>: {score}"
+            f"<b>Score</b>: {score}<br>"
             f"<b>TaskID</b>: {taskId}<br>"
         )
 
@@ -441,6 +511,7 @@ class GanttChart:
 
                     # Process the allocated task
                     for task in [allocated_time_task, conflict_time_task]:
+                        uniqueCode = generate_random_alphanumeric_code()
                         start_time_str = task['TaskExecutionDate']
                         if task['TaskExecutionDate']:
                             try:
@@ -503,13 +574,13 @@ class GanttChart:
                         # strTskSubject = f"<b>{count}. {task.get('TaskSubject', '')}</b> {status} {priority}"
                         # strTskSubject =  f"<span style='font-size:20px;'><b>{count}. {task.get('TaskSubject', '')}</b> {status} {priority}</span>"
                         if priority == "urgent":
-                            strTskSubject = f"<span style='font-size:20px;'><b>{count}. {task.get('TaskSubject', '')}</b> {status} {priority}</span>"
+                            strTskSubject = f"<span style='font-size:20px;'><b>{uniqueCode}. {task.get('TaskSubject', '')}</b> {status} {priority}</span>"
                         elif priority in ["normal", "high"]:
-                            strTskSubject = f"<span style='font-size:20px;'><i>{count}. {task.get('TaskSubject', '')}</i> {status} {priority}</span>"
+                            strTskSubject = f"<span style='font-size:20px;'><i>{uniqueCode}. {task.get('TaskSubject', '')}</i> {status} {priority}</span>"
                         elif priority == "low":
-                            strTskSubject = f"<span style='font-size:20px;'>{count}. {task.get('TaskSubject', '')} {status} {priority}</span>"
+                            strTskSubject = f"<span style='font-size:20px;'>{uniqueCode}. {task.get('TaskSubject', '')} {status} {priority}</span>"
                         else:
-                            strTskSubject = f"<span style='font-size:20px;'>{count}. {task.get('TaskSubject', '')} {status} No-Priority</span>"
+                            strTskSubject = f"<span style='font-size:20px;'>{uniqueCode}. {task.get('TaskSubject', '')} {status} No-Priority</span>"
                         # Add task to Gantt chart
                         objGanttChart.add_task(
                             task_name=strTskSubject,
@@ -523,6 +594,7 @@ class GanttChart:
                         )
                         count+=1
                 else:
+                    uniqueCode = generate_random_alphanumeric_code()
                     # Process the task as usual if there is no conflict
                     start_time_str = taskDetail['TaskExecutionDate']
                     if taskDetail['TaskExecutionDate']:
@@ -598,13 +670,13 @@ class GanttChart:
                     # strTskSubject = f"<span style='font-size:20px;'><b>{count}. {taskDetail.get('TaskSubject', '')}</b> {status} {priority}</span>"
 
                     if priority == "urgent":
-                        strTskSubject = f"<span style='font-size:20px;'><b>{count}. {taskDetail.get('TaskSubject', '')}</b> {status} {priority}</span>"
+                        strTskSubject = f"<span style='font-size:20px;'><b>{uniqueCode}. {taskDetail.get('TaskSubject', '')}</b> {status} {priority}</span>"
                     elif priority in ["normal", "high"]:
-                        strTskSubject = f"<span style='font-size:20px;'><i>{count}. {taskDetail.get('TaskSubject', '')}</i> {status} {priority}</span>"
+                        strTskSubject = f"<span style='font-size:18px;'><i>{uniqueCode}. {taskDetail.get('TaskSubject', '')}</i> {status} {priority}</span>"
                     elif priority == "low":
-                        strTskSubject = f"<span style='font-size:20px;'>{count}. {taskDetail.get('TaskSubject', '')} {status} {priority}</span>"
+                        strTskSubject = f"<span style='font-size:17px;'>{uniqueCode}. {taskDetail.get('TaskSubject', '')} {status} {priority}</span>"
                     else:
-                        strTskSubject = f"<span style='font-size:20px;'>{count}. {taskDetail.get('TaskSubject', '')} {status} No-Priority</span>"
+                        strTskSubject = f"<span style='font-size:19px;'>{uniqueCode}. {taskDetail.get('TaskSubject', '')} {status} No-Priority</span>"
                     # Add task to Gantt chart
                     objGanttChart.add_task(
                         task_name=strTskSubject,
@@ -851,6 +923,12 @@ if __name__ == "__main__":
         'devanshi@riveredgeanalytics.com', 'dhruvin@riveredgeanalytics.com',
         'mohit.intern@riveredgeanalytics.com', 'harshil@riveredgeanalytics.com',"fenil@riveredgeanalytics.com","punesh@riveredgeanalytics.com","ankita@riveredgeanalytics.com","nikhil@riveredgeanalytics.com","mansip@riveredgeanalytics.com","zahid@riveredgeanalytics.com"
     ], lsProjects=['901601699012', '901600183071', '901603806927',"901604664293","901604664323","901604664325","901604664326","901604664327","901604664329","901604664340"], StartDate="01-09-2024",EndDate="01-12-2024",bTaskIntensityInclude=False, bFetchLatest=False,bShowPlot=True)
+    
+#     objFigure = GanttChart.Master(lsEmps= [
+# "ankita@riveredgeanalytics.com", "fenil@riveredgeanalytics.com"
+
+#     ], lsProjects=['901601699012', '901600183071', '901603806927',"901604664293","901604664323","901604664325","901604664326","901604664327","901604664329","901604664340"], StartDate="22-10-2024",EndDate="24-10-2024",bTaskIntensityInclude=False, bFetchLatest=False,bShowPlot=True)
+    
     
     # GanttChart.Main(lsListIDs=['901601699012', '901600183071', '901603806927',"901604664293","901604664323","901604664325","901604664326","901604664327","901604664329","901604664340"], 
     #          strTskStDate=(datetime.now() - timedelta(weeks=1)).strftime('%d-%m-%Y'), 
