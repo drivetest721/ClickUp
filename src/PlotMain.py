@@ -8,6 +8,7 @@ from ClickUpHelper import CClickUpHelper
 from main import CClickUpMiddleWare
 import os
 import random
+import plotly.graph_objects as go
 import json
 from ClickUpAPI import CClickUpAPI
 from helperFunc import readJson,generate_random_alphanumeric_code, GetTimeInHrsAndMins
@@ -37,7 +38,7 @@ class GanttChart:
         self.SelectedPattern = {}
         
         
-    def add_task(self, task_name, person, start_datetime, duration, color=None, pattern=None, bar_width=None,strLegendData = None):
+    def add_task(self, task_name, person, start_datetime, duration, color=None, pattern=None, bar_width=None,strLegendData = None,status=None):
         end_datetime = start_datetime + duration
         self.tasks.append({
             'Task': task_name,
@@ -47,7 +48,8 @@ class GanttChart:
             'Color': color,
             'Pattern': pattern,
             'BarWidth': bar_width,
-            'strLegendData':strLegendData
+            'strLegendData':strLegendData,
+            'status':status
         })
     
     
@@ -120,13 +122,12 @@ class GanttChart:
     #         task.hovertemplate = df['strLegendData'].iloc[i]  # Customize hover text
     #     return fig
 
-    def create_chart(self, title="Gantt Chart", height=900, width=1800, bar_thickness=0.5):
+    def create_chart(self, title="Gantt Chart", height=1080, width=1920, bar_thickness=0.5):
         df = pd.DataFrame(self.tasks)
 
         # Create the Gantt chart using Plotly
-        fig = px.timeline(df, x_start="Start", x_end="Finish", y="Person", color="Task",
-                        title=title, height=height, width=width)
-        
+        fig = px.timeline(df, x_start="Start", x_end="Finish", y="Person",color="Task",
+                        title=title, height=height, width=width,hover_data={"strLegendData": True,"Task":False,"Start":False,"Finish":False,"Person":False})
         # Update y-axis to reverse order (for Gantt charts)
         fig.update_yaxes(autorange="reversed")
         
@@ -143,63 +144,81 @@ class GanttChart:
                 fixedrange=False,  # Allow vertical scrolling
                 automargin=True,  # Adjust margins to accommodate labels
             ),
-            showlegend=False,  # Turn off the legend
+            showlegend=False,  # Enable legend to show Color categories
             height=height,
-            width=width
+            width=width,
+            # hovermode="x unified"
+        #     hoverlabel=dict(
+        #     bgcolor="white",  # Background color for hover label
+        #     font_size=14,     # Font size for hover label
+        #     font_family="Rockwell"  # Font family for hover label
+        # )
         )
 
-        # Add alternating date background shades
+        # Get the min and max dates from the data
         min_date = df['Start'].min().floor('D')
         max_date = df['Finish'].max().ceil('D')
         num_days = (max_date - min_date).days + 1
-        
-        shapes = []
-        light_grey = "rgba(211, 215, 223,0.5)"  # Soft, subtle gray for light sections
-        dark_grey = "rgb(122, 136, 159,0.5)"  # Slightly brighter but still subtle for alternating sections
 
+        # Define colors
+        light_grey = "rgba(211, 215, 223,0.5)"  # Light section color
+        dark_grey = "rgb(122, 136, 159,0.5)"  # Dark section color
+
+        # Define the duration for the dark color interval (8.5 hours or 8:30 AM)
+        dark_duration = pd.Timedelta(hours=8, minutes=0)
+
+        # Create shapes for each day without alternating the color per day
+        shapes = []
         for i in range(num_days):
             start_date = min_date + pd.Timedelta(days=i)
-            end_date = start_date + pd.Timedelta(days=1)
             
-            # Alternate the color based on the day index
-            color = light_grey if i % 2 == 0 else dark_grey
-            
-            # Add shape to the list
+            # First interval: midnight to 8:30 AM (dark color)
             shapes.append(dict(
                 type="rect",
-                x0=start_date, x1=end_date,
-                y0=0, y1=1,  # Extend the rectangle vertically across the plot
-                xref="x", yref="paper",  # x-axis refers to data, y-axis spans full plot height
-                fillcolor=color,
+                x0=start_date,
+                x1=start_date + dark_duration,
+                y0=0,
+                y1=1,
+                xref="x",
+                yref="paper",
+                fillcolor=dark_grey,
                 opacity=0.3,
-                layer="below",  # Ensure it is behind the chart elements
+                layer="below",
+                line_width=0
+            ))
+            
+            # Second interval: 8:30 AM to midnight (light color)
+            shapes.append(dict(
+                type="rect",
+                x0=start_date + dark_duration,
+                x1=start_date + pd.Timedelta(days=1),
+                y0=0,
+                y1=1,
+                xref="x",
+                yref="paper",
+                fillcolor=light_grey,
+                opacity=0.3,
+                layer="below",
                 line_width=0
             ))
         
         # Add the shapes to the chart layout
         fig.update_layout(shapes=shapes)
-
-        # Create buttons for zooming to specific dates and months
-        unique_dates = sorted(df['Start'].dt.date.unique())
-        unique_months = sorted(df['Start'].dt.to_period("M").unique())
-
-        date_buttons = [
-            dict(
-                args=[{"xaxis.range": [pd.Timestamp(date), pd.Timestamp(date) + pd.Timedelta(days=1)]}],
-                label=date.strftime("%Y-%m-%d"),
+    
+        # Generate weekly date ranges from min_date to max_date
+        weekly_ranges = []
+        current_start = min_date - timedelta(days=min_date.weekday())  # Start on the Monday of the week containing min_date
+        while current_start <= max_date:
+            current_end = current_start + timedelta(days=6)  # End on Sunday of the same week
+            week_range_label = f"{current_start.strftime('%Y-%m-%d')} - {current_end.strftime('%Y-%m-%d')}"
+            weekly_ranges.append(dict(
+                args=[{"xaxis.range": [current_start, current_end]}],
+                label=week_range_label,
                 method="relayout"
-            ) for date in unique_dates
-        ]
+            ))
+            current_start += timedelta(days=7)  # Move to the next week
 
-        month_buttons = [
-            dict(
-                args=[{"xaxis.range": [pd.Timestamp(str(month)), pd.Timestamp(str(month)) + pd.DateOffset(months=1)]}],
-                label=str(month),
-                method="relayout"
-            ) for month in unique_months
-        ]
-
-        # Add zoom control buttons for 1 Day, 1 Week, specific dates, and specific months
+        # Add only the reset button and week range dropdown menu
         fig.update_layout(
             updatemenus=[
                 dict(
@@ -207,23 +226,13 @@ class GanttChart:
                     direction="left",
                     x=0.5,
                     y=1.2,
-                    buttons=list([
-                        dict(
-                            args=[{"xaxis.range": [df['Start'].min(), df['Start'].min() + pd.DateOffset(days=1)]}],
-                            label="1 Day",
-                            method="relayout"
-                        ),
-                        dict(
-                            args=[{"xaxis.range": [df['Start'].min(), df['Start'].min() + pd.DateOffset(weeks=1)]}],
-                            label="1 Week",
-                            method="relayout"
-                        ),
+                    buttons=[
                         dict(
                             args=[{"xaxis.autorange": True}],  # Reset to full zoom
                             label="Reset",
                             method="relayout"
-                        )
-                    ]),
+                        ),
+                    ],
                     showactive=True,
                     xanchor="center"
                 ),
@@ -232,28 +241,26 @@ class GanttChart:
                     direction="down",
                     x=0.6,
                     y=1.2,
-                    buttons=date_buttons,
+                    buttons=weekly_ranges,
                     showactive=True,
                     xanchor="center",
-                ),
-                dict(
-                    type="dropdown",
-                    direction="down",
-                    x=0.7,
-                    y=1.2,
-                    buttons=month_buttons,
-                    showactive=True,
-                    xanchor="center",
+                    pad={"r": 10}  # Add padding for dropdown placement
                 )
             ]
         )
-        
+        # Ensure all traces have the correct hover settings
+        # fig.update_traces (
+        #     hoverinfo="none",  # Disable all default hover info
+        #     hovertemplate="none"  # Set custom hover template to use custom data only
+        # )
         # Add task names on the bars and apply custom colors, patterns, and bar widths
         for i, task in enumerate(fig.data):
             task.text = df['Task'].iloc[i]
             task.textposition = 'inside'
-            task.hoverinfo = "skip"  # Disable the default hoverinfo to avoid extra tooltips
-            
+            # task.hoverinfo = "skip"  # Disable the default hoverinfo to avoid extra tooltips
+            # # Provide strLegendData as custom hover data
+            # task.customdata = [df['strLegendData'].iloc[i]]
+            # task.hovertemplate = "%{customdata}"  # Display only strLegendData on hover
             if df['Color'].iloc[i]:
                 task.marker.color = df['Color'].iloc[i]
 
@@ -266,11 +273,27 @@ class GanttChart:
             else:
                 task.width = bar_thickness
 
+        
             # Update hover template to display strLegendData
-            task.hovertemplate = df['strLegendData'].iloc[i]  # Customize hover text
-
+            # task.hovertemplate = df['strLegendData'].iloc[i]  # Customize hover text
+        
         return fig
 
+        # # Create dummy traces for each unique color in `self.SelectedColors` to generate a legend
+        # for color_name, task_status in self.SelectedColors.items():
+        #     fig.add_trace(
+        #         go.Scatter(
+        #             x=[None], y=[None],
+        #             mode='markers',
+        #             marker=dict(
+        #                 size=10,
+        #                 color=color_name  # Assign color using the color name from SelectedColors
+        #             ),
+        #             legendgroup=task_status,
+        #             showlegend=True,
+        #             name=task_status  # Display the task status as legend text
+        #         )
+        #     )
 
 
     @staticmethod
@@ -350,16 +373,16 @@ class GanttChart:
 
         # Adjust font size and style based on priority
         if priority == "urgent":
-            font_size = "25px"
+            font_size = "22px"
             font_style = "font-weight: bold;"
         elif priority == "high":
-            font_size = "21px"
+            font_size = "18px"
             font_style = "font-style: italic;"
         elif priority in ["low", "normal"]:
-            font_size = "12px"
+            font_size = "14px"
             font_style = ""
         else:
-            font_size = "12px"
+            font_size = "14px"
             font_style = ""
         priority_display = priority if priority in ["urgent", "high", "low", "normal"] else "No Priority"
 
@@ -425,7 +448,7 @@ class GanttChart:
             status_color_map = dictColorDimConfig.get("optiondetails", {}).get("status", {})
             # Assign status color based on task status
             status_color_rgb = status_color_map.get(dictTskDetails.get("TaskStatus", "open").lower(), "rgb(216, 216, 216)")  # Default light blue
-            self.SelectedColors[CClickUpHelper.rgb_to_color_name(status_color_rgb)] = dictTskDetails.get("TaskStatus")
+            self.SelectedColors[status_color_rgb] = dictTskDetails.get("TaskStatus")
             return status_color_rgb
     
     def MGetPattern(self, dictDimensionConfig, dictTskDetails):
@@ -483,7 +506,7 @@ class GanttChart:
             return status_thickness
     
     @staticmethod
-    def Master(lsEmps, lsProjects, StartDate="25-08-2024", EndDate="20-09-2024", bTaskIntensityInclude=False, bFetchLatest=False,bShowPlot=False):
+    def Master(lsEmps, lsProjects, StartDate="25-08-2024", EndDate="20-09-2024", bTaskIntensityInclude=False, bFetchLatest=False,bShowPlot=False,height=1080, width=1920):
         try:
             """
             Placeholder Master function returning a dummy Plotly figure.
@@ -601,13 +624,13 @@ class GanttChart:
                             # strTskSubject = f"<b>{count}. {task.get('TaskSubject', '')}</b> {status} {priority}"
                             # strTskSubject =  f"<span style='font-size:20px;'><b>{count}. {task.get('TaskSubject', '')}</b> {status} {priority}</span>"
                             if priority == "urgent":
-                                strTskSubject = f"<span style='font-size:30px;'><b> {task.get('TaskSubject', '')}</b> {status} {priority}, {uniqueCode}</span>"
+                                strTskSubject = f"<span style='font-size:20px;'><b> {task.get('TaskSubject', '')}</b> {status} {priority}, {uniqueCode}</span>"
                             elif priority =="high":
-                                strTskSubject = f"<span style='font-size:22px;'><i> {task.get('TaskSubject', '')}</i> {status} {priority}, {uniqueCode}</span>"
+                                strTskSubject = f"<span style='font-size:15px;'><i> {task.get('TaskSubject', '')}</i> {status} {priority}, {uniqueCode}</span>"
                             elif priority in ["low","normal"]:
-                                strTskSubject = f"<span style='font-size:12px;'> {task.get('TaskSubject', '')} {status} {priority}, {uniqueCode}</span>"
+                                strTskSubject = f"<span style='font-size:10px;'> {task.get('TaskSubject', '')} {status} {priority}, {uniqueCode}</span>"
                             else:
-                                strTskSubject = f"<span style='font-size:12px;'> {task.get('TaskSubject', '')} {status} No-Priority, {uniqueCode}</span>"
+                                strTskSubject = f"<span style='font-size:10px;'> {task.get('TaskSubject', '')} {status} No-Priority, {uniqueCode}</span>"
                             # Add task to Gantt chart
                             objGanttChart.add_task(
                                 task_name=strTskSubject,
@@ -617,7 +640,8 @@ class GanttChart:
                                 color=color,
                                 pattern=pattern,
                                 bar_width=bar_width,
-                                strLegendData=strTaskDetail
+                                strLegendData=strTaskDetail,
+                                status=status
                             )
                             count+=1
                     else:
@@ -714,11 +738,12 @@ class GanttChart:
                             color=color,
                             pattern=pattern,
                             bar_width=bar_width,
-                            strLegendData=strTaskDetail
+                            strLegendData=strTaskDetail,
+                            status=status
                         )
                         count +=1
             # Create and display the Gantt chart
-            fig = objGanttChart.create_chart(title="Employee Wise Gantt Chart")
+            fig = objGanttChart.create_chart(title="Employee Wise Gantt Chart", width=width, height=height)
             if bShowPlot:
                 fig.show()
             return fig

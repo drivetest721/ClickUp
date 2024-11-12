@@ -16,8 +16,8 @@
                 "in progress": "rgb(0, 255, 255)",   
                 "review": "rgb(144, 238, 144)", 
                 "in review": "rgb(144, 238, 144)",      
-                "delievered": "rgb(0, 100, 0)",
-                "closed": "rgb(0, 100, 0)",        
+                "delievered": "rgb(96, 255, 71)",
+                "closed": "rgb(96, 255, 71)",        
                 "hold": "rgb(255, 105, 180)",
                 "on hold": "rgb(255, 105, 180)",         
                 "idle time": "rgb(238, 237, 9)"

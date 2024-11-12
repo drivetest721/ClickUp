@@ -80,3 +80,48 @@ def find_employee_info(employee_name, employee_dict):
         if full_name == employee_name:
             return email, full_name
     return False
+
+
+def create_output_data(input_dict):
+    """
+    Generates a list of dictionaries with 'label' and 'value' keys from the input dictionary.
+    
+    Parameters:
+    input_dict (dict): Dictionary where keys are email addresses and values are names.
+    
+    Returns:
+    list: List of dictionaries with 'label' and 'value' keys for each entry in input_dict.
+    """
+    return [{"label": name, "value": email} for email, name in input_dict.items()]
+
+def create_project_list(input_data):
+    """
+    Generates a list of dictionaries with 'label' and 'value' keys from the input data.
+    
+    Parameters:
+    input_data (list): List of dictionaries containing project details, each with keys 'ListID' and 'Project'.
+    
+    Returns:
+    list: List of dictionaries with 'label' and 'value' keys for each project.
+    """
+    return [{"label": item["Project"], "value": item["ListID"]} for item in input_data]
+
+def create_customer_list(input_data):
+    """
+    Generates a list of dictionaries with 'label' and 'value' keys from the input data.
+    
+    Parameters:
+    input_data (list): List of dictionaries containing customer details, each with keys 'ListID' and 'customer'.
+    
+    Returns:
+    list: List of dictionaries with 'label' and 'value' keys for each customer.
+    """
+    return [{"label": item["Customer"], "value": item["Customer"]} for item in input_data]
+
+# Mock function for cleaning task data (replace with actual function)
+def clean_task_data(dictEmptasks):
+    # Combine tasks from each employee into a single list
+    all_tasks = []
+    for employee, tasks in dictEmptasks.items():
+        all_tasks.extend(tasks)
+    return all_tasks

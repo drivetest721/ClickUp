@@ -306,7 +306,7 @@ app.layout = html.Div([
             # Priority P0 (Urgent) - Tallest box
             html.Div([
                 html.Div(style={
-                    'width': '20px', 'height': '40px', 'border': '1px solid #000',
+                    'width': '20px', 'height': '30px', 'border': '1px solid #000',
                     'marginRight': '5px', 'display': 'inline-block', 'backgroundColor': '#f8f9fa'
                 }),
                 html.Span("P0 (Urgent)", style={'fontWeight': 'bold', 'marginRight': '15px'})
@@ -315,7 +315,7 @@ app.layout = html.Div([
             # Priority P1 (High) - Medium box
             html.Div([
                 html.Div(style={
-                    'width': '20px', 'height': '30px', 'border': '1px solid #000',
+                    'width': '20px', 'height': '20px', 'border': '1px solid #000',
                     'marginRight': '5px', 'display': 'inline-block', 'backgroundColor': '#f8f9fa'
                 }),
                 html.Span("P1 (High)", style={'fontStyle': 'italic', 'marginRight': '15px'})
@@ -324,7 +324,7 @@ app.layout = html.Div([
             # Priority P2 (Normal) - Shortest box
             html.Div([
                 html.Div(style={
-                    'width': '20px', 'height': '20px', 'border': '1px solid #000',
+                    'width': '20px', 'height': '10px', 'border': '1px solid #000',
                     'marginRight': '5px', 'display': 'inline-block', 'backgroundColor': '#f8f9fa'
                 }),
                 html.Span("P2 (Normal)", style={'marginRight': '15px'})
@@ -497,6 +497,43 @@ def display_user_inputs(n_clicks, employee_names, project_names, start_date, end
             width=width,
             height=height
         )
+        
+        # Prepare list to hold all employee data tables
+        # employee_data_tables = []
+        
+        # Assuming the GanttChart class is already defined
+        # objGanttChart = GanttChart()
+        
+        # # Fetching employee tasks for the given date range
+        # dictEmptasks = objGanttChart.Main(
+        #     lsListIDs=project_names, 
+        #     strTskStDate=start_date, 
+        #     strTskEndDate=end_date, 
+        #     lsEmployees=employee_names,
+        #     include_toughness=task_intensity_value
+        # )
+        
+        # # Clean the task data
+        # cleaned_dictEmptasks = clean_task_data(dictEmptasks)
+
+        # # Create data tables for each employee
+        # for EmpName, lsEmpTasks in cleaned_dictEmptasks.items():
+        #     # Convert the cleaned task details to a DataFrame
+        #     df_tasks = pd.DataFrame(lsEmpTasks)
+            
+        #     # Create a Dash DataTable for the current employee
+        #     table = dash_table.DataTable(
+        #         columns=[{"name": i, "id": i} for i in df_tasks.columns],
+        #         data=df_tasks.to_dict('records'),
+        #         style_table={'overflowX': 'scroll', 'width': '100%', 'marginTop': '20px'},
+        #         style_header={'backgroundColor': 'lightgrey'},
+        #         style_cell={'textAlign': 'left'},
+        #         style_data={'whiteSpace': 'normal', 'height': 'auto'}
+        #     )
+            
+        #     # Append a header and the table to the list
+        #     employee_data_tables.append(html.H3(f"Tasks for {EmpName}", style={'marginTop': '30px'}))
+        #     employee_data_tables.append(table)
 
         # Return the graph and employee data tables
         return html.Div([
@@ -504,6 +541,7 @@ def display_user_inputs(n_clicks, employee_names, project_names, start_date, end
                 dcc.Graph(figure=fig, config={'responsive': True}), 
                 style={'marginBottom': '50px'}
             )
+            # html.Div(employee_data_tables, style={'padding': '20px'})
         ])
 
     return html.P(
@@ -597,10 +635,10 @@ def generate_excel(n_clicks, employee_names, project_names, start_date, end_date
                 'criteria': f'OR(INDIRECT("R{row_num+1}C{status_column+1}",0)="On Hold", INDIRECT("R{row_num+1}C{status_column+1}",0)="Hold")',
                 'format': pink_format
             })
-            # Check if the row's TaskStatus column is "Completed", "Closed", or "Delivered"
+            # Check if the row's TaskStatus column is "Completed" or "Closed"
             worksheet.conditional_format(row_num, 0, row_num, len(df.columns) - 1, {
                 'type': 'formula',
-                'criteria': f'OR(INDIRECT("R{row_num+1}C{status_column+1}",0)="Completed", INDIRECT("R{row_num+1}C{status_column+1}",0)="Closed", INDIRECT("R{row_num+1}C{status_column+1}",0)="Delievered")',
+                'criteria': f'OR(INDIRECT("R{row_num+1}C{status_column+1}",0)="Completed", INDIRECT("R{row_num+1}C{status_column+1}",0)="Closed")',
                 'format': green_format
             })
             # Check if the row's TaskStatus column is "In Review" or "Review"
@@ -621,4 +659,100 @@ def generate_excel(n_clicks, employee_names, project_names, start_date, end_date
 
 # Run the app
 if __name__ == '__main__':
+    # app.run_server(debug=True)
+    # fetch new clickup data
+    # CClickUpAPI.MSFetchTaskFromConfigFile(strConfigPath = r"resource\clickup_config.json")
+    # tasks, taskStatics = CClickUpDB.MSGetTasksByListIDsWithEmpFilter(["901600183071"], "10-09-2024",  "25-09-2024",  ['mitul@riveredgeanalytics.com','mansi@riveredgeanalytics.com', 'hr@riveredgeanalytics.com'])
+    # print(tasks)
+    # print()
+    # print(taskStatics)
     app.run_server(debug=True)
+    # objGanttChart = GanttChart()
+    # employee_data_tables = []
+    # # Assuming the GanttChart class is already defined
+    # # Fetching employee tasks for the given date range
+    # dictEmptasks = objGanttChart.Main(lsListIDs= ["901600183071"], strTskStDate="01-08-2024", strTskEndDate="01-10-2024", lsEmployees=["mitul@riveredgeanalytics.com"],include_toughness=False)
+    # cleaned_dictEmptasks = clean_task_data(dictEmptasks)
+
+    # # Create data tables for each employee
+    # for EmpName, lsEmpTasks in cleaned_dictEmptasks.items():
+    #     # Convert the cleaned task details to a DataFrame
+    #     df_tasks = pd.DataFrame(lsEmpTasks)
+        
+    #     # Create a Dash DataTable for the current employee
+    #     table = dash_table.DataTable(
+    #         columns=[{"name": i, "id": i} for i in df_tasks.columns],
+    #         data=df_tasks.to_dict('records'),
+    #         style_table={'overflowX': 'scroll', 'width': '100%', 'marginTop': '20px'},
+    #         style_header={'backgroundColor': 'lightgrey'},
+    #         style_cell={'textAlign': 'left'},
+    #         style_data={'whiteSpace': 'normal', 'height': 'auto'}
+    #     )
+        
+    #     # Append a header and the table to the list
+    #     employee_data_tables.append(html.H3(f"Tasks for {EmpName}", style={'marginTop': '30px'}))
+    #     employee_data_tables.append(table)
+    # print("-----------------")
+    # print(employee_data_tables)
+    # @app.callback(
+    #     Output('plot-area', 'children'),
+    #     [
+    #         Input('submit-button', 'n_clicks'),
+    #         State('employee-names', 'value'),
+    #         State('project-names', 'value'),
+    #         State('date-range', 'start_date'),
+    #         State('date-range', 'end_date'),
+    #         State('task-intensity-wise-score', 'value'),
+    #         State('fetch-latest-date', 'value')
+    #     ]
+    # )
+    # def update_dashboard(n_clicks, employee_names, project_names, start_date, end_date, task_intensity, fetch_latest):
+    #     return display_user_inputs(n_clicks, employee_names, project_names, start_date, end_date, task_intensity, fetch_latest)
+
+
+    # def clean_task_data(dictEmptasks):
+    #     """
+    #     Cleans and filters each employee's task data to ensure all values are of valid types
+    #     for the Dash DataTable (string, number, boolean). Only includes selected columns.
+
+    #     Parameters:
+    #         dictEmptasks (dict): Dictionary containing employee task data.
+
+    #     Returns:
+    #         dict: Cleaned and filtered dictionary with all values converted to appropriate types.
+    #     """
+    #     selected_columns = [
+    #         'TaskID', 'TaskSubject', 'TaskStatus', 'TaskPriority', 'AssignTo',
+    #         'TaskScore', 'TaskExecutionDate', 'TaskStartDate', 'TaskDueDate',
+    #         'IsConflict', 'ConflictTimeMin', 'AllocatedTimeMin'
+    #     ]
+        
+    #     cleaned_dict = {}
+
+    #     for emp_name, task_list in dictEmptasks.items():
+    #         cleaned_tasks = []
+            
+    #         for task in task_list:
+    #             cleaned_task = {}
+    #             for key in selected_columns:
+    #                 # Ensure the key exists in the task dictionary before processing
+    #                 value = task.get(key, None)
+                    
+    #                 # Convert None values to empty strings
+    #                 if value is None:
+    #                     cleaned_task[key] = ''
+    #                 # Convert unsupported types (like lists, dicts) to strings
+    #                 elif isinstance(value, (list, dict)):
+    #                     cleaned_task[key] = str(value)
+    #                 # Keep valid types (string, number, boolean) as is
+    #                 elif isinstance(value, (str, int, float, bool)):
+    #                     cleaned_task[key] = value
+    #                 else:
+    #                     # For any other type, convert to string
+    #                     cleaned_task[key] = str(value)
+                
+    #             cleaned_tasks.append(cleaned_task)
+            
+    #         cleaned_dict[emp_name] = cleaned_tasks
+        
+    #     return cleaned_dict
